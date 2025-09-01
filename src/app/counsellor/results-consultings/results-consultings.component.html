@@ -1,0 +1,10 @@
+<button mat-fab extended style="margin-top: 3vh;" (click)="addConsulting()" >
+          <mat-icon style="margin-left: 3vh;">add</mat-icon>
+          הרשמת נועץ
+        </button>
+
+@for(user of users;track user;){
+<app-one-consulting [user]="user"></app-one-consulting>
+}
+
+<router-outlet></router-outlet>

@@ -1,0 +1,27 @@
+.table-container {
+  margin: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.table-title {
+  text-align: center;
+  font-size: 24px;
+  margin: 10px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px;
+  text-align: center;
+}
+th {
+  background-color: #f2f2f2;
+}
+.color1 { background-color: #cba3a3; }
+.color2 { background-color: #98bcc8; }
+.color3 { background-color: #80b180; }
+.color4 { background-color: #b9ab96; }
+.color5 { background-color: #b3a9a9; }

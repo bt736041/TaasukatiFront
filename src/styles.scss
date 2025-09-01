@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use '@angular/material' as mat;
+
+:root {
+  @include mat.card-overrides((
+    outlined-outline-color: #0c6f74,
+    subtitle-text-color:#0c6f74
+  ));
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Helvetica Neue", sans-serif;
+}
+
+
+html {
+    direction: rtl;
+    @include mat.theme((
+            typography: Segoe UI,
+            
+            ));
+}
+

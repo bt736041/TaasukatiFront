@@ -1,0 +1,13 @@
+<div style="height: 20vh;"></div>
+
+<p class="small-sentence" [innerText] = "explanation"></p>
+
+<div class="question-container">
+  <h2 class="big-question" [innerText] = "question"></h2>
+  <div class="button-container">
+    <button class="yes-button" (click)="answering(true)">כן</button>
+    <button class="no-button" (click)="answering(false)">לא</button>
+  </div>
+</div>
+
+

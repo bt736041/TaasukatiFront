@@ -1,0 +1,47 @@
+<div style="height: 20vh;"></div>
+<table mat-table [dataSource]="results" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="purview">
+    <th mat-header-cell *matHeaderCellDef> תחום </th>
+    <td mat-cell *matCellDef="let element"> {{element.purview}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="R">
+    <th mat-header-cell *matHeaderCellDef> ביצועי </th>
+    <td mat-cell *matCellDef="let element"> {{element.R}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="I">
+    <th mat-header-cell *matHeaderCellDef> חקרני </th>
+    <td mat-cell *matCellDef="let element"> {{element.I}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="A">
+    <th mat-header-cell *matHeaderCellDef> אומנותי </th>
+    <td mat-cell *matCellDef="let element"> {{element.A}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="S">
+    <th mat-header-cell *matHeaderCellDef> חברתי </th>
+    <td mat-cell *matCellDef="let element"> {{element.S}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="E">
+    <th mat-header-cell *matHeaderCellDef> יזמי </th>
+    <td mat-cell *matCellDef="let element"> {{element.E}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="C">
+    <th mat-header-cell *matHeaderCellDef> מנהלי </th>
+    <td mat-cell *matCellDef="let element"> {{element.C}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="total">
+    <th mat-header-cell *matHeaderCellDef> סה"כ </th>
+    <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
