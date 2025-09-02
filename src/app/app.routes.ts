@@ -29,19 +29,19 @@ export const routes: Routes = [
     {
         path: 'test',
         loadComponent: () =>
-            import('./test/test.component').then((m) => m.TestComponent),
+            import('./simple/test/test.component').then((m) => m.TestComponent),
             data: {hideButtons: true},
         children: [
             {
                 path: 'part-test',
                 loadComponent: () =>
-                    import('./test/partTest/partTest.component').then((m) => m.PartTestComponent)
+                    import('./simple/test/partTest/partTest.component').then((m) => m.PartTestComponent)
 
             },
             {
                 path: 'introduction',
                 loadComponent: () =>
-                    import('./test/intrudaction/intrudaction.component').then((m) => m.IntrudactionComponent)
+                    import('./simple/test/intrudaction/intrudaction.component').then((m) => m.IntrudactionComponent)
             }]
     },
     {
