@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { NavbarService } from '../simple/Services/navbar.service';
 import { CounsellorService } from '../simple/Services/counsellor.service';
 import { NgModule } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog'
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -65,13 +65,13 @@ export class LoginComponent implements OnInit {
         );
 
       }
+
       else {
         this.navbarService.changeNavbar('login_counsellor')
-        this.counsellorService.id = result.id
-        this.counsellorService.name = result.firstName
+        // this.counsellorService.id = result.id
+        // this.counsellorService.name = result.firstName
         this.router.navigate(['/counsellor'],
         );
-
       }
 
     }
@@ -82,9 +82,6 @@ export class LoginComponent implements OnInit {
 
   onNoClick() {
     this.dialogRef.close();
-
   }
-
-
 
 }

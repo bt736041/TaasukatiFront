@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { QuestionsService } from '../simple/Services/questions.service';
+import { QuestionsService } from '../Services/questions.service';
 import { PartTestComponent } from './partTest/partTest.component';
 
 

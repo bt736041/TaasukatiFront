@@ -3,17 +3,17 @@
   <form [formGroup]="formGroup" (ngSubmit)="create()">
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>שם פרטי</mat-label>
-      <input matInput type="text" id="firstName" class="formControlLogin" formControlName="firstName" required>
-      <mat-error *ngIf="formGroup.controls['firstName'].errors | hasErrors: 'firstName'">
-        <span *ngFor="let error of [formGroup.controls['firstName'].errors | getError]" [innerText]="error"></span>
+      <input matInput type="text" id="first_name" class="formControlLogin" formControlName="first_name" required>
+      <mat-error *ngIf="formGroup.controls['first_name'].errors | hasErrors: 'first_name'">
+        <span *ngFor="let error of [formGroup.controls['first_name'].errors | getError]" [innerText]="error"></span>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>שם משפחה</mat-label>
-      <input matInput type="text" id="lastName" class="formControlLogin" formControlName="lastName" required>
-      <mat-error *ngIf="formGroup.controls['lastName'].errors | hasErrors: 'lastName'">
-        <span *ngFor="let error of [formGroup.controls['lastName'].errors | getError]" [innerText]="error"></span>
+      <input matInput type="text" id="last_name" class="formControlLogin" formControlName="last_name" required>
+      <mat-error *ngIf="formGroup.controls['last_name'].errors | hasErrors: 'last_name'">
+        <span *ngFor="let error of [formGroup.controls['last_name'].errors | getError]" [innerText]="error"></span>
       </mat-error>
     </mat-form-field>
 
@@ -34,17 +34,36 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="full-width">
-      <mat-label>גיל</mat-label>
-      <input matInput type="number" id="age" class="formControlLogin" formControlName="age" required>
-      <mat-error *ngIf="formGroup.controls['age'].errors | hasErrors: 'age'">
-        <span *ngFor="let error of [formGroup.controls['age'].errors | getError]" [innerText]="error"></span>
+      <mat-label>תעודת זהות</mat-label>
+      <input matInput type="password" id="password" class="formControlLogin" formControlName="password" required>
+      <mat-error *ngIf="formGroup.controls['password'].errors | hasErrors: 'password'">
+        <span *ngFor="let error of [formGroup.controls['password'].errors | getError]" [innerText]="error"></span>
       </mat-error>
     </mat-form-field>
 
 <mat-form-field appearance="fill" class="full-width">
+  <mat-label>תאריך לידה</mat-label>
+  <input
+    matInput
+    type="date"
+    id="birth_date"
+    formControlName="birth_date"
+    [min]="'1900-01-01'"
+    [max]="todayString"
+    required>
+  <mat-error *ngIf="formGroup.controls['birth_date'].errors">
+    <!-- הראי הודעות בהתאם ל-pipes/לוגיקה שלך -->
+    תאריך לא תקין או מחוץ לטווח
+  </mat-error>
+</mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>אזור מגורים</mat-label>
-      <input matInput type="text" id="area" class="formControlLogin" formControlName="area" >
-      <mat-error *ngIf="formGroup.controls['area'].errors | hasErrors: 'area'">
+      <mat-select id="region" formControlName="region" required>
+        <mat-option *ngFor="let r of regions" [value]="r.name">
+          {{ r.name }}
+        </mat-option>
+      </mat-select>      <mat-error *ngIf="formGroup.controls['area'].errors | hasErrors: 'area'">
         <span *ngFor="let error of [formGroup.controls['area'].errors | getError]" [innerText]="error"></span>
       </mat-error>
     </mat-form-field>
