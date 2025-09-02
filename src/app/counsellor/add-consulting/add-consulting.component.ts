@@ -11,6 +11,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { Client } from '../../models/client';
+import { ClientHttpService } from '../../services/client-http.service';
 
 @Component({
   selector: 'app-add-consulting',
@@ -37,8 +39,9 @@ export class AddConsultingComponent {
   constructor(private formBuilder: FormBuilder) { }
   readonly dialogRef = inject(MatDialogRef<AddConsultingComponent>)
   readonly dialog = inject(MatDialog)
-  regions = [{ id: 1, name: "צפון" }, { id: 2, name: "מרכז" }, { id: 3, name: "דרום" }]
+  regions = [{ id: 1, name: "מרכז" }, { id: 2, name: "צפון" }, { id: 3, name: "דרום" }]
   todayString = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  clientService = inject(ClientHttpService)
 
 
   ngOnInit() {
@@ -48,6 +51,7 @@ export class AddConsultingComponent {
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+      password: ['', [Validators.required, Validators.maxLength(9), Validators.minLength(9)]],
       birth_date: ['', [Validators.required, this.dateInRange()]],
       region: ['', Validators.required]
     });
@@ -65,7 +69,7 @@ export class AddConsultingComponent {
     }
   }
 
-    dateInRange(min = '1900-01-01', max = new Date().toISOString().slice(0, 10)): ValidatorFn {
+  dateInRange(min = '1900-01-01', max = new Date().toISOString().slice(0, 10)): ValidatorFn {
     return (c: AbstractControl): ValidationErrors | null => {
       const v = c.value as string | null;
       if (!v) return null; // Validators.required כבר יטפל בריק
@@ -78,14 +82,45 @@ export class AddConsultingComponent {
 
   create() {
     this.dialogRef.close()
-    const { firstName, lastName, email, phone, age, area } = this.formGroup.value;
-    const consulting = { first: firstName, last: lastName, mail: email, phone: phone, age: age, area: area }
-    this.consultings.push(consulting)
+    const v = this.formGroup.value;
+
+    const regionMatch = this.regions?.find(r => r.name === v.region);
+    if (!regionMatch) { console.error('region not found'); return; }
+
+    const client = {
+      first_name: v.first_name,
+      last_name: v.last_name,
+      email: v.email,
+      phone: v.phone,
+      password: v.password,
+      birth_date: typeof v.birth_date === 'string'
+        ? v.birth_date
+        : (v.birth_date as Date).toISOString().slice(0, 10),
+      advisor_id: 1,
+      region_id: regionMatch.id
+    };
+
+    console.log('OUT payload:', client);
+
+    this.clientService.createClient$(client, "ai").subscribe({
+      next: r => console.log('OK:', r),
+      error: (e) => {
+        console.error('HTTP ERR:', e.status, e.statusText);
+        // ב-FastAPI/Django תקבלי פירוט ב-e.error
+        console.dir(e.error, { depth: null });
+      }
+    });
+
+
+
+
+    // this.consultings.push(consulting)
     this.dialog.open(NewConsultingDetailsComponent, {
-      data: { username: firstName, password: email },
+      data: { username: v.email, password: v.password },
     })
   }
   return() {
     this.dialogRef.close()
   }
 }
+

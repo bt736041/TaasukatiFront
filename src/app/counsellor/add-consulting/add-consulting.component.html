@@ -63,8 +63,8 @@
         <mat-option *ngFor="let r of regions" [value]="r.name">
           {{ r.name }}
         </mat-option>
-      </mat-select>      <mat-error *ngIf="formGroup.controls['area'].errors | hasErrors: 'area'">
-        <span *ngFor="let error of [formGroup.controls['area'].errors | getError]" [innerText]="error"></span>
+      </mat-select>      <mat-error *ngIf="formGroup.controls['region'].errors | hasErrors: 'region'">
+        <span *ngFor="let error of [formGroup.controls['region'].errors | getError]" [innerText]="error"></span>
       </mat-error>
     </mat-form-field>
 
@@ -78,6 +78,6 @@
   <button mat-button (click)="return()">ביטול</button>
   <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid"
     (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false" (click)="create()">
-    התחבר
+    הוסף
   </button>
 </mat-dialog-actions>
