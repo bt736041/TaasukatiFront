@@ -1,0 +1,10 @@
+<div class="client-showcase">
+      <h1>נועצות משתפות</h1>
+      @for(cust of clients;track cust;){
+      <div class="client">
+        <p [innerText]="cust.sentence"></p>
+        <h3 [innerText]="cust.name"></h3>
+        <div class="rating" [innerText]="cust.rating"></div>
+      </div>
+    }
+    </div>

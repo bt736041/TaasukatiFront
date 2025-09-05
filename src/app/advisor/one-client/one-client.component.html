@@ -1,0 +1,11 @@
+<mat-card style="margin-top: 2vh;" appearance="outlined">
+    <mat-card-header>
+        <mat-card-title [innerText]="user.username"></mat-card-title>
+        <mat-card-subtitle>יש משהו לכתוב כאן?</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions align="end">
+        <button mat-button style="color: #0c6f74;" (click)="viewResults()">לצפיה בתוצאות המבחן</button>
+        <button mat-button style="color: #0c6f74;" (click)="set()">עריכה</button>
+        <button mat-button style="color: #0c6f74;" (click)="delete()">מחיקה</button>
+    </mat-card-actions>
+</mat-card>
