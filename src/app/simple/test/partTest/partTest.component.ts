@@ -3,7 +3,7 @@ import { QuestionComponent } from './question/question.component';
 import { Router } from '@angular/router'
 import { QuestionsService } from '../..//Services/questions.service';
 import { AnswersService } from '../..//Services/answers.service';
-import { NavbarService } from '../../Services/navbar.service';
+import { NavbarService } from '../../../services/navbar.service';
 
 @Component({
   selector: 'app-partTest',

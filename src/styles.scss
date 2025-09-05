@@ -7,6 +7,10 @@
     outlined-outline-color: #0c6f74,
     subtitle-text-color:#0c6f74
   ));
+
+    @include mat.progress-spinner-overrides((
+    size: 10px,
+  ));
 }
 
 html,

@@ -1,0 +1,64 @@
+[
+    {
+        "name": "home",
+        "buttons": [
+            {
+                "name": "כניסה",
+                "path": "/login",
+                "disabled": "false"
+            },
+            {
+                "name": "אודות",
+                "path": "",
+                "disabled": "false"
+            },
+            {
+                "name": "נועצות משתפות",
+                "path": "",
+                "disabled": "false"
+            }
+        ]
+    },
+    {
+        "name": "login_user",
+        "buttons": [
+            {
+                "name": "יציאה",
+                "path": "",
+                "disabled": "false",
+                "action": "logout"
+            },
+            {
+                "name": "עריכת מבחן",
+                "path": "startTest",
+                "disabled": "false"
+            },
+            {
+                "name": "צפיה בתוצאות",
+                "path": "results",
+                "disabled": "false"
+            }
+        ]
+    },
+    {
+        "name": "login_advisor",
+        "buttons": [
+            {
+                "name": "יציאה",
+                "path": "",
+                "disabled": "false",
+                "action": "logout"
+            },
+            {
+                "name": "אודות",
+                "path": "",
+                "disabled": "false"
+            },
+            {
+                "name": "נועצות משתפות",
+                "path": "",
+                "disabled": "false"
+            }
+        ]
+    }
+]
