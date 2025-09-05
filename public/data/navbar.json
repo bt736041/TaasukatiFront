@@ -41,7 +41,7 @@
         ]
     },
     {
-        "name": "login_counsellor",
+        "name": "login_advisor",
         "buttons": [
             {
                 "name": "יציאה",

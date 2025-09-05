@@ -64,8 +64,8 @@ export class LoginComponent implements OnInit {
       ofType(AuthActions.loginSuccess),
     ).subscribe(({ loginResponse }) => {
       const role = loginResponse.role;
-      this.navbarService.changeNavbar(role === 'advisor' ? 'login_counsellor' : 'login_user');
-      this.router.navigate([role === 'advisor' ? '/counsellor' : '/consulting']);
+      this.navbarService.changeNavbar(role === 'advisor' ? 'login_advisor' : 'login_user');
+      this.router.navigate([role === 'advisor' ? '/advisor' : '/client']);
       this.dialogRef?.close();
     });
 

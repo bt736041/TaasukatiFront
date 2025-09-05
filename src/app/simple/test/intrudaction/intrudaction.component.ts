@@ -25,7 +25,7 @@ export class IntrudactionComponent {
   }
 // addTest(){
 //   const testDto:TestDto= new TestDto()
-//   testDto.id_consulting=213
+//   testDto.id_client=213
 //   this.testService.create(testDto)
 // }
   
