@@ -3,11 +3,11 @@
     <img [src]="logo_src" class="logo">
     @for(button of buttons;track button;){
     @if(button.disabled === 'false'){
-    <li><a class="active" [innerText]="button.name" routerLink="" (click)="navigate(button.navigate)"
+    <li><a class="active" [innerText]="button.name" routerLink="" (click)="onClick(button.path, button.action)"
         routerLinkActive="active"></a></li>
     }
     @if(button.disabled === 'true'){
-    <li><a class="disabled" [innerText]="button.name" ></a></li>
+    <li><a class="disabled" [innerText]="button.name"></a></li>
     }}
   </ul>
 </nav>

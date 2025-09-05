@@ -36,12 +36,14 @@ export class AddConsultingComponent {
   mouseoverLogin: boolean = false;
   formGroup: FormGroup = {} as FormGroup;
   consultings = [{}]
-  constructor(private formBuilder: FormBuilder) { }
   readonly dialogRef = inject(MatDialogRef<AddConsultingComponent>)
   readonly dialog = inject(MatDialog)
   regions = [{ id: 1, name: "מרכז" }, { id: 2, name: "צפון" }, { id: 3, name: "דרום" }]
   todayString = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
   clientService = inject(ClientHttpService)
+  
+  constructor(private formBuilder: FormBuilder) { }
+
 
 
   ngOnInit() {

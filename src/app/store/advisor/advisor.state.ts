@@ -6,10 +6,12 @@ export interface AdvisorState {
     advisor: Advisor
     clients: Array<Client>
     regions: Array<Region>
+    lastCreatedClient: Client
 }
 
 export const initialState: AdvisorState = {
     advisor: {} as Advisor,
     clients: [],
-    regions: []
+    regions: [],
+    lastCreatedClient: {} as Client
 }

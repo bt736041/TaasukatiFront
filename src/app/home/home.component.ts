@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AboutComponent } from '../about/about.component';
 import { CustomersTellComponent } from '../customers-tell/customers-tell.component';
-import { NavbarService } from '../simple/Services/navbar.service';
+import { NavbarService } from '../services/navbar.service';
 
 
 

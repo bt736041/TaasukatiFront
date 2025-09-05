@@ -31,10 +31,10 @@
 
     <p [innerHtml]="message"></p>
   </form>
+  <mat-spinner *ngIf="(loading$ |async)"></mat-spinner>
 </mat-dialog-content>
-
 <mat-dialog-actions align="end">
-  <button mat-button (click)="onNoClick()">ביטול</button>
+  <button mat-button [disabled]="(loading$ | async)" (click)="onNoClick()">ביטול</button>
   <button mat-raised-button
           color="primary"
           type="submit"
