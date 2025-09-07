@@ -62,3 +62,42 @@ export const logoutEffect = createEffect(
     }
     , { functional: true }
 );
+
+export const forgotPasswordEffect = createEffect(
+    (actions$ = inject(Actions), authService = inject(LoginService)) => {
+        return actions$.pipe(
+            ofType(AuthActions.forgotPassword),
+            mergeMap(({ email }) =>
+                authService.forgotPassword$(email).pipe(
+                    map(() => AuthActions.forgotPasswordSuccess()),
+                    catchError((err: HttpErrorResponse) =>
+                        of(AuthActions.forgotPasswordFailure({
+                            message: err.error?.detail ?? err.message ?? 'שליחת אימייל נכשלה'
+                        }))
+                    ),
+                )
+            )
+        );
+    },
+    { functional: true }
+);
+
+export const resetPasswordEffect = createEffect(
+    (actions$ = inject(Actions), authService = inject(LoginService)) => {
+        return actions$.pipe(
+            ofType(AuthActions.resetPassword),
+            mergeMap(({ token, newPassword }) =>
+                authService.resetPassword$(token, newPassword).pipe(
+                    map(() => AuthActions.resetPasswordSuccess()),
+                    catchError((err: HttpErrorResponse) =>
+                        of(AuthActions.resetPasswordFailure({
+                            message: err.error?.detail ?? err.message ?? 'איפוס נכשל, נסה שוב'
+                        }))
+                    ),
+                )
+            )
+        );
+    },
+    { functional: true }
+);
+
