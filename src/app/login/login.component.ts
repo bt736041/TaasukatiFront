@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,6 +14,7 @@ import { NavbarService } from '../services/navbar.service';
 import { LoginRequest, Role } from '../models/auth';
 import { selectAccessToken, selectAuthError, selectAuthLoading, selectAuthUser, selectIsAuthenticated } from '../store/auth/auth.selectors';
 import { AuthActions } from '../store/auth/auth.actions';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @Component({
   standalone: true,
@@ -36,6 +37,8 @@ export class LoginComponent implements OnInit {
   message: string = ""
   formGroup: FormGroup = {} as FormGroup;
   readonly dialogRef = inject(MatDialogRef<LoginComponent>)
+  readonly dialog = inject(MatDialog)
+
   constructor(private formBuilder: FormBuilder) { }
 
   accessToken$ = this.store.select(selectAccessToken)
@@ -79,5 +82,10 @@ export class LoginComponent implements OnInit {
 
   onNoClick() {
     this.dialogRef.close();
+  }
+
+  forgetPass() {
+    this.dialog.open(ForgotPasswordComponent)
+
   }
 }
