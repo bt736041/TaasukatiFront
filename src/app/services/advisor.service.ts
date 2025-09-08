@@ -21,4 +21,33 @@ export class AdvisorService extends HttpServiceBase {
       body: advisor
     }))
   }
+
+  getAdvisors$(): Observable<Advisor[]> {
+    return this.get$(new HttpRequestModel({
+      url: this._serverUrl,
+      action: "get_all"
+    }))
+  }
+
+  getAdvisorById$(id: number): Observable<Advisor> {
+    return this.get$(new HttpRequestModel({
+      url: this._serverUrl,
+      action: `get_by_id/${id}`
+    }))
+  }
+
+  updateAdvisor$(advisor: Advisor): Observable<Advisor> {
+    return this.put$(new HttpRequestModel({
+      url: this._serverUrl,
+      action: "update",
+      body: advisor
+    }))
+  }
+
+  deleteAdvisor$(id: number): Observable<any> {
+    return this.delete$(new HttpRequestModel({
+      url: this._serverUrl,
+      action: `delete/${id}`
+    }))
+  }
 }
