@@ -1,6 +1,6 @@
 import { Component , inject} from '@angular/core';
 import { Router } from '@angular/router';
-import { NavbarService } from '../../services/navbar.service';
+import { NavbarService } from '../../../../services/navbar.service';
 
 @Component({
   selector: 'app-start-the-test',
