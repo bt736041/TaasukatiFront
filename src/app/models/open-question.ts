@@ -1,4 +1,4 @@
-export type Status = 'question' | 'clarification' | 'analysis_done' | 'questions_exhausted' | 'error' | 'incomplete'
+export type Status = 'question' | 'clarification' | 'analysis_done' | 'questions_exhausted' | 'error'
 
 export interface OpenQuestion { //OpenQuestionProcessOut
     status: Status,

@@ -47,7 +47,7 @@ export const routes: Routes = [
     {
         path: 'results',
         loadComponent: () =>
-            import('./simple/results/results.component').then((m) => m.ResultsComponent)
+            import('./components/general/simple/results/results.component').then((m) => m.ResultsComponent)
     },
     // {
     //     path: 'loginAdvisor',
@@ -62,7 +62,7 @@ export const routes: Routes = [
     {
         path: 'one-client-results',
         loadComponent: () =>
-            import('./simple/results/results.component').then((m) => m.ResultsComponent),
+            import('./components/general/simple/results/results.component').then((m) => m.ResultsComponent),
     },
     {
         path: 'reset-password',
