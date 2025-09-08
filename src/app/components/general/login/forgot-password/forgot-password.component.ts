@@ -7,9 +7,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Store } from '@ngrx/store';
-import { selectAuthLoading } from '../../store/auth/auth.selectors';
+import { selectAuthLoading } from '../../../../store/auth/auth.selectors';
 import { Actions, ofType } from '@ngrx/effects';
-import { AuthActions } from '../../store/auth/auth.actions';
+import { AuthActions } from '../../../../store/auth/auth.actions';
 
 @Component({
   selector: 'app-forgot-password',

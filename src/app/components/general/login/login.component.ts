@@ -10,10 +10,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { NavbarService } from '../services/navbar.service';
-import { LoginRequest, Role } from '../models/auth';
-import { selectAccessToken, selectAuthError, selectAuthLoading, selectAuthUser, selectIsAuthenticated } from '../store/auth/auth.selectors';
-import { AuthActions } from '../store/auth/auth.actions';
+import { NavbarService } from '../../../services/navbar.service';
+import { LoginRequest, Role } from '../../../models/auth';
+import { selectAccessToken, selectAuthError, selectAuthLoading, selectAuthUser, selectIsAuthenticated } from '../../../store/auth/auth.selectors';
+import { AuthActions } from '../../../store/auth/auth.actions';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @Component({

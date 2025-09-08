@@ -5,7 +5,7 @@ export const routes: Routes = [
     {
         path: '',
         loadComponent: () =>
-            import('./home/home.component').then((m) => m.HomeComponent),
+            import('./components/general/home/home.component').then((m) => m.HomeComponent),
 
     },
     {
@@ -16,38 +16,38 @@ export const routes: Routes = [
     {
         path: 'client',
         loadComponent: () =>
-            import('./home-client/home-client.component').then((m) => m.HomeClientComponent),
+            import('./components/general/home-client/home-client.component').then((m) => m.HomeClientComponent),
 
     },
     {
         path: 'startTest',
         loadComponent: () =>
-            import('./home-client/start-the-test/start-the-test.component').then((m) => m.StartTheTestComponent),
+            import('./components/general/home-client/start-the-test/start-the-test.component').then((m) => m.StartTheTestComponent),
         data: { hideButtons: true },
 
     },
     {
         path: 'test',
         loadComponent: () =>
-            import('./simple/test/test.component').then((m) => m.TestComponent),
+            import('./components/simple/test/test.component').then((m) => m.TestComponent),
         data: { hideButtons: true },
         children: [
             {
                 path: 'part-test',
                 loadComponent: () =>
-                    import('./simple/test/partTest/partTest.component').then((m) => m.PartTestComponent)
+                    import('./components/simple/test/partTest/partTest.component').then((m) => m.PartTestComponent)
 
             },
             {
                 path: 'introduction',
                 loadComponent: () =>
-                    import('./simple/test/intrudaction/intrudaction.component').then((m) => m.IntrudactionComponent)
+                    import('./components/simple/test/intrudaction/intrudaction.component').then((m) => m.IntrudactionComponent)
             }]
     },
     {
         path: 'results',
         loadComponent: () =>
-            import('./components/general/simple/results/results.component').then((m) => m.ResultsComponent)
+            import('./components/simple/results/results.component').then((m) => m.ResultsComponent)
     },
     // {
     //     path: 'loginAdvisor',
@@ -57,17 +57,17 @@ export const routes: Routes = [
     {
         path: 'advisor',
         loadComponent: () =>
-            import('./advisor/results-clients/results-clients.component').then((m) => m.ResultsClientsComponent),
+            import('./components/general/advisor/results-clients/results-clients.component').then((m) => m.ResultsClientsComponent),
     },
     {
         path: 'one-client-results',
         loadComponent: () =>
-            import('./components/general/simple/results/results.component').then((m) => m.ResultsComponent),
+            import('./components/simple/results/results.component').then((m) => m.ResultsComponent),
     },
     {
         path: 'reset-password',
         loadComponent: () =>
-            import('./login/reset-password/reset-password.component').then((m) => m.ResetPasswordComponent)
+            import('./components/general/login/reset-password/reset-password.component').then((m) => m.ResetPasswordComponent)
     }
 ]
 //  },

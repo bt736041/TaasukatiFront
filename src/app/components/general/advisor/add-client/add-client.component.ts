@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { AbstractControl, ValidatorFn, ValidationErrors, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { GetErrorPipe } from '../../pipes/get-error.pipe';
-import { HasErrorsPipe } from '../../pipes/has-errors.pipe';
+import { GetErrorPipe } from '../../../../pipes/get-error.pipe';
+import { HasErrorsPipe } from '../../../../pipes/has-errors.pipe';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NewClientDetailsComponent } from './new-client-details/new-client-details.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -11,8 +11,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { Client } from '../../models/client';
-import { ClientHttpService } from '../../services/client-http.service';
+import { Client } from '../../../../models/client';
+import { ClientHttpService } from '../../../../services/client-http.service';
 
 @Component({
   selector: 'app-add-client',

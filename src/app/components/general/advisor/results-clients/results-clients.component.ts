@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { CounsellorService } from '../../simple/Services/counsellor.service';
 import { OneClientComponent } from '../one-client/one-client.component';
 import { AddClientComponent } from '../add-client/add-client.component';
 import { MatDialog } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import { CounsellorService } from '../../../../services/old-services/counsellor.service';
 
 @Component({
   selector: 'app-results-clients',

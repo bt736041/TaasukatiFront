@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { QuestionComponent } from './question/question.component';
 import { Router } from '@angular/router'
-import { QuestionsService } from '../..//Services/questions.service';
-import { AnswersService } from '../..//Services/answers.service';
-import { NavbarService } from '../../../services/navbar.service';
+import { AnswersService } from '../../../../services/old-services/answers.service';
+import { QuestionsService } from '../../../../services/old-services/questions.service';
+import { NavbarService } from '../../../../services/navbar.service';
+
 
 @Component({
   selector: 'app-partTest',

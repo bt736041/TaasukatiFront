@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { AddClientComponent } from './add-client/add-client.component';
 import { Store } from '@ngrx/store';
-import { Advisor } from '../models/advisor';
-import { selectAdvisor, selectClients, selectLastCreatedClient, selectRegions } from '../store/advisor/advisor.selectors';
+import { Advisor } from '../../../models/advisor';
+import { selectAdvisor, selectClients, selectLastCreatedClient, selectRegions } from '../../../store/advisor/advisor.selectors';
 
 @Component({
   selector: 'app-advisor',

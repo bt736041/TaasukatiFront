@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, ValidationErrors, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AuthActions } from '../../store/auth/auth.actions';
+import { AuthActions } from '../../../../store/auth/auth.actions';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,8 +10,8 @@ import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { Actions, ofType } from '@ngrx/effects';
 import { take } from 'rxjs';
-import { LoginRequest } from '../../models/auth';
-import { NavbarService } from '../../services/navbar.service';
+import { LoginRequest } from '../../../../models/auth';
+import { NavbarService } from '../../../../services/navbar.service';
 
 
 @Component({

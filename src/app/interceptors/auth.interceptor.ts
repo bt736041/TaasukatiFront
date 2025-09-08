@@ -3,7 +3,6 @@ import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectAccessToken } from '../store/auth/auth.selectors';
 import { take, mergeMap } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const store = inject(Store);

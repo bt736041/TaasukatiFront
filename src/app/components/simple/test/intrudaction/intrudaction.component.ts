@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { QuestionsService } from '../../Services/questions.service'
 import { Router } from '@angular/router'
 import { HttpClient } from '@angular/common/http';
+import { QuestionsService } from '../../../../services/old-services/questions.service';
 
 
 

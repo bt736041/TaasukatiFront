@@ -1,17 +1,17 @@
 import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core';
 import { Router, RouterModule, RouterLink, RouterOutlet } from '@angular/router';
-import { NavbarService } from './services/navbar.service';
+import { NavbarService } from '.././services/navbar.service';
 import { filter, Subscription, take, tap } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { LoginComponent } from './login/login.component';
-import { Button, NavBar } from './models/nabar';
+import { LoginComponent } from './general/login/login.component';
+import { Button, NavBar } from '.././models/nabar';
 import { select, Store } from '@ngrx/store';
-import { AuthActions } from './store/auth/auth.actions';
-import { selectIsAuthenticated } from './store/auth/auth.selectors';
+import { AuthActions } from '.././store/auth/auth.actions';
+import { selectIsAuthenticated } from '.././store/auth/auth.selectors';
 
 
 
