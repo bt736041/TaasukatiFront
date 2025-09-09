@@ -1,0 +1,19 @@
+<div class="flex flex-col gap-2 p-2 h-[60vh] overflow-auto" cdkScrollable [appAutoScrollBottom]="messages$ | async">
+    @for (msg of (messages$ |async); track track($index, msg)) {
+    <app-chat-message [message]="msg.message" [isUser]="msg.sender=='client'"
+        [clarification]="!!msg.clarification"></app-chat-message>
+    }
+</div>
+@if (completeMassage.trim().length){
+<p [innerText]="completeMassage"></p>
+}
+@if (loading$|async) {
+<span
+    class="inline-block h-6 w-6 animate-spin rounded-full border-2 border-current border-t-transparent align-[-0.125em]"
+    role="status" aria-label="Loading"></span>
+}
+
+@if (error$|async) {
+  <div [innerText]="error$" role="alert" class="mt-2 rounded-lg border border-red-300 bg-red-50 p-2 text-red-700"> </div>
+}
+<app-chat-input [disabled]="disabled" (sendMessage)="onSendMessage($event)"></app-chat-input>

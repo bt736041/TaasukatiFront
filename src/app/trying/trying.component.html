@@ -1,4 +1,4 @@
-<div class="table-container">
+<!-- <div class="table-container">
   <h2 class="table-title">תוצאות המבחן</h2>
   <table>
     <thead>
@@ -48,4 +48,45 @@
       </tr>
     </tfoot>
   </table>
+</div> -->
+<app-start-part-page></app-start-part-page>
+<div class="flex flex-col h-screen max-w-xl mx-auto border rounded-2xl shadow-lg overflow-hidden bg-white">
+  <!-- חלון הודעות -->
+  <div class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+    <!-- הודעת משתמש -->
+    <div class="max-w-[75%] ml-auto bg-blue-100 text-right p-3 rounded-xl shadow">
+      שלום, אני רוצה ייעוץ בבחירת מקצוע
+    </div>
+
+    <!-- הודעת מערכת -->
+    <div class="max-w-[75%] mr-auto bg-gray-200 text-left p-3 rounded-xl shadow">
+      כמובן! אשמח לעזור. במה את מתעניינת?
+    </div>
+
+    <!-- הודעת משתמש -->
+    <div class="max-w-[75%] ml-auto bg-blue-100 text-right p-3 rounded-xl shadow">
+      אני אוהבת לעבוד עם אנשים ולעזור להם
+    </div>
+
+    <!-- הודעת מערכת -->
+    <div class="max-w-[75%] mr-auto bg-gray-200 text-left p-3 rounded-xl shadow">
+      נשמע מעולה. תחום הייעוץ וההנחיה יכול להתאים לך.
+    </div>
+  </div>
+
+  <!-- תיבת קלט -->
+  <div class="border-t p-3 bg-white">
+    <div class="flex gap-2 items-center">
+      <input
+        type="text"
+        placeholder="הקלד הודעה..."
+        class="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring focus:border-blue-400"
+      />
+      <button
+        class="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition"
+      >
+        שלח
+      </button>
+    </div>
+  </div>
 </div>

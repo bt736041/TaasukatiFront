@@ -9,11 +9,13 @@ export const selectClient = createSelector(
     selectClientState,
     (state: clientState) => state.client
 );
-export const selectCategories = createSelector(
-    selectClientState,
-    (state: clientState) => state.categories
-);
+
 export const selectClientError = createSelector(
     selectClientState,
     (state: clientState) => state.error
+);
+
+export const selectClientTestId = createSelector(
+    selectClientState,
+    (state: clientState) => state.client?.active_test_id
 );

@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 
-
 export const routes: Routes = [
     {
         path: '',
@@ -27,6 +26,18 @@ export const routes: Routes = [
 
     },
     {
+        path: 'test-ai',
+        loadComponent: () =>
+            import('./components/ai/start-part-page/start-part-page.component').then((m) => m.StartPartPageComponent),
+    },
+    {
+        path: 'open',
+        loadComponent: () =>
+            import('./components/ai/open-questions/open-questions.component').then((m) => m.OpenQuestionsComponent)
+    },
+
+
+    {
         path: 'test',
         loadComponent: () =>
             import('./components/simple/test/test.component').then((m) => m.TestComponent),
@@ -49,11 +60,6 @@ export const routes: Routes = [
         loadComponent: () =>
             import('./components/simple/results/results.component').then((m) => m.ResultsComponent)
     },
-    // {
-    //     path: 'loginAdvisor',
-    //     loadComponent: () =>
-    //         import('./login-advisor/login-advisor.component').then((m) => m.LoginAdvisorComponent),
-    // },
     {
         path: 'advisor',
         loadComponent: () =>
@@ -70,7 +76,6 @@ export const routes: Routes = [
             import('./components/general/login/reset-password/reset-password.component').then((m) => m.ResetPasswordComponent)
     }
 ]
-//  },
 
 
 

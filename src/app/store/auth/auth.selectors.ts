@@ -11,6 +11,6 @@ export const selectAuthError = createSelector(selectAuthFeature, s => s.error);
 export const selectAccessToken = createSelector(selectAuthFeature, s => s.accessToken);
 
 
-export const selectRole = createSelector(selectAuthUser, u => u?.role ?? null);
-export const selectAdvisorId = createSelector(selectAuthUser, u => u?.advisorId ?? null);
-export const selectClientId = createSelector(selectAuthUser, u => u?.clientId ?? null);
+export const selectRole = createSelector(selectAuthUser, u => u?.role ?? undefined);
+export const selectAdvisorId = createSelector(selectAuthUser, u => u?.advisorId ?? undefined);
+export const selectClientId = createSelector(selectAuthUser, u => u?.clientId ?? undefined);
