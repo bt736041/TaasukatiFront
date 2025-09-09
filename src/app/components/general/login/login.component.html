@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>התחברות</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="formGroup" (ngSubmit)="login()">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>שם משתמש</mat-label>
+      <input matInput type="text" id="username" formControlName="username" required placeholder="Enter your username">
+      <mat-error *ngIf="formGroup.get('username')?.invalid && mouseoverLogin">
+        שדה חובה
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>סיסמה</mat-label>
+      <input matInput type="password" id="pwd" formControlName="password" required placeholder="Enter your password">
+      <mat-error *ngIf="formGroup.get('password')?.invalid && mouseoverLogin">
+        שדה חובה
+      </mat-error>
+    </mat-form-field>
+    <button (click)="forgetPass()">שכחת סיסמה?</button>
+    <p [innerHtml]="message"></p>
+  </form>
+  <mat-spinner *ngIf="(loading$ |async)"></mat-spinner>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">ביטול</button>
+  <button mat-raised-button [disabled]="(loading$ | async)" color="primary" type="submit" [disabled]="formGroup.invalid"
+    (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false" (click)="login()">
+    התחבר
+  </button>
+</mat-dialog-actions>

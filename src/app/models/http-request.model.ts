@@ -1,12 +1,13 @@
 import { HttpHeaders } from '@angular/common/http';
 
 export class HttpRequestModel {
-  url: string ='';
-  action: string ='';
+  url: string = '';
+  action: string = '';
   params: object = {};
   body: any = {};
   isText: boolean = false;
   headers: HttpHeaders = {} as HttpHeaders;
+  pathParams: Record<string, string | number | boolean> = {};
 
   constructor(copy?: Partial<HttpRequestModel>) {
     Object.assign(this, copy);
@@ -48,7 +49,24 @@ export class HttpRequestModel {
       .join('&');
   }
 
-  get fullUrl() { return `${this.url}${this.action}`; }
+  private _applyPathParams(url: string): string {
+    if (!this.pathParams || Object.keys(this.pathParams).length === 0) return url;
+
+    const base = url.replace(/\/+$/, '');
+
+    const segments = Object.values(this.pathParams)
+      .map(v => encodeURIComponent(String(v)));
+
+    return `${base}/${segments.join('/')}`;
+  }
+
+
+get fullUrl() {
+  const base = `${this.url}${this.action}`;
+  const normalized = base.replace(/([^:]\/)\/+/g, '$1');
+  return this._applyPathParams(normalized);
+}
+
 
   get fullParams() {
     return this.params;

@@ -4,6 +4,7 @@ import { Client } from '../models/client'
 import { Observable } from 'rxjs';
 import { HttpRequestModel } from '../models/http-request.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,12 +14,22 @@ export class ClientHttpService extends HttpServiceBase {
     return `${this.config.ips.serverUrl}clients/`
   }
 
-  createClient$(client: Client): Observable<Client> {
+  createClient$(client: Client,test_type:string): Observable<Client> {
     
     return this.post$(new HttpRequestModel({
       url: this._serverUrl,
       action: "create",
-      body: client
+      body: client,
+      params:{test_type:test_type}
+        }))
+  }
+
+  getClientsByAdvisor$(advisor_id:number): Observable<Client[]>{
+
+    return this.get$(new HttpRequestModel({
+      url:this._serverUrl,
+      action:"advisor",
+      pathParams:{id:advisor_id}
     }))
   }
 }
