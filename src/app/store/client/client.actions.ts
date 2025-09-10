@@ -1,11 +1,11 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
-import { Category } from "../../models/category";
+import { Client } from "../../models/client";
 
 export const ClientActions = createActionGroup({
     source: 'Client',
     events: {
-        'Client Load': props<{ id:string }>,
-        'Client Load Success': props<{ categories: Array<Category> }>(),
+        'Client Load': emptyProps(),
+        'Client Load Success': props<{ client: Client }>(),
         'Client Load Failure': props<{ message: string }>(),
     }
 })

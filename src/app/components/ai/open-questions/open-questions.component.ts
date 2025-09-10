@@ -18,13 +18,12 @@ export class OpenQuestionsComponent implements OnInit {
   loading$ = this.store.select(selectOpenLoading);
   error$ = this.store.select(selectOpenError);
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.store.dispatch(OpenActions.startOpenFlow())
   }
 
   submitAnswer(message: string) {
     this.store.dispatch(OpenActions.submitOpenAnswer({ userAnswer: message }));
   }
-
 
 }

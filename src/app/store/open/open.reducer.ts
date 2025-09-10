@@ -14,7 +14,7 @@ export const openReducer = createReducer(
         error: null,
         chatHistory: question.question_text ? [...state.chatHistory,
         {
-            sender: 'system',
+            sender: 'system' as const,
             message: question.question_text,
             question_id: question.question_id,
             clarification: false,
@@ -22,14 +22,14 @@ export const openReducer = createReducer(
         }] : state.chatHistory
     })),
     on(OpenActions.startOpenFlowFailure, (state, { message }) => ({ ...state, loading: false, error: message })),
-    on(OpenActions.submitOpenAnswer, (state, { answer }) => ({
+    on(OpenActions.submitOpenAnswer, (state, { userAnswer }) => ({
         ...state,
         loading: true,
         error: null,
         chatHistory: [...state.chatHistory,
         {
-            sender: 'client',
-            message: answer.user_answer,
+            sender: 'client' as const,
+            message: userAnswer,
             question_id: state.currentQuestion?.id,
             clarification: false,
             timestamp: Date.now()

@@ -3,7 +3,7 @@ import { clientState } from "./client.state";
 
 export const CLIENT_FEATURE_KEY = 'client';
 
-const selectClientState = createFeatureSelector<clientState>('clientState');
+export const selectClientState = createFeatureSelector<clientState>(CLIENT_FEATURE_KEY);
 
 export const selectClient = createSelector(
     selectClientState,
