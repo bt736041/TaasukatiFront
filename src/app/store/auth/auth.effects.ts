@@ -1,9 +1,10 @@
 import { inject } from "@angular/core"
 import { LoginService } from "../../services/login.service"
 import { Actions, createEffect, ofType } from "@ngrx/effects"
-import { catchError, exhaustMap, map, mergeMap, of, tap } from "rxjs";
+import { catchError, exhaustMap, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AuthActions } from "./auth.actions";
 import { HttpErrorResponse } from '@angular/common/http';
+import { ClientActions } from "../client/client.actions";
 
 
 export const loginEffect = createEffect(
@@ -12,7 +13,12 @@ export const loginEffect = createEffect(
             ofType(AuthActions.login),
             exhaustMap(({ loginRequest }) =>
                 authService.login$(loginRequest).pipe(
-                    map((loginResponse) => AuthActions.loginSuccess({ loginResponse })),
+                    switchMap((loginResponse) =>
+                        of(
+                            AuthActions.loginSuccess({ loginResponse }),
+                            ClientActions.clientLoad()
+                        )
+                    ),
                     catchError((err: HttpErrorResponse) =>
                         of(AuthActions.loginFailure({
                             message: err.error?.detail ?? err.message ?? 'Login failed'

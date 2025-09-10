@@ -10,19 +10,31 @@ import { authReducer } from './store/auth/auth.reducers';
 import { advisorReducer } from './store/advisor/advisor.reducer';
 import * as AuthEffects from './store/auth/auth.effects';
 import * as AdvisorEffects from './store/advisor/advisor.effects';
+import * as OpenEffects from './store/open/open.effects'
+import * as ClientEffects from './store/client/client.effects'
 import { AUTH_FEATURE_KEY } from './store/auth/auth.selectors';
 import { ADVISOR_FEATURE_KEY } from './store/advisor/advisor.selectors';
+import { OPEN_FEATURE_KEY } from './store/open/open.selectors';
+import { openReducer } from './store/open/open.reducer';
+import { CLIENT_FEATURE_KEY } from './store/client/client.selectors';
+import { clientReducer } from './store/client/client.reducer';
 
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideStore(), 
+    provideStore(),
 
     provideState(AUTH_FEATURE_KEY, authReducer),
     provideEffects(AuthEffects),
 
     provideState(ADVISOR_FEATURE_KEY, advisorReducer),
     provideEffects(AdvisorEffects),
+
+    provideState(OPEN_FEATURE_KEY, openReducer),
+    provideEffects(OpenEffects),
+
+    provideState(CLIENT_FEATURE_KEY, clientReducer),
+    provideEffects(ClientEffects),
 
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
