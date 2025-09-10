@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { ClientHttpService } from '../../services/client-http.service'
 import { AdvisorActions } from './advisor.actions'
 import { catchError, concatMap, map, mergeMap, of } from 'rxjs'
+import { AdvisorService } from '../../services/advisor.service'
 
 export const loadClientsEffect = createEffect(
     (actions$ = inject(Actions), clientService = inject(ClientHttpService)) => {
@@ -33,6 +34,23 @@ export const createClientEffect = createEffect(
                     ]),
                     catchError((error) =>
                         of(AdvisorActions.createClientFailure({ message: error.message })),
+                    ),
+                ),
+            ),
+        );
+    },
+    { functional: true }
+);
+
+export const createAdvisorEffect = createEffect(
+    (actions$ = inject(Actions), advisorService = inject(AdvisorService)) => {
+        return actions$.pipe(
+            ofType(AdvisorActions.createAdvisor),
+            mergeMap(({ advisor }) =>
+                advisorService.createAdvisor$(advisor).pipe(
+                    map((createdAdvisor) => AdvisorActions.createAdvisorSuccess({ advisor: createdAdvisor })),
+                    catchError((error) =>
+                        of(AdvisorActions.createAdvisorFailure({ message: error.message })),
                     ),
                 ),
             ),

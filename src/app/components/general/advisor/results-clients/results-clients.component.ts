@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import { CounsellorService } from '../../../../services/old-services/counsellor.service';
+// import { CounsellorService } from '../../../../services/old-services/counsellor.service';
 
 @Component({
   selector: 'app-results-clients',
@@ -15,11 +15,11 @@ import { CounsellorService } from '../../../../services/old-services/counsellor.
 })
 export class ResultsClientsComponent {
 
-  counsellorService= inject(CounsellorService)
+  // counsellorService= inject(CounsellorService)
 
   readonly dialog = inject(MatDialog)
 
-  users=this.counsellorService.getUsers()
+  // users=this.counsellorService.getUsers()
  
   addClient(){
     this.dialog.open(AddClientComponent)

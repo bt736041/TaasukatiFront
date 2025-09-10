@@ -13,5 +13,13 @@ export const advisorReducer = createReducer(
     on(AdvisorActions.createClientSuccess,(state,{client})=>({
         ...state,
         lastCreatedClient: client
-    }))
-)
+    })),
+    on(AdvisorActions.createAdvisorSuccess,(state,{advisor})=>({
+        ...state,
+        advisor
+    })),
+    on(AdvisorActions.createAdvisorFailure,(state,{message})=>({
+        ...state,
+        error: message
+    })),
+);
