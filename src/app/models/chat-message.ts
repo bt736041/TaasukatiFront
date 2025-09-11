@@ -5,5 +5,5 @@ export interface ChatMessage {
     question_id?: number
     clarification?: boolean;
     timestamp: number;
-
+    follow_up?: boolean;
 }

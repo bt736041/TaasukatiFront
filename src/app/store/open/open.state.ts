@@ -4,7 +4,7 @@ export interface OpenState {
     testId: number | null
     currentQuestion: { id: number; text: string } | null
     chatHistory: ChatMessage[];
-    status: 'idle' | 'waitingAnswer' | 'awaitingClarification' | 'completed';
+    status: 'idle' | 'waitingAnswer' | 'awaitingClarification' | 'processingAnswer' | 'completed';
     loading: boolean;
     error: string | null
 }
