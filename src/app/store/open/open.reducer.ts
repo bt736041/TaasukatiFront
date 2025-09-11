@@ -33,7 +33,8 @@ export const openReducer = createReducer(
             question_id: state.currentQuestion?.id,
             clarification: false,
             timestamp: Date.now()
-        }]
+        }],
+        status:'processingAnswer'
     })),
     on(OpenActions.openAnswerProcessing, (state, { question, error }) => ({
         ...state,
