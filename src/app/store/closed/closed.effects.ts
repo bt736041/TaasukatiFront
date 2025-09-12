@@ -2,7 +2,7 @@ import { inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { CategoriesService } from "../../services/categories.service";
 import { ClosedActions } from "./closed.actions";
-import { catchError, concatMap, filter, map, mergeMap, of, switchMap, withLatestFrom } from "rxjs";
+import { catchError, concatMap, filter, map, mergeMap, of, switchMap, tap, withLatestFrom } from "rxjs";
 import { CloseQuestionService } from "../../services/close-question.service";
 import { Store } from "@ngrx/store";
 import { selectClientTestId } from "../client/client.selectors";
@@ -42,18 +42,26 @@ export const StartClosedFlowEffect = createEffect(
                 store.select(selectCurrentCategoryId)
             ),
             filter(hasIds),
-            mergeMap(([_, testId, categoryId]) =>
-                closedService.getNewQuestion$(testId, categoryId).pipe(
+            mergeMap(([_, testId, categoryId]) => {
+                return closedService.getNewQuestion$(testId, categoryId).pipe(
                     switchMap((question) => {
-                        return of(ClosedActions.startClosedFlowSuccess({ question }));
+                        if (question.status === 'category_completed')
+                            return of(ClosedActions.closedAnswerProcessing({
+                                source: 'closed',
+                                categoryId: categoryId ?? undefined,
+                                closedQuestion: question
+                            }))
+                        else
+                            return of(ClosedActions.startClosedFlowSuccess({ question }));
+
                     }),
-                    catchError((err: HttpErrorResponse) =>
-                        of(ClosedActions.startClosedFlowFailure({
+                    catchError((err: HttpErrorResponse) => {
+                        return of(ClosedActions.startClosedFlowFailure({
                             message: err.error?.detail ?? err.message ?? 'Starting closed flow failed'
                         }))
-                    ),
-                ),
-            ),
+                    }),
+                )
+            }),
         );
     },
     { functional: true }
@@ -69,21 +77,33 @@ export const SubmitClosedAnswerEffect = createEffect(
                 store.select(selectCurrentCategoryId),
                 store.select(selectCurrentQuestion)
             ),
-            filter(([{ userAnswer }, testId, categoryId, currentQuestion]) =>
-                !!testId && !!categoryId && !!currentQuestion?.id
-            ),
+            filter(([{ userAnswer }, testId, categoryId, currentQuestion]) => {
+                return !!testId && !!categoryId && !!currentQuestion?.id;
+            }),
             switchMap(([{ userAnswer }, testId, categoryId, currentQuestion]) => {
                 const isOpen = currentQuestion?.isOpen === true;
                 if (isOpen) {
-                    return openService.postAnswer$({ test_id: testId, question_id: currentQuestion.id, user_answer: userAnswer } as OpenAnswer).pipe(
+                    return openService.postAnswer$({
+                        test_id: testId,
+                        question_id: currentQuestion.id,
+                        user_answer: userAnswer
+                    } as OpenAnswer).pipe(
                         switchMap((question) => {
-                            const base = ClosedActions.closedAnswerProcessing({ source: 'open', categoryId: categoryId ?? undefined, openQuestion: question });
+                            const base = ClosedActions.closedAnswerProcessing({
+                                source: 'open',
+                                categoryId: categoryId ?? undefined,
+                                openQuestion: question
+                            });
+
                             switch (question.status) {
                                 case 'error':
-                                    return [ClosedActions.closedAnswerProcessing({ source: 'open', error: question.clarification_prompt ?? 'Error occurred' })];
+                                    return [ClosedActions.closedAnswerProcessing({
+                                        source: 'open',
+                                        error: question.clarification_prompt ?? 'Error occurred'
+                                    })];
 
                                 case 'analysis_done':
-                                    return [ClosedActions.startClosedFlow()];
+                                    return [base, ClosedActions.startClosedFlow()];
 
                                 case 'question':
                                 case 'clarification':
@@ -91,32 +111,47 @@ export const SubmitClosedAnswerEffect = createEffect(
                                     return [base];
                             }
                         }),
-                        catchError(err => of(ClosedActions.closedAnswerProcessing({ source: 'open', error: err.error?.detail ?? err.message ?? 'Submitting answer failed' })))
-                    )
-                }
-                else {
-                    return closedService.postAnswer$({ test_id: testId, question_id: currentQuestion!.id, answer_text: userAnswer } as CloseAnswer).pipe(
+                        catchError(err => {
+                            return of(ClosedActions.closedAnswerProcessing({
+                                source: 'open',
+                                error: err.error?.detail ?? err.message ?? 'Submitting answer failed'
+                            }));
+                        })
+                    );
+                } else {
+                    return closedService.postAnswer$({
+                        test_id: testId,
+                        question_id: currentQuestion!.id,
+                        answer_text: userAnswer
+                    } as CloseAnswer).pipe(
                         switchMap((question) => {
-                            const base = ClosedActions.closedAnswerProcessing({ source: 'closed', categoryId: categoryId ?? undefined, closedQuestion: question });
+                            const base = ClosedActions.closedAnswerProcessing({
+                                source: 'closed',
+                                categoryId: categoryId ?? undefined,
+                                closedQuestion: question
+                            });
+
                             switch (question.status) {
                                 case 'error':
-                                    return [ClosedActions.closedAnswerProcessing({ source: 'closed', error: question.error_message ?? 'Error occurred' })];
+                                    return [ClosedActions.closedAnswerProcessing({
+                                        source: 'closed',
+                                        error: question.error_message ?? 'Error occurred'
+                                    })];
+
                                 case 'analysis_done':
                                     return [ClosedActions.startClosedFlow()];
+
                                 case 'follow_up':
                                 case 'clarification':
-                                case 'category_completed':
                                 case 'question':
                                 default:
                                     return [base];
                             }
                         })
-                    )
+                    );
                 }
-            }
-
-            )
-        )
+            })
+        );
     },
     { functional: true }
 );

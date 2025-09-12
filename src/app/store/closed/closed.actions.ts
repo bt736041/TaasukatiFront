@@ -19,7 +19,8 @@ export const ClosedActions = createActionGroup({
             closedQuestion?: CloseQuestion;
             openQuestion?: OpenQuestion;
             error?: string;
-        }>()
+        }>(),
+        'Next Category':emptyProps()
     }
 })
 

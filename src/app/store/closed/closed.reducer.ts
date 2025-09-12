@@ -3,18 +3,39 @@ import { initialClosedState } from "./closed.state";
 import { ClosedActions } from "./closed.actions";
 import { ChatMessage } from "../../models/chat-message";
 
+const thankYouMessages = [
+    "תודה רבה על המענה 🙏\n\nנמשיך לשאלה הבאה:",
+    "תודה על התגובה שלך 🙏\n\nהנה שאלה נוספת:",
+    "תודה! 🙏\n\nנעבור לשאלה הבאה:",
+    "תודה שענית 🙏\n\nנמשיך הלאה:",
+    "תודה! 🙏\n\nועכשיו שאלה חדשה:",
+    "תודה על המענה 🙏\n\nבוא נתקדם לשאלה הבאה:",
+    "תודה 🙏\n\nהנה השאלה הבאה:",
+    "תודה על התשובה 🙏\n\nועכשיו לשאלה הבאה:",
+    "תודה 🙏\n\nנמשיך עם השאלה הבאה:"
+];
+
+
+
 export const closedReducer = createReducer(
     initialClosedState,
-    on(ClosedActions.loadCategoriesSuccess, (state, { categories }) => (
-        {
-            ...state,
-            categories: categories
-        })),
+    on(ClosedActions.loadCategoriesSuccess, (state, { categories }) => ({
+        ...state,
+        categories,
+        currentCategoryId: categories.length > 0 ? categories[0].id : null,
+        loading: false,
+        error: null
+    })),
     on(ClosedActions.loadCategoriesFailure, (state, { message }) => (
         {
             ...state,
             error: message
         })),
+    on(ClosedActions.nextCategory, (state => ({
+        ...state,
+        currentCategoryId: state.currentCategoryId! < 3 ? state.currentCategoryId! + 1 : state.currentCategoryId
+    }
+    ))),
     on(ClosedActions.startClosedFlow, (state => (
         {
             ...state,
@@ -30,15 +51,23 @@ export const closedReducer = createReducer(
             chatHistory: [],
             status: 'idle'
         };
+
+        let questionTextToDisplay: string | undefined
+        if (cat.currentQuestion?.isOpen === true) {
+            const randomThankYou = thankYouMessages[Math.floor(Math.random() * thankYouMessages.length)];
+            questionTextToDisplay = `${randomThankYou}\n\n${question.question_text}`;
+        } else {
+            questionTextToDisplay = question.question_text;
+        }
         cat = {
             currentQuestion: {
                 id: question.question_id!,
-                text: question.question_text ?? '',
+                text: questionTextToDisplay ?? '',
                 isOpen: false
             },
             chatHistory: [...cat.chatHistory, {
                 sender: 'system' as const,
-                message: question.question_text,
+                message: questionTextToDisplay,
                 question_id: question.question_id,
                 timestamp: Date.now()
             } as ChatMessage],
@@ -102,21 +131,21 @@ export const closedReducer = createReducer(
 
         if (source === 'closed' && closedQuestion) {
             switch (closedQuestion.status) {
-                case 'question':
-                    currentQuestion =
-                    {
-                        id: closedQuestion.question_id!,
-                        text: closedQuestion.question_text!,
-                        isOpen: false
-                    }
-                    chatHistory = [...chatHistory, {
-                        sender: 'system' as const,
-                        message: closedQuestion.question_text,
-                        question_id: closedQuestion.question_id,
-                        timestamp: Date.now()
-                    } as ChatMessage]
-                    status = 'waitingAnswer'
-                    break
+                // case 'question':
+                //     currentQuestion =
+                //     {
+                //         id: closedQuestion.question_id!,
+                //         text: closed!,
+                //         isOpen: false
+                //     }
+                //     chatHistory = [...chatHistory, {
+                //         sender: 'system' as const,
+                //         message: questionTextToDisplay,
+                //         question_id: closedQuestion.question_id,
+                //         timestamp: Date.now()
+                //     } as ChatMessage]
+                //     status = 'waitingAnswer'
+                //     break
                 case 'clarification':
                     currentQuestion =
                     {
@@ -137,12 +166,12 @@ export const closedReducer = createReducer(
                     currentQuestion =
                     {
                         id: closedQuestion.question_id!,
-                        text: closedQuestion.question_text!,
+                        text: closedQuestion.follow_up_text!,
                         isOpen: true
                     }
                     chatHistory = [...chatHistory, {
                         sender: 'system' as const,
-                        message: closedQuestion.question_text,
+                        message: closedQuestion.follow_up_text,
                         question_id: closedQuestion.question_id,
                         follow_up: true,
                         timestamp: Date.now()
@@ -150,7 +179,10 @@ export const closedReducer = createReducer(
                     status = 'waitingAnswer'
                     break
                 case 'category_completed':
-                    status = 'categoryCompleted'
+                    if (categoryId < 3)
+                        status = 'categoryCompleted'
+                    else
+                        status = 'completed'
                     break
             }
         }
