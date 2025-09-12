@@ -12,5 +12,6 @@ export class ChatMessageComponent {
   @Input() message: string = '';
   @Input() isUser: boolean = false;
   @Input() clarification: boolean = false;
+  @Input() follow_up:boolean = false;
 
 }

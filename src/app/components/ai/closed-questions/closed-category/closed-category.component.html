@@ -1,0 +1,8 @@
+@let status = (status$ |async);
+
+<app-chat-window (sendMessage)="submitAnswer($event)" [messages$]="messages$" [loading$]="loading$"
+    [disabled]="status === 'completed' || status === 'idle' || status === 'processingAnswer' || status === 'categoryCompleted'"
+    [completeMassage]="status === 'completed' ? 'הסתיימו השאלות בשלב זה של המבחן,תודה על המענה!' : status === 'categoryCompleted'?'הסתיימו השאלות בקטגוריה זו, תודה על המענה, כבר עוברים לקטגוריה הבאה ':''"
+    [error$]="error$">>
+
+</app-chat-window>

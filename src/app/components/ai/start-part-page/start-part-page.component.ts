@@ -2,32 +2,27 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TestFlowService } from '../../../services/test-flow.service';
 import { Router } from '@angular/router';
 import { Part } from '../../../models/part';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-start-part-page',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './start-part-page.component.html',
   styleUrl: './start-part-page.component.scss'
 })
-export class StartPartPageComponent implements OnInit {
+export class StartPartPageComponent {
 
   testService = inject(TestFlowService)
   router = inject(Router)
 
-  part: Part = {} as Part
+  part$ = this.testService.currentPart$;
 
-  title: string = ''
-  description: string = ''
-
-  ngOnInit(): void {
-    this.part = this.testService.getCurrentPart()
-    this.title = this.part.title
-    this.description = this.part.description
+  start(part: Part) {
+    this.router.navigate([part.pathToNavigate]).then(() => {
+      this.testService.incrementPart();
+    });
   }
 
-  start() {
-    this.router.navigate([this.part.pathToNavigate])    
-  }
 
 }
 

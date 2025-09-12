@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClosedQuestionsComponent } from './closed-questions.component';
+import { EndTestPageComponent } from './end-test-page.component';
 
-describe('ClosedQuestionsComponent', () => {
-  let component: ClosedQuestionsComponent;
-  let fixture: ComponentFixture<ClosedQuestionsComponent>;
+describe('EndTestPageComponent', () => {
+  let component: EndTestPageComponent;
+  let fixture: ComponentFixture<EndTestPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ClosedQuestionsComponent]
+      imports: [EndTestPageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ClosedQuestionsComponent);
+    fixture = TestBed.createComponent(EndTestPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

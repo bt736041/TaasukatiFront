@@ -35,8 +35,21 @@ export const routes: Routes = [
         loadComponent: () =>
             import('./components/ai/open-questions/open-questions.component').then((m) => m.OpenQuestionsComponent)
     },
-
-
+    {
+        path: 'closed',
+        loadComponent: () =>
+            import('./components/ai/closed-questions/closed-section/closed-section.component').then((m) => m.ClosedSectionComponent)
+    },
+    {
+        path: 'category',
+        loadComponent: () =>
+            import('./components/ai/closed-questions/closed-category/closed-category.component').then((m) => m.ClosedCategoryComponent)
+    },
+    {
+        path: 'end-page',
+        loadComponent: () =>
+            import('./components/ai/end-test-page/end-test-page.component').then((m) => m.EndTestPageComponent)
+    },
     {
         path: 'test',
         loadComponent: () =>
