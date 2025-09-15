@@ -18,6 +18,7 @@
       </mat-error>
     </mat-form-field>
     <button (click)="forgetPass()">שכחת סיסמה?</button>
+    <button (click)="createAdvisor()">יועץ חדש, מעוניין להצטרף?</button>
     <p [innerHtml]="message"></p>
   </form>
   <mat-spinner *ngIf="(loading$ |async)"></mat-spinner>

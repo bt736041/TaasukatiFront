@@ -37,6 +37,11 @@ export const selectCurrentChatHistory = createSelector(
   cat => cat?.chatHistory ?? []
 );
 
+export const selectChatHistoryByCategoryId = (categoryId: number) => createSelector(
+  selectClosedFeature,
+  s => s.byCategory[categoryId]?.chatHistory ?? []
+);
+
 export const selectCurrentClosedStatus = createSelector(
   selectCurrentCategoryState,
   cat => cat?.status ?? 'idle'

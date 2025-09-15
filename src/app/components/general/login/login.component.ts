@@ -15,6 +15,7 @@ import { LoginRequest, Role } from '../../../models/auth';
 import { selectAccessToken, selectAuthError, selectAuthLoading, selectAuthUser, selectIsAuthenticated } from '../../../store/auth/auth.selectors';
 import { AuthActions } from '../../../store/auth/auth.actions';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { CreateAdvisorComponent } from '../advisor/create-advisor/create-advisor.component';
 
 @Component({
   standalone: true,
@@ -55,6 +56,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    debugger
     const { username, password } = this.formGroup.value;
     if (password.length !== 4 && password.length !== 9) {
       this.message = 'אורך סיסמה לא תקין';
@@ -87,5 +89,10 @@ export class LoginComponent implements OnInit {
   forgetPass() {
     this.dialog.open(ForgotPasswordComponent)
 
+  }
+
+  createAdvisor() {
+    this.dialogRef.close();
+    this.dialog.open(CreateAdvisorComponent)
   }
 }

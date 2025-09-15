@@ -18,7 +18,6 @@ export class ConfigurationService {
       this.http.get<IpConfig>(`${path}/ipConfig.json`),
       this.http.get<SettingsConfig>(`${path}/settingsConfig.json`)
     ).pipe(
-      tap(response => console.log(response)),
       tap(response => [this.ips, this.settingConfig] = response),
     ).toPromise();
   }

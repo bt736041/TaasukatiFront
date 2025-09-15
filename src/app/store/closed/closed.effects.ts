@@ -30,7 +30,6 @@ export const loadCategoriesEffect = createEffect(
         );
     },
     { functional: true },
-
 );
 
 export const StartClosedFlowEffect = createEffect(
