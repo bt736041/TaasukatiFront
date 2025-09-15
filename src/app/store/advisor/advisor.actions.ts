@@ -6,6 +6,9 @@ import { Region } from '../../models/region'
 export const AdvisorActions = createActionGroup({
     source: 'Advisor',
     events:{
+        'Advisor Load': emptyProps(),
+        'Advisor Load Success': props<{ advisor: Advisor }>(),
+        'Advisor Load Failure': props<{ message: string }>(),
         'Create Advisor':props<{advisor:Advisor}>(),
         'Create Advisor Success':props<{advisor:Advisor}>(),
         'Create Advisor Failure':props<{message: string}>(),
@@ -18,5 +21,6 @@ export const AdvisorActions = createActionGroup({
         'Regions Load':emptyProps(),
         'Regions Load Success':props<{regions:Array<Region>}>(),
         'Regions Load Failure':props<{message: string}>(),
+
     }
 })

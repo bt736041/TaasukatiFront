@@ -10,12 +10,10 @@ import { ClosedActions } from '../../../../store/closed/closed.actions';
   templateUrl: './closed-section.component.html',
   styleUrl: './closed-section.component.scss'
 })
-export class ClosedSectionComponent implements OnInit {
+export class ClosedSectionComponent {
   testService = inject(TestFlowService)
   store = inject(Store)
 
-  ngOnInit(): void {
-    this.store.dispatch(ClosedActions.loadCategories())
-  }
+ 
 
 }

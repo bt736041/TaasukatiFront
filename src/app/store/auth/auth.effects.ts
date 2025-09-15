@@ -5,6 +5,7 @@ import { catchError, exhaustMap, map, mergeMap, of, switchMap, tap } from "rxjs"
 import { AuthActions } from "./auth.actions";
 import { HttpErrorResponse } from '@angular/common/http';
 import { ClientActions } from "../client/client.actions";
+import { AdvisorActions } from "../advisor/advisor.actions";
 
 
 export const loginEffect = createEffect(
@@ -13,12 +14,16 @@ export const loginEffect = createEffect(
             ofType(AuthActions.login),
             exhaustMap(({ loginRequest }) =>
                 authService.login$(loginRequest).pipe(
-                    switchMap((loginResponse) =>
-                        of(
-                            AuthActions.loginSuccess({ loginResponse }),
-                            ClientActions.clientLoad()
-                        )
-                    ),
+                    switchMap((loginResponse) => {
+                        const loginSuccessAction = AuthActions.loginSuccess({ loginResponse });
+
+                        const additionalAction =
+                            loginResponse.role === 'client'
+                                ? ClientActions.clientLoad()
+                                : AdvisorActions.advisorLoad();
+
+                        return of(loginSuccessAction, additionalAction);
+                    }),
                     catchError((err: HttpErrorResponse) =>
                         of(AuthActions.loginFailure({
                             message: err.error?.detail ?? err.message ?? 'Login failed'

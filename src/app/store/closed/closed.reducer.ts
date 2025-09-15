@@ -4,18 +4,16 @@ import { ClosedActions } from "./closed.actions";
 import { ChatMessage } from "../../models/chat-message";
 
 const thankYouMessages = [
-    "תודה רבה על המענה 🙏\n\nנמשיך לשאלה הבאה:",
-    "תודה על התגובה שלך 🙏\n\nהנה שאלה נוספת:",
-    "תודה! 🙏\n\nנעבור לשאלה הבאה:",
-    "תודה שענית 🙏\n\nנמשיך הלאה:",
-    "תודה! 🙏\n\nועכשיו שאלה חדשה:",
-    "תודה על המענה 🙏\n\nבוא נתקדם לשאלה הבאה:",
-    "תודה 🙏\n\nהנה השאלה הבאה:",
-    "תודה על התשובה 🙏\n\nועכשיו לשאלה הבאה:",
-    "תודה 🙏\n\nנמשיך עם השאלה הבאה:"
+    "תודה רבה על המענה 🙏\nנמשיך לשאלה הבאה:",
+    "תודה על התגובה שלך 🙏\nהנה שאלה נוספת:",
+    "תודה! 🙏\nנעבור לשאלה הבאה:",
+    "תודה שענית 🙏\nנמשיך הלאה:",
+    "תודה! 🙏\nועכשיו שאלה חדשה:",
+    "תודה על המענה 🙏\nבוא נתקדם לשאלה הבאה:",
+    "תודה 🙏\nהנה השאלה הבאה:",
+    "תודה על התשובה 🙏\nועכשיו לשאלה הבאה:",
+    "תודה 🙏\nנמשיך עם השאלה הבאה:"
 ];
-
-
 
 export const closedReducer = createReducer(
     initialClosedState,
@@ -23,7 +21,6 @@ export const closedReducer = createReducer(
         ...state,
         categories,
         currentCategoryId: categories.length > 0 ? categories[0].id : null,
-        loading: false,
         error: null
     })),
     on(ClosedActions.loadCategoriesFailure, (state, { message }) => (
@@ -55,7 +52,7 @@ export const closedReducer = createReducer(
         let questionTextToDisplay: string | undefined
         if (cat.currentQuestion?.isOpen === true) {
             const randomThankYou = thankYouMessages[Math.floor(Math.random() * thankYouMessages.length)];
-            questionTextToDisplay = `${randomThankYou}\n\n${question.question_text}`;
+            questionTextToDisplay = `${randomThankYou}\n${question.question_text}`;
         } else {
             questionTextToDisplay = question.question_text;
         }
@@ -131,21 +128,6 @@ export const closedReducer = createReducer(
 
         if (source === 'closed' && closedQuestion) {
             switch (closedQuestion.status) {
-                // case 'question':
-                //     currentQuestion =
-                //     {
-                //         id: closedQuestion.question_id!,
-                //         text: closed!,
-                //         isOpen: false
-                //     }
-                //     chatHistory = [...chatHistory, {
-                //         sender: 'system' as const,
-                //         message: questionTextToDisplay,
-                //         question_id: closedQuestion.question_id,
-                //         timestamp: Date.now()
-                //     } as ChatMessage]
-                //     status = 'waitingAnswer'
-                //     break
                 case 'clarification':
                     currentQuestion =
                     {
@@ -217,7 +199,7 @@ export const closedReducer = createReducer(
                         clarification: true,
                         timestamp: Date.now()
                     } as ChatMessage]
-                    status = 'waitingAnswer'
+                    status = 'awaitingClarification'
                     break
             }
         }

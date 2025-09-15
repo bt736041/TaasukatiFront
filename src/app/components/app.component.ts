@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core';
 import { Router, RouterModule, RouterLink, RouterOutlet } from '@angular/router';
 import { NavbarService } from '.././services/navbar.service';
-import { filter, Subscription, take, tap } from 'rxjs';
+import { filter, Observable, Subscription, take, tap } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,6 +12,7 @@ import { Button, NavBar } from '.././models/nabar';
 import { select, Store } from '@ngrx/store';
 import { AuthActions } from '.././store/auth/auth.actions';
 import { selectIsAuthenticated } from '.././store/auth/auth.selectors';
+import { Client } from '../models/client';
 
 
 
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit {
   router = inject(Router)
   navbarService = inject(NavbarService)
   store = inject(Store)
+  
 
   buttons: Button[] = []
   dataSubscription: Subscription | undefined;
@@ -73,8 +75,6 @@ export class AppComponent implements OnInit {
   }
 
   scrollToElement() {
-    console.log(this.targetElement);
-
     const element = this.targetElement.nativeElement;
     if (element) {
 

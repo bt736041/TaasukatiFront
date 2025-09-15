@@ -1,3 +1,7 @@
+<h1 [innerText]="part.part"></h1>
+@if(part.part !== part.title){
+<h2 [innerText]="part.title"></h2>}
+
 <div class="flex flex-col gap-2 p-2 h-[60vh] overflow-auto" cdkScrollable [appAutoScrollBottom]="messages$ | async">
     @for (msg of (messages$ |async); track track($index, msg)) {
     <app-chat-message [message]="msg.message" [isUser]="msg.sender=='client'" [clarification]="!!msg.clarification"
@@ -16,4 +20,6 @@
 @if (error$|async) {
 <div [innerText]="error$" role="alert" class="mt-2 rounded-lg border border-red-300 bg-red-50 p-2 text-red-700"> </div>
 }
+@if(showInput){
 <app-chat-input [disabled]="disabled" (sendMessage)="onSendMessage($event)"></app-chat-input>
+}

@@ -14,7 +14,6 @@ export class AdvisorService extends HttpServiceBase {
   }
 
   createAdvisor$(advisor: Advisor): Observable<Advisor> {
-    
     return this.post$(new HttpRequestModel({
       url: this._serverUrl,
       action: "create",

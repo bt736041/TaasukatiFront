@@ -50,6 +50,10 @@ export const routes: Routes = [
         loadComponent: () =>
             import('./components/ai/end-test-page/end-test-page.component').then((m) => m.EndTestPageComponent)
     },
+    { path: 'read-only/:id', 
+        loadComponent:()=>
+            import('./components/ai/chat/read-only-chat/read-only-chat.component').then((m)=>m.ReadOnlyChatComponent)
+     },
     {
         path: 'test',
         loadComponent: () =>

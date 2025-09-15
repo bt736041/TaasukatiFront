@@ -1,10 +1,16 @@
-@let status = (status$ |async);
+<div class="flex h-screen">
+  <app-sidebar></app-sidebar>
 
-<app-chat-window 
-    (sendMessage)="submitAnswer($event)" 
-    [messages$]="messages$" 
-    [loading$]="loading$"
-    [disabled]="status === 'completed' || status === 'idle'"
-    [completeMassage]="status === 'completed' ? 'הסתיימו השאלות בשלב זה של המבחן,תודה על המענה!' : ''"
-    [error$]="error$">
-</app-chat-window>
+  <div class="flex-1">
+    @let status = (status$ | async);
+
+    <app-chat-window 
+      [messages$]="messages$"
+      [loading$]="loading$"
+      [disabled]="status === 'completed' || status === 'idle'"
+      [completeMassage]="status === 'completed' ? 'הסתיימו השאלות בשלב זה של המבחן,תודה על המענה!' : ''"
+      [error$]="error$"
+      (sendMessage)="submitAnswer($event)">
+    </app-chat-window>
+  </div>
+</div>
