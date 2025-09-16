@@ -38,7 +38,6 @@ export class SidebarComponent implements AfterViewInit {
   }
 
   constructor() {
-    debugger
     this.currentPart = this.testFlowService.getCurrentPart();
 
     this.groupedParts$ = this.testFlowService.categories$.pipe(
@@ -85,8 +84,6 @@ export class SidebarComponent implements AfterViewInit {
   }
 
   isDone(part: Part): boolean {
-    console.log(`isDone** id: ${part.id}, status: ${part.status}`);
-
     return part.status === PartStatus.completed;
   }
 

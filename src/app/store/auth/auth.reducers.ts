@@ -13,6 +13,7 @@ export const authReducer = createReducer(
     isAuthenticated: true,
     user: {
       userId: loginResponse.user_id,
+      userName:loginResponse.user_name,
       role: loginResponse.role,
       advisorId: loginResponse.advisor_id ?? null,
       clientId: loginResponse.client_id ?? null,

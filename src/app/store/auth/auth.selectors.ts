@@ -15,4 +15,6 @@ export const selectRole = createSelector(selectAuthUser, u => u?.role ?? undefin
 export const selectAdvisorId = createSelector(selectAuthUser, u => u?.advisorId ?? undefined);
 export const selectClientId = createSelector(selectAuthUser, u => u?.clientId ?? undefined);
 export const selectUserId = createSelector(selectAuthUser, u => u?.userId ?? undefined);
+export const selectUserName = createSelector(selectAuthUser, u => u?.userName ?? undefined);
+
 
