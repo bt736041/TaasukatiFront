@@ -9,7 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-results-clients',
-  imports: [OneClientComponent, RouterModule, MatButtonModule, MatIconModule],
+  imports: [RouterModule, MatButtonModule, MatIconModule],
   templateUrl: './results-clients.component.html',
   styleUrl: './results-clients.component.scss'
 })

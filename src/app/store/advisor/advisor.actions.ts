@@ -12,7 +12,7 @@ export const AdvisorActions = createActionGroup({
         'Create Advisor':props<{advisor:Advisor}>(),
         'Create Advisor Success':props<{advisor:Advisor}>(),
         'Create Advisor Failure':props<{message: string}>(),
-        'Clients Load':props<{id:number}>(),
+        'Clients Load':props<{advisorId:number}>(),
         'Clients Load Success':props<{clients:Array<Client>}>(),
         'Clients Load Failure':props<{message: string}>(),
         'Create Client':props<{client:Client, test_type:string, advisor_id:number}>(),

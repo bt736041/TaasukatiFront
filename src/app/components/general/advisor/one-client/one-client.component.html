@@ -1,7 +1,7 @@
 <mat-card style="margin-top: 2vh;" appearance="outlined">
     <mat-card-header>
-        <mat-card-title [innerText]="user.username"></mat-card-title>
-        <mat-card-subtitle>יש משהו לכתוב כאן?</mat-card-subtitle>
+        <mat-card-title [innerText]="client.first_name"></mat-card-title>
+        <mat-card-subtitle [innerText]="client.email"></mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions align="end">
         <button mat-button style="color: #0c6f74;" (click)="viewResults()">לצפיה בתוצאות המבחן</button>
