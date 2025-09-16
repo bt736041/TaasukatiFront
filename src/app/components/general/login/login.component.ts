@@ -56,7 +56,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    debugger
     const { username, password } = this.formGroup.value;
     if (password.length !== 4 && password.length !== 9) {
       this.message = 'אורך סיסמה לא תקין';
