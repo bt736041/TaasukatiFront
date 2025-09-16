@@ -80,7 +80,6 @@ export class CreateAdvisorComponent {
       type_tests: v.type_tests
     };
     this.store.dispatch(AdvisorActions.createAdvisor({ advisor }))
-
   }
   return() {
     this.dialogRef.close()

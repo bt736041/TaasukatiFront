@@ -7,9 +7,11 @@ import { AdvisorService } from '../../services/advisor.service'
 import { Store } from '@ngrx/store'
 import { selectClientId, selectUserId } from '../auth/auth.selectors'
 import { AuthActions } from '../auth/auth.actions'
+import { RegionService } from '../../services/region.service'
 
 const hasId = <T>(t: [T, number | undefined]): t is [T, number] =>
     t[1] !== undefined;
+
 
 export const loadAdvisorEffect = createEffect(
     (actions$ = inject(Actions), advisorService = inject(AdvisorService), store = inject(Store)) => {
@@ -19,22 +21,29 @@ export const loadAdvisorEffect = createEffect(
             filter(hasId),
             concatMap(([_, id]) =>
                 advisorService.getAdvisorById$(id).pipe(
-                    map((advisor) => AdvisorActions.advisorLoadSuccess({ advisor })),
+                    concatMap((advisor) =>
+                        of(
+                            AdvisorActions.advisorLoadSuccess({ advisor }),
+                            AdvisorActions.clientsLoad({ advisorId: advisor.id!}),
+                            AdvisorActions.regionsLoad()
+                        )
+                    ),
                     catchError((error: { message: string }) =>
                         of(AdvisorActions.advisorLoadFailure({ message: error.message }))),
-                    ),
                 ),
-            );
+            ),
+        );
     },
     { functional: true },
 );
+
 
 export const loadClientsEffect = createEffect(
     (actions$ = inject(Actions), clientService = inject(ClientHttpService)) => {
         return actions$.pipe(
             ofType(AdvisorActions.clientsLoad),
-            concatMap(({ id }) =>
-                clientService.getClientsByAdvisor$(id).pipe(
+            concatMap(({ advisorId }) =>
+                clientService.getClientsByAdvisor$(advisorId).pipe(
                     map((clients) => AdvisorActions.clientsLoadSuccess({ clients })),
                     catchError((error: { message: string }) =>
                         of(AdvisorActions.clientsLoadFailure({ message: error.message })),
@@ -46,6 +55,24 @@ export const loadClientsEffect = createEffect(
     { functional: true },
 );
 
+export const loadRegionsEffect = createEffect(
+    (actions$ = inject(Actions), regionService = inject(RegionService)) => {
+        return actions$.pipe(
+            ofType(AdvisorActions.regionsLoad),
+            mergeMap(() =>
+                regionService.getRegions$().pipe(
+                    map((regions) => AdvisorActions.regionsLoadSuccess({ regions })),
+                    catchError((error: { message: string }) =>
+                        of(AdvisorActions.regionsLoadFailure({ message: error.message })),
+                    ),
+                ),
+            ),
+        );
+    },
+    { functional: true }
+);
+
+
 export const createClientEffect = createEffect(
     (actions$ = inject(Actions), clientService = inject(ClientHttpService)) => {
         return actions$.pipe(
@@ -53,7 +80,7 @@ export const createClientEffect = createEffect(
             mergeMap(({ client, test_type, advisor_id }) =>
                 clientService.createClient$(client, test_type).pipe(
                     mergeMap((createdClient) => [
-                        AdvisorActions.clientsLoad({ id: advisor_id }),
+                        AdvisorActions.clientsLoad({ advisorId: advisor_id }),
                         AdvisorActions.createClientSuccess({ client: createdClient }),
                     ]),
                     catchError((error) =>

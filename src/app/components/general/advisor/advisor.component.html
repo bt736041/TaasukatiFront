@@ -1,3 +1,6 @@
 <!-- <div style="height: 10vw;"></div> -->
 <button (click)="addClient()" >להרשמת נועץ</button>
+@for(client of clients$ | async;track client;){
+<app-one-client [client]="client"></app-one-client>
+}
 <router-outlet></router-outlet>

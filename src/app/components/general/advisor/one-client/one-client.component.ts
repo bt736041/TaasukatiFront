@@ -2,6 +2,7 @@ import { Component, Inject, Input, inject,  } from '@angular/core';
 import { Router } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import { Client } from '../../../../models/client';
 
 @Component({
   selector: 'app-one-client',
@@ -14,11 +15,10 @@ export class OneClientComponent {
 
 router=inject(Router)
 
-@Input() user:any
+@Input() client:Client={} as Client
 
 viewResults(){
-
-this.router.navigate(['one-client-results'],{ queryParams:{ id: this.user.id } })
+this.router.navigate(['one-client-results'],{ queryParams:{ id: this.client.id } })
 
 }
 

@@ -16,7 +16,6 @@ export const loginEffect = createEffect(
                 authService.login$(loginRequest).pipe(
                     switchMap((loginResponse) => {
                         const loginSuccessAction = AuthActions.loginSuccess({ loginResponse });
-
                         const additionalAction =
                             loginResponse.role === 'client'
                                 ? ClientActions.clientLoad()

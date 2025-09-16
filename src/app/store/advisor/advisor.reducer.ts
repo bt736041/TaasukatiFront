@@ -22,7 +22,18 @@ export const advisorReducer = createReducer(
         ...state,
         clients
     })),
-
+    on(AdvisorActions.clientsLoadFailure, (state, { message }) => ({
+        ...state,
+        error: message
+    })),
+    on(AdvisorActions.regionsLoadSuccess, (state, { regions }) => ({
+        ...state,
+        regions
+    })),
+    on(AdvisorActions.regionsLoadFailure, (state, { message }) => ({
+        ...state,
+        error: message
+    })),
     on(AdvisorActions.createClientSuccess, (state, { client }) => ({
         ...state,
         lastCreatedClient: client
