@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClosedQuestionsComponent } from './closed-questions.component';
+import { CreateAdvisorComponent } from './create-advisor.component';
 
-describe('ClosedQuestionsComponent', () => {
-  let component: ClosedQuestionsComponent;
-  let fixture: ComponentFixture<ClosedQuestionsComponent>;
+describe('CreateAdvisorComponent', () => {
+  let component: CreateAdvisorComponent;
+  let fixture: ComponentFixture<CreateAdvisorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ClosedQuestionsComponent]
+      imports: [CreateAdvisorComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ClosedQuestionsComponent);
+    fixture = TestBed.createComponent(CreateAdvisorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

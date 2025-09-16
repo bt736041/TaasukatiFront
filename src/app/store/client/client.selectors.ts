@@ -3,17 +3,19 @@ import { clientState } from "./client.state";
 
 export const CLIENT_FEATURE_KEY = 'client';
 
-const selectClientState = createFeatureSelector<clientState>('clientState');
+export const selectClientState = createFeatureSelector<clientState>(CLIENT_FEATURE_KEY);
 
 export const selectClient = createSelector(
     selectClientState,
     (state: clientState) => state.client
 );
-export const selectCategories = createSelector(
-    selectClientState,
-    (state: clientState) => state.categories
-);
+
 export const selectClientError = createSelector(
     selectClientState,
     (state: clientState) => state.error
+);
+
+export const selectClientTestId = createSelector(
+    selectClientState,
+    (state: clientState) => state.client?.active_test_id
 );

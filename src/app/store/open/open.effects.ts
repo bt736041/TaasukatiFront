@@ -1,16 +1,27 @@
 import { inject } from "@angular/core"
 import { Actions, createEffect, ofType } from "@ngrx/effects"
 import { OpenQuestionService } from "../../services/open-question.service"
-import { catchError, exhaustMap, map, mergeMap, of, switchMap } from "rxjs"
+import { catchError, filter, mergeMap, of, switchMap, tap, withLatestFrom } from "rxjs"
 import { OpenActions } from "./open.actions"
 import { HttpErrorResponse } from "@angular/common/http"
-import { ResultsActions } from "../results/results.actions"
+import { Store } from "@ngrx/store"
+import { selectcurrentQuestionId } from "./open.selectors"
+import { OpenAnswer } from "../../models/open-question"
+import { selectClientTestId } from "../client/client.selectors"
+
+const hasIds = (t: [any, number | undefined, number | undefined]): t is [any, number, number] =>
+    t[1] != null && t[2] != null;
+
+const hasTestId = <T>(t: [T, number | undefined]): t is [T, number] =>
+    t[1] !== undefined;
 
 export const StartOpenFlowEffect = createEffect(
-    (actions$ = inject(Actions), openService = inject(OpenQuestionService)) => {
+    (actions$ = inject(Actions), openService = inject(OpenQuestionService), store = inject(Store)) => {
         return actions$.pipe(
             ofType(OpenActions.startOpenFlow),
-            mergeMap(({ testId }) =>
+            withLatestFrom(store.select(selectClientTestId)),
+            filter(hasTestId),
+            mergeMap(([_, testId]) =>
                 openService.getNewQuestion$(testId).pipe(
                     switchMap((question) => {
                         const base = OpenActions.startOpenFlowSuccess({ question });
@@ -32,11 +43,16 @@ export const StartOpenFlowEffect = createEffect(
 );
 
 export const SubmitOpenAnswerEffect = createEffect(
-    (actions$ = inject(Actions), openService = inject(OpenQuestionService)) => {
+    (actions$ = inject(Actions), openService = inject(OpenQuestionService), store = inject(Store)) => {
         return actions$.pipe(
             ofType(OpenActions.submitOpenAnswer),
-            exhaustMap(({ answer }) =>
-                openService.postAnswer$(answer).pipe(
+            withLatestFrom(
+                store.select(selectClientTestId),
+                store.select(selectcurrentQuestionId)
+            ),
+            filter(hasIds),
+            switchMap(([{ userAnswer }, testId, qId]) =>
+                openService.postAnswer$({ test_id: testId, question_id: qId, user_answer: userAnswer } as OpenAnswer).pipe(
                     switchMap((question) => {
                         const base = OpenActions.openAnswerProcessing({ question });
                         switch (question.status) {
@@ -44,14 +60,13 @@ export const SubmitOpenAnswerEffect = createEffect(
                                 return [OpenActions.openAnswerProcessing({ error: question.clarification_prompt ?? 'Error occurred' })];
 
                             case 'analysis_done':
-                                return [base, OpenActions.startOpenFlow({ testId: answer.test_id })];
+                                return [base, OpenActions.startOpenFlow()];
 
                             case 'question':
                             case 'clarification':
                             default:
                                 return [base];
                         }
-
                     }),
                     catchError(err => of(OpenActions.openAnswerProcessing({ error: err.error?.detail ?? err.message ?? 'Submitting answer failed' })))
                 ),

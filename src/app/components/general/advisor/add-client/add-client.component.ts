@@ -102,8 +102,6 @@ export class AddClientComponent {
       region_id: regionMatch.id
     };
 
-    console.log('OUT payload:', client);
-
     this.clientService.createClient$(client, "ai").subscribe({
       next: r => console.log('OK:', r),
       error: (e) => {

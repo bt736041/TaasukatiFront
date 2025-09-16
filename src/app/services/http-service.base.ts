@@ -26,6 +26,15 @@ export abstract class HttpServiceBase {
     return this.http.delete<T>(httpRequest.fullUrl, { params: { ...httpRequest.fullParams } });
   }
 
+  put$<T = string>(httpRequest: HttpRequestModel): Observable<T> {
+
+    if (httpRequest.isText) { return this._put$(httpRequest); }
+    return this.http.put<T>(httpRequest.fullUrl, httpRequest.body, {
+      headers: httpRequest.headers,
+      params: { ...httpRequest.fullParams }
+    });
+  }
+
   post$<T = string>(httpRequest: HttpRequestModel): Observable<T> {
 
     if (httpRequest.isText) { return this._post$(httpRequest); }
@@ -65,6 +74,10 @@ export abstract class HttpServiceBase {
 
   private _post$(httpRequest: HttpRequestModel): Observable<any> {
     return this.http.post(httpRequest.fullUrl, httpRequest.body, { params: { ...httpRequest.fullParams }, responseType: 'text' });
+  }
+
+  private _put$(httpRequest: HttpRequestModel): Observable<any> {
+    return this.http.put(httpRequest.fullUrl, httpRequest.body, { params: { ...httpRequest.fullParams }, responseType: 'text' });
   }
 
 }

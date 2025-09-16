@@ -24,6 +24,14 @@ export class ClientHttpService extends HttpServiceBase {
         }))
   }
 
+  getClientById$(client_id:number):Observable<Client>{
+    return this.get$(new HttpRequestModel({
+      url:this._serverUrl,
+      action:"id",
+      pathParams:{id:client_id}
+    }))
+  }
+
   getClientsByAdvisor$(advisor_id:number): Observable<Client[]>{
 
     return this.get$(new HttpRequestModel({

@@ -10,6 +10,7 @@ export interface LoginResponse {
   access_token: string;
   token_type: 'bearer';
   user_id: number;
+  user_name:string;
   role: Role;
   advisor_id?: number | null;
   client_id?: number | null;
@@ -25,6 +26,7 @@ export interface RefreshResponse {
 
 export interface AuthUser {
   userId: number;
+  userName:string;
   role: Role;
   advisorId?: number | null;
   clientId?: number | null;

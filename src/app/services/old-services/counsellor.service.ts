@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GenericService } from '../../database/generic.service';
-import {Counsellor,CounsellorDto} from '../../models/counsellor'
+import {Advisor} from '../../models/advisor'
 
 @Injectable({
   providedIn: 'root'
 })
-export class CounsellorService extends GenericService<Counsellor, CounsellorDto> {
+export class CounsellorService <Advisor, CounsellorDto> {
 
   constructor(http:HttpClient) {
-    super(http, 'api/counsellors')
    }
 users=[
   { "id": "123","username": "aliza", "password": "000000000" , "results":[

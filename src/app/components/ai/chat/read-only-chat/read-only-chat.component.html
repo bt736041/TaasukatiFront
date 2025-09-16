@@ -1,0 +1,26 @@
+<div class="p-4">
+  <h2 class="text-xl font-bold mb-4 text-right">
+    צפייה בשלב: {{ partId() }}
+  </h2>
+
+  <div class="text-left mb-4">
+  <button
+    class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-xl shadow"
+    (click)="returnToFlow()"
+  >
+    חזרה לתהליך המבחן
+  </button>
+</div>
+
+
+<app-chat-window
+[part]="part"
+  [showInput]="false"
+  [messages$]="messages$"
+  [disabled]="true"
+  [loading$]="loading$"
+  [completeMassage]="completeMessage"
+  [error$]="error$">
+</app-chat-window>
+
+</div>

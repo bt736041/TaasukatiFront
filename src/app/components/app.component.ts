@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core';
 import { Router, RouterModule, RouterLink, RouterOutlet } from '@angular/router';
 import { NavbarService } from '.././services/navbar.service';
-import { filter, Subscription, take, tap } from 'rxjs';
+import { filter, Observable, Subscription, take, tap } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +11,8 @@ import { LoginComponent } from './general/login/login.component';
 import { Button, NavBar } from '.././models/nabar';
 import { select, Store } from '@ngrx/store';
 import { AuthActions } from '.././store/auth/auth.actions';
-import { selectIsAuthenticated } from '.././store/auth/auth.selectors';
+import { selectIsAuthenticated, selectUserName } from '.././store/auth/auth.selectors';
+import { Client } from '../models/client';
 
 
 
@@ -33,6 +34,8 @@ export class AppComponent implements OnInit {
   navbarService = inject(NavbarService)
   store = inject(Store)
 
+  user_name = this.store.select(selectUserName)
+  
   buttons: Button[] = []
   dataSubscription: Subscription | undefined;
   readonly dialog = inject(MatDialog)
@@ -53,12 +56,10 @@ export class AppComponent implements OnInit {
       })
   }
   onClick(path: string, action?: string): void {
-    if (path)
-      this.navigate(path)
-    if (action)
-      if (action === 'logout') {
-        this.store.dispatch(AuthActions.logout());
-      }
+    if (action && action === 'logout') {
+      this.store.dispatch(AuthActions.logout());
+    }
+    this.navigate(path)
   }
 
   navigate(path: string): void {
@@ -73,8 +74,6 @@ export class AppComponent implements OnInit {
   }
 
   scrollToElement() {
-    console.log(this.targetElement);
-
     const element = this.targetElement.nativeElement;
     if (element) {
 

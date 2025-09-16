@@ -10,4 +10,4 @@ export const selectChatHistory = createSelector(selectOpenFeature, s => s.chatHi
 export const selectOpenStatus = createSelector(selectOpenFeature, s => s.status);
 export const selectOpenLoading = createSelector(selectOpenFeature, s => s.loading);
 export const selectOpenError = createSelector(selectOpenFeature, s => s.error);
-
+export const selectcurrentQuestionId = createSelector(selectOpenFeature, s => s.currentQuestion?.id);
