@@ -99,12 +99,14 @@ export const resetPasswordEffect = createEffect(
             ofType(AuthActions.resetPassword),
             mergeMap(({ token, newPassword }) =>
                 authService.resetPassword$(token, newPassword).pipe(
-                    map(() => AuthActions.resetPasswordSuccess()),
-                    catchError((err: HttpErrorResponse) =>
-                        of(AuthActions.resetPasswordFailure({
+                    map(() => {
+                        return AuthActions.resetPasswordSuccess();
+                    }),
+                    catchError((err: HttpErrorResponse) => {
+                        return of(AuthActions.resetPasswordFailure({
                             message: err.error?.detail ?? err.message ?? 'איפוס נכשל, נסה שוב'
-                        }))
-                    ),
+                        }));
+                    }),
                 )
             )
         );
