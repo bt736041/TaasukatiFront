@@ -76,7 +76,6 @@ export class ResetPasswordComponent {
     return password === confirm ? null : { notSame: true };
   }
 
-
   send(): void {
     this.submitted = true;
     if (this.form.invalid) {
@@ -96,7 +95,6 @@ export class ResetPasswordComponent {
       this.message = 'קישור לא תקין או שפג תוקפו';
       return;
     }
-
 
     this.store.dispatch(AuthActions.resetPassword({
       token: this.token,
@@ -133,7 +131,6 @@ export class ResetPasswordComponent {
     });
 
     this.message = 'הסיסמה אופסה בהצלחה!';
-    setTimeout(() => this.router.navigate(['/login']), 2000);
   }
 
 }

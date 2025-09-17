@@ -10,7 +10,10 @@
     <li><a class="disabled" [innerText]="button.name"></a></li>
     }}
   </ul>
-<span [innerText]="user_name"></span>
+  @let name = user_name |async;
+  @if (name!==undefined ) {
+  <span [innerText]="name"></span>
+  }
 </nav>
 <div style="height: 9vh;"></div>
 
