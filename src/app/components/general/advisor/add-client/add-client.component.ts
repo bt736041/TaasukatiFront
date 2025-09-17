@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output, inject } from '@angular/core';
 import { AbstractControl, ValidatorFn, ValidationErrors, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -13,6 +13,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { Client } from '../../../../models/client';
 import { ClientHttpService } from '../../../../services/client-http.service';
+import { Store } from '@ngrx/store';
+import { AdvisorActions } from '../../../../store/advisor/advisor.actions';
+import { selectAdvisor, selectRegions } from '../../../../store/advisor/advisor.selectors';
+import { combineLatest, take } from 'rxjs';
 
 @Component({
   selector: 'app-add-client',
@@ -35,13 +39,13 @@ export class AddClientComponent {
   router = inject(Router);
   mouseoverLogin: boolean = false;
   formGroup: FormGroup = {} as FormGroup;
-  clients = [{}]
   readonly dialogRef = inject(MatDialogRef<AddClientComponent>)
   readonly dialog = inject(MatDialog)
-  regions = [{ id: 1, name: "מרכז" }, { id: 2, name: "צפון" }, { id: 3, name: "דרום" }]
   todayString = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
   clientService = inject(ClientHttpService)
-  
+  store= inject(Store)
+  regions$ = this.store.select(selectRegions)
+  advisor$ = this.store.select(selectAdvisor)
   constructor(private formBuilder: FormBuilder) { }
 
 
@@ -82,42 +86,35 @@ export class AddClientComponent {
     };
   }
 
-  create() {
-    this.dialogRef.close()
-    const v = this.formGroup.value;
-
-    const regionMatch = this.regions?.find(r => r.name === v.region);
-    if (!regionMatch) { console.error('region not found'); return; }
-
-    const client = {
-      first_name: v.first_name,
-      last_name: v.last_name,
-      email: v.email,
-      phone: v.phone,
-      password: v.password,
-      birth_date: typeof v.birth_date === 'string'
-        ? v.birth_date
-        : (v.birth_date as Date).toISOString().slice(0, 10),
-      advisor_id: 1,
-      region_id: regionMatch.id
-    };
-
-    this.clientService.createClient$(client, "ai").subscribe({
-      next: r => console.log('OK:', r),
-      error: (e) => {
-        console.error('HTTP ERR:', e.status, e.statusText);
-        // ב-FastAPI/Django תקבלי פירוט ב-e.error
-        console.dir(e.error, { depth: null });
+ create() {
+  combineLatest([this.advisor$, this.regions$])
+    .pipe(take(1))
+    .subscribe(([advisor, regions]) => {
+      this.dialogRef.close();
+      const v = this.formGroup.value;
+      const regionMatch = regions.find(r => r.name === v.region);
+      if (!regionMatch) {
+        console.error('region not found');
+        return;
       }
-    });
+      const client: Client = {
+        first_name: v.first_name,
+        last_name: v.last_name,
+        email: v.email,
+        phone: v.phone,
+        password: v.password,
+        birth_date: typeof v.birth_date === 'string'
+          ? v.birth_date
+          : (v.birth_date as Date).toISOString().slice(0, 10),
+        advisor_id: advisor.id ?? 0,
+        region_id: regionMatch.id
+      };
 
-
-
-
-    // this.clients.push(client)
-    this.dialog.open(NewClientDetailsComponent, {
+      this.store.dispatch(AdvisorActions.createClient({ client }));
+        this.dialog.open(NewClientDetailsComponent, {
       data: { username: v.email, password: v.password },
     })
+    });
   }
   return() {
     this.dialogRef.close()

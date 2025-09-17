@@ -25,9 +25,12 @@ export class AdvisorComponent implements OnInit {
   lastCreatedClient$ = this.store.select(selectLastCreatedClient)
   
   ngOnInit(): void {
+    console.log(this.clients$);
+    
   }
 
   addClient() {
+    debugger
     this.dialog.open(AddClientComponent)
   }
 
