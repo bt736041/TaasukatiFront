@@ -50,11 +50,5 @@ export class AdvisorService extends HttpServiceBase {
     }))
   }
 
-   getTestType$(advisor_id:number): Observable<string>{
-    return this.get$(new HttpRequestModel({
-      url:this._serverUrl,
-      action:`get_test_type/${advisor_id}`,
-    }))
-  }
 
 }

@@ -36,8 +36,8 @@ export const getTypeTestEffect = createEffect(
         return actions$.pipe(
             ofType(ClientActions.getTypeTest),
             concatMap(({advisor_id})=>
-                advisorService.getTestType$(advisor_id).pipe(
-                    map((test_type) => ClientActions.getTypeTestSuccess({test_type})),
+                advisorService.getAdvisorById$(advisor_id).pipe(
+                    map((advisor) => ClientActions.getTypeTestSuccess({ test_type: advisor.type_tests})),
                     catchError((error: { message: string }) =>
                         of(ClientActions.getTypeTestFailure({ message: error.message }))),
                 )
