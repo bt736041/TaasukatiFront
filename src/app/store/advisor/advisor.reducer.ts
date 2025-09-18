@@ -46,4 +46,16 @@ export const advisorReducer = createReducer(
         ...state,
         error: message
     })),
+    on(AdvisorActions.createClientFailure, (state, { message }) => ({
+        ...state,
+        error: message
+    })),
+    on(AdvisorActions.updateClientFailure, (state, { message }) => ({
+        ...state,
+        error: message
+    })),
+    on(AdvisorActions.deleteClientFailure, (state, { message }) => ({
+        ...state,
+        error: message
+    })),
 );

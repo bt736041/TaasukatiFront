@@ -17,7 +17,7 @@ getRegions$():Observable<[Region]>{
     
     return this.get$(new HttpRequestModel({
       url: this._serverUrl,
-      action:'get_all'
+      action:''
     }))
   }
 

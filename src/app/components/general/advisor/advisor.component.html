@@ -1,6 +1,26 @@
 <!-- <div style="height: 10vw;"></div> -->
-<button (click)="addClient()" >להרשמת נועץ</button>
-@for(client of clients$ | async;track client;){
-<app-one-client [client]="client"></app-one-client>
+<button mat-fab extended style="margin-top: 3vh;" (click)="addClient()" > <mat-icon style="margin-left: 3vh;">add</mat-icon> הרשמת נועץ </button>
+<!-- @for(client of clients$ | async; track client) {
+  <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+    <app-one-client [client]="client"></app-one-client>
+
+    <button mat-icon-button color="primary" (click)="editClient(client)" aria-label="עריכת נועץ">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+} -->
+
+@for(client of clients$ | async; track client) {
+ <div style="width: 100%;">
+  <app-one-client
+    [client]="client"
+    (edit)="editClient(client)"
+    (remove)="deleteClient($event)">
+  </app-one-client>
+</div>
+
 }
+
+
+
 <router-outlet></router-outlet>

@@ -80,7 +80,7 @@ export const routes: Routes = [
     {
         path: 'advisor',
         loadComponent: () =>
-            import('./components/general/advisor/results-clients/results-clients.component').then((m) => m.ResultsClientsComponent),
+            import('./components/general/advisor/advisor.component').then((m) => m.AdvisorComponent),
     },
     {
         path: 'one-client-results',

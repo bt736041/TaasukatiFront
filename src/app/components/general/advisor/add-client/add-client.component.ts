@@ -17,6 +17,8 @@ import { Store } from '@ngrx/store';
 import { AdvisorActions } from '../../../../store/advisor/advisor.actions';
 import { selectAdvisor, selectRegions } from '../../../../store/advisor/advisor.selectors';
 import { combineLatest, take } from 'rxjs';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-add-client',
@@ -46,22 +48,26 @@ export class AddClientComponent {
   store= inject(Store)
   regions$ = this.store.select(selectRegions)
   advisor$ = this.store.select(selectAdvisor)
-  constructor(private formBuilder: FormBuilder) { }
+constructor(
+  private formBuilder: FormBuilder,
+  @Inject(MAT_DIALOG_DATA) public data: { mode: 'add' | 'edit', client?: Client }
+) { }
 
 
+ngOnInit() {
+  const isEdit = this.data?.mode === 'edit';
+  const c = this.data?.client;
 
-  ngOnInit() {
-
-    this.formGroup = this.formBuilder.group({
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-      password: ['', [Validators.required, Validators.maxLength(9), Validators.minLength(9)]],
-      birth_date: ['', [Validators.required, this.dateInRange()]],
-      region: ['', Validators.required]
-    });
-  }
+  this.formGroup = this.formBuilder.group({
+    first_name: [isEdit ? c?.first_name : '', Validators.required],
+    last_name: [isEdit ? c?.last_name : '', Validators.required],
+    email: [isEdit ? c?.email : '', [Validators.required, Validators.email]],
+    phone: [isEdit ? c?.phone : '', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+    password: [isEdit ? c?.password : '', [Validators.required, Validators.maxLength(9), Validators.minLength(9)]],
+    birth_date: [isEdit ? c?.birth_date : '', [Validators.required, this.dateInRange()]],
+    region: [isEdit ? c?.region_id : '', Validators.required]  // שימי לב אם צריך התאמה לפי שם/ID
+  });
+}
 
   emailValidator(control: FormControl) {
     if (
@@ -85,6 +91,15 @@ export class AddClientComponent {
       return null;
     };
   }
+
+submit() {
+  if (this.data.mode === 'edit') {
+    this.update();
+  } else {
+    this.create();
+  }
+}
+
 
  create() {
   combineLatest([this.advisor$, this.regions$])
@@ -116,6 +131,37 @@ export class AddClientComponent {
     })
     });
   }
+
+update() {
+  combineLatest([this.advisor$, this.regions$])
+    .pipe(take(1))
+    .subscribe(([advisor, regions]) => {
+      this.dialogRef.close();
+      const v = this.formGroup.value;
+      const regionMatch = regions.find(r => r.name === v.region);
+      if (!regionMatch) {
+        console.error('region not found');
+        return;
+      }
+
+      const updatedClient: Client = {
+        ...this.data.client,
+        first_name: v.first_name,
+        last_name: v.last_name,
+        email: v.email,
+        phone: v.phone,
+        password: v.password,
+        birth_date: typeof v.birth_date === 'string'
+          ? v.birth_date
+          : (v.birth_date as Date).toISOString().slice(0, 10),
+        advisor_id: advisor.id ?? 0,
+        region_id: regionMatch.id
+      };
+
+      this.store.dispatch(AdvisorActions.updateClient({ client: updatedClient }));
+    });
+}
+
   return() {
     this.dialogRef.close()
   }

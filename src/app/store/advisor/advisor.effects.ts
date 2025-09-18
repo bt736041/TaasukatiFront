@@ -98,6 +98,47 @@ export const createClientEffect = createEffect(
     { functional: true }
 );
 
+export const updateClientEffect = createEffect(
+    (actions$ = inject(Actions), clientService = inject(ClientHttpService),store = inject(Store)
+) => {
+        return actions$.pipe(
+            ofType(AdvisorActions.updateClient),
+                mergeMap(({ client }) =>
+                clientService.updateClient$(client).pipe(
+                    mergeMap((updatedClient) => [
+                        AdvisorActions.clientsLoad({ advisorId: client.advisor_id }),
+                    ]),
+                    catchError((error) =>
+                        of(AdvisorActions.updateClientFailure({ message: error.message })),
+                    ),
+                ),
+            ),
+        );
+    },
+    { functional: true }
+);
+
+export const deleteClientEffect = createEffect(
+    (actions$ = inject(Actions), clientService = inject(ClientHttpService),store = inject(Store)
+) => {
+        return actions$.pipe(
+            ofType(AdvisorActions.deleteClient),
+                withLatestFrom(store.select(selectAdvisor)), 
+                 mergeMap(([{ clientId }, advisor]) =>
+                clientService.deleteClient$(clientId).pipe(
+                    mergeMap(() => [
+                        AdvisorActions.clientsLoad({ advisorId: advisor.id! }),
+                    ]),
+                    catchError((error) =>
+                        of(AdvisorActions.deleteClientFailure({ message: error.message })),
+                    ),
+                ),
+            ),
+        );
+    }
+    , { functional: true }
+);
+
 export const createAdvisorEffect = createEffect(
     (actions$ = inject(Actions), advisorService = inject(AdvisorService)) => {
         return actions$.pipe(
