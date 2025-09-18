@@ -60,7 +60,7 @@
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>אזור מגורים</mat-label>
       <mat-select id="region" formControlName="region" required>
-        <mat-option *ngFor="let r of regions" [value]="r.name">
+        <mat-option *ngFor="let r of regions$ | async" [value]="r.name">
           {{ r.name }}
         </mat-option>
       </mat-select>      <mat-error *ngIf="formGroup.controls['region'].errors | hasErrors: 'region'">

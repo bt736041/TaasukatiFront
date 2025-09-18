@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store'
 import { selectClientId, selectUserId } from '../auth/auth.selectors'
 import { AuthActions } from '../auth/auth.actions'
 import { RegionService } from '../../services/region.service'
+import { selectAdvisor } from './advisor.selectors'
 
 const hasId = <T>(t: [T, number | undefined]): t is [T, number] =>
     t[1] !== undefined;
@@ -74,13 +75,17 @@ export const loadRegionsEffect = createEffect(
 
 
 export const createClientEffect = createEffect(
-    (actions$ = inject(Actions), clientService = inject(ClientHttpService)) => {
+    (actions$ = inject(Actions), clientService = inject(ClientHttpService),store = inject(Store)
+) => {
         return actions$.pipe(
             ofType(AdvisorActions.createClient),
-            mergeMap(({ client, test_type, advisor_id }) =>
-                clientService.createClient$(client, test_type).pipe(
+           withLatestFrom(store.select(selectAdvisor)), 
+              mergeMap(([{ client }, advisor]) =>
+                clientService.createClient$(
+                    {...client,}, advisor.type_tests 
+                ).pipe(
                     mergeMap((createdClient) => [
-                        AdvisorActions.clientsLoad({ advisorId: advisor_id }),
+                        AdvisorActions.clientsLoad({ advisorId: advisor.id! }),
                         AdvisorActions.createClientSuccess({ client: createdClient }),
                     ]),
                     catchError((error) =>

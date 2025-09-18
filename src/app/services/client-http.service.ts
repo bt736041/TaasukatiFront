@@ -40,6 +40,8 @@ export class ClientHttpService extends HttpServiceBase {
       pathParams:{id:advisor_id}
     }))
   }
+
+ 
 }
 
 

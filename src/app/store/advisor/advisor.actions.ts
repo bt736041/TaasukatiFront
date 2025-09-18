@@ -15,7 +15,7 @@ export const AdvisorActions = createActionGroup({
         'Clients Load':props<{advisorId:number}>(),
         'Clients Load Success':props<{clients:Array<Client>}>(),
         'Clients Load Failure':props<{message: string}>(),
-        'Create Client':props<{client:Client, test_type:string, advisor_id:number}>(),
+        'Create Client':props<{client:Client}>(),
         'Create Client Success':props<{client:Client}>(),
         'Create Client Failure':props<{message: string}>(),
         'Regions Load':emptyProps(),
