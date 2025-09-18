@@ -5,7 +5,7 @@ import { filter, Observable, Subscription, take, tap } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common'
+import { CommonModule, ViewportScroller } from '@angular/common'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { LoginComponent } from './general/login/login.component';
 import { Button, NavBar } from '.././models/nabar';
@@ -26,16 +26,15 @@ import { Client } from '../models/client';
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild('about') targetElement!: ElementRef;
-
-  logo_src = 'assets/logo.png'
+  logo_src = 'assets/AIM_logo.jpeg'
   title = 'emptyProject';
   router = inject(Router)
+  viewportScroller = inject(ViewportScroller)
   navbarService = inject(NavbarService)
   store = inject(Store)
 
   user_name = this.store.select(selectUserName)
-  
+
   buttons: Button[] = []
   dataSubscription: Subscription | undefined;
   readonly dialog = inject(MatDialog)
@@ -56,6 +55,19 @@ export class AppComponent implements OnInit {
       })
   }
   onClick(path: string, action?: string): void {
+    if (action && (action == 'about' || action == 'types')) {
+      this.router.navigate(['/home']).then(() => {
+          setTimeout(() => {
+  const el = document.getElementById(action);
+  if (el) {
+    const yOffset = -200; // גובה ה-navbar אם קיים
+    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+}, 300);
+        
+      });
+    }
     if (action && action === 'logout') {
       this.store.dispatch(AuthActions.logout());
     }
@@ -73,12 +85,5 @@ export class AppComponent implements OnInit {
     }
   }
 
-  scrollToElement() {
-    const element = this.targetElement.nativeElement;
-    if (element) {
-
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
 
 }

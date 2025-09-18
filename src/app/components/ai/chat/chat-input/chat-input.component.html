@@ -1,9 +1,16 @@
 <div>
-    <input type="text" [(ngModel)]="message" placeholder="הקלידי תשובה..." (keydown)="onKeydown($event)"
-        (compositionstart)="onCompositionStart()" (compositionend)="onCompositionEnd()"
-        [disabled]="disabled" class="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-    <button (click)="send()" [disabled]="disabled || !message.trim().length"
-        class="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition">
-        שליחה
-    </button>
+   <input
+  type="text"
+  [(ngModel)]="message"
+  placeholder="הקלידי תשובה..."
+  (keydown)="onKeydown($event)"
+  (compositionstart)="onCompositionStart()"
+  (compositionend)="onCompositionEnd()"
+  [disabled]="disabled"
+  class="w-full max-w-xl border border-orangeDark px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-orangeDark mr-2"
+/>
+
+    <app-button [label]="'שליחה'" [disabled]="disabled || !message.trim().length" (click)="send()">
+    </app-button>
+
 </div>

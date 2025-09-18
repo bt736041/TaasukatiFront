@@ -10,6 +10,8 @@ import { Store } from '@ngrx/store';
 import { selectAuthLoading } from '../../../../store/auth/auth.selectors';
 import { Actions, ofType } from '@ngrx/effects';
 import { AuthActions } from '../../../../store/auth/auth.actions';
+import { ButtonComponent } from '../../../base/button/button.component';
+import { SpinnerComponent } from '../../../base/spinner/spinner.component';
 
 @Component({
   selector: 'app-forgot-password',
@@ -18,7 +20,7 @@ import { AuthActions } from '../../../../store/auth/auth.actions';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatProgressSpinnerModule],
+    MatProgressSpinnerModule,ButtonComponent,SpinnerComponent],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'
 })

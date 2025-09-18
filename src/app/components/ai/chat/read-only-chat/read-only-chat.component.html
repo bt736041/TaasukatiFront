@@ -1,16 +1,14 @@
 <div class="p-4">
-  <h2 class="text-xl font-bold mb-4 text-right">
+  <h2 class="text-xl font-bold mb-4 text-right text-orangeDark">
     צפייה בשלב: {{ partId() }}
   </h2>
 
   <div class="text-left mb-4">
-  <button
-    class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-xl shadow"
-    (click)="returnToFlow()"
-  >
-    חזרה לתהליך המבחן
-  </button>
-</div>
+    <app-button
+      [label]="'חזרה לתהליך המבחן'"
+      (click)="returnToFlow()"
+    ></app-button>
+  </div>
 
 
 <app-chat-window

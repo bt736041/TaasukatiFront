@@ -5,10 +5,11 @@ import { Part, PartStatus } from '../../../models/part';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { ClosedActions } from '../../../store/closed/closed.actions';
+import { ButtonComponent } from '../../base/button/button.component';
 
 @Component({
   selector: 'app-start-part-page',
-  imports: [CommonModule],
+  imports: [CommonModule,ButtonComponent],
   templateUrl: './start-part-page.component.html',
   styleUrl: './start-part-page.component.scss'
 })

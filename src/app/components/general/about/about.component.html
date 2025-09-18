@@ -1,9 +1,12 @@
-<div class="about-container">
-      <h1>על החברה שלנו</h1>
-      <img [src]=img_src alt="Company Image" class="company-image"/>
-      <p>ברוכים הבאים לחברתנו, המובילה בתחום הטכנולוגיה.</p>
-      <h2>החזון שלנו</h2>
-      <p>החזון שלנו הוא ליצור עולם שבו טכנולוגיה משפרת את חיי היומיום.</p>
-      <h2>הצוות שלנו</h2>
-      <p>צוות המומחים שלנו כולל אנשי מקצוע מנוסים ומסורים.</p>
+<div class="bg-white rounded-xl shadow-lg p-8 md:p-10 space-y-10">
+  @for (about of about_array; track about) {
+    <div class="space-y-4">
+      <h2 [innerText]="about.title"
+          class="text-xl md:text-2xl font-semibold text-orangeDark border-b border-orangeLight pb-1">
+      </h2>
+      <p [innerText]="about.text"
+         class="text-blueDark leading-relaxed text-base md:text-lg">
+      </p>
     </div>
+  }
+</div>

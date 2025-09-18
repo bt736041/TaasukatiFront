@@ -8,10 +8,11 @@ import { selectChatHistoryByCategoryId, selectClosedCategories } from '../../../
 import { selectChatHistory } from '../../../../store/open/open.selectors';
 import { TestFlowService } from '../../../../services/test-flow.service';
 import { Part } from '../../../../models/part';
+import { ButtonComponent } from '../../../base/button/button.component';
 
 @Component({
   selector: 'app-read-only-chat',
-  imports: [ChatWindowComponent],
+  imports: [ChatWindowComponent, ButtonComponent],
   templateUrl: './read-only-chat.component.html',
   styleUrl: './read-only-chat.component.scss'
 })

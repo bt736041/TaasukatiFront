@@ -7,10 +7,11 @@ import { Store } from '@ngrx/store';
 import { Advisor } from '../../../models/advisor';
 import { selectAdvisor, selectClients, selectLastCreatedClient, selectRegions } from '../../../store/advisor/advisor.selectors';
 import { OneClientComponent } from './one-client/one-client.component';
+import { ButtonComponent } from '../../base/button/button.component';
 
 @Component({
   selector: 'app-advisor',
-  imports: [RouterModule, CommonModule, OneClientComponent],
+  imports: [ButtonComponent,RouterModule, CommonModule, OneClientComponent],
   templateUrl: './advisor.component.html',
   styleUrl: './advisor.component.scss'
 })

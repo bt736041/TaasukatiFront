@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { Client } from '../../../../models/client';
 import { ClientHttpService } from '../../../../services/client-http.service';
+import { ButtonComponent } from '../../../base/button/button.component';
 
 @Component({
   selector: 'app-add-client',
@@ -25,7 +26,8 @@ import { ClientHttpService } from '../../../../services/client-http.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule],
+    MatSelectModule,
+  ButtonComponent],
   templateUrl: './add-client.component.html',
   styleUrl: './add-client.component.scss'
 })

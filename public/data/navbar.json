@@ -9,13 +9,15 @@
             },
             {
                 "name": "אודות",
-                "path": "",
-                "disabled": "false"
+                "path": "/home",
+                "disabled": "false",
+                "action": "about"
             },
             {
-                "name": "נועצות משתפות",
-                "path": "",
-                "disabled": "false"
+                "name": "טיפוסי הולנד",
+                "path": "/home",
+                "disabled": "false",
+                "action": "types"
             }
         ]
     },

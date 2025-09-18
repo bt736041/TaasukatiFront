@@ -16,16 +16,18 @@ import { selectAccessToken, selectAuthError, selectAuthLoading, selectAuthUser, 
 import { AuthActions } from '../../../store/auth/auth.actions';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { CreateAdvisorComponent } from '../advisor/create-advisor/create-advisor.component';
+import { SpinnerComponent } from "../../base/spinner/spinner.component";
+import { ButtonComponent } from '../../base/button/button.component';
 
 @Component({
   standalone: true,
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule,
+  imports: [SpinnerComponent, CommonModule, ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatProgressSpinnerModule],
+    MatProgressSpinnerModule,ButtonComponent ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

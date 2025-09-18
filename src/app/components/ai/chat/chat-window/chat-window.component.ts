@@ -7,12 +7,13 @@ import { Observable, of } from 'rxjs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AutoScrollBottomDirective } from '../../../../directives/auto-scroll-bottom.directive';
 import { TestFlowService } from '../../../../services/test-flow.service';
+import { SpinnerComponent } from '../../../base/spinner/spinner.component';
 
 
 
 @Component({
   selector: 'app-chat-window',
-  imports: [ChatInputComponent, ChatMessageComponent, CommonModule, ScrollingModule, AutoScrollBottomDirective],
+  imports: [SpinnerComponent,ChatInputComponent, ChatMessageComponent, CommonModule, ScrollingModule, AutoScrollBottomDirective],
   templateUrl: './chat-window.component.html',
   styleUrl: './chat-window.component.scss'
 })
@@ -30,7 +31,6 @@ export class ChatWindowComponent {
   @Output() sendMessage: EventEmitter<string> = new EventEmitter<string>();
 
   track = (_: number, m: ChatMessage) => m.timestamp;
-
 
   onSendMessage(message: string) {
     this.sendMessage.emit(message);
