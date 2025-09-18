@@ -1,9 +1,6 @@
-<h2 mat-dialog-title class="!text-2xl !font-bold !text-orangeDark text-center mb-4">הוספת נועץ</h2>
-
-<mat-dialog-content class="p-4 space-y-4 text-right rtl">
+<h2 mat-dialog-title class="!text-2xl !font-bold !text-orangeDark text-center mb-4">{{ data.mode === 'edit' ? 'עריכת נועץ' : 'הוספת נועץ' }} </h2>
+<mat-dialog-content>
   <form [formGroup]="formGroup" (ngSubmit)="create()" class="space-y-4">
-
-    <!-- שם פרטי -->
     <mat-form-field appearance="fill" class="w-full">
       <mat-label>שם פרטי</mat-label>
       <input matInput type="text" id="first_name" formControlName="first_name" required>
@@ -68,7 +65,7 @@
     <mat-form-field appearance="fill" class="w-full">
       <mat-label>אזור מגורים</mat-label>
       <mat-select id="region" formControlName="region" required>
-        <mat-option *ngFor="let r of regions" [value]="r.name">
+        <mat-option *ngFor="let r of regions$ | async" [value]="r.name">
           {{ r.name }}
         </mat-option>
       </mat-select>
@@ -81,14 +78,10 @@
   </form>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end" class="p-4 flex justify-end gap-4">
-  <app-button [label]="'ביטול'" (click)="return()" variant="outline"></app-button>
-
-  <app-button
-    [label]="'הוסף'"
-    [disabled]="formGroup.invalid"
-    (mouseenter)="mouseoverLogin=true"
-    (mouseleave)="mouseoverLogin=false"
-    (click)="create()">
-  </app-button>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="return()">ביטול</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid"
+    (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false" (click)="create()">
+    הוסף
+  </button>
 </mat-dialog-actions>

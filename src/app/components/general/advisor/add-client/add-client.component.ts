@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output, inject } from '@angular/core';
 import { AbstractControl, ValidatorFn, ValidationErrors, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -13,6 +13,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { Client } from '../../../../models/client';
 import { ClientHttpService } from '../../../../services/client-http.service';
+import { Store } from '@ngrx/store';
+import { AdvisorActions } from '../../../../store/advisor/advisor.actions';
+import { selectAdvisor, selectRegions } from '../../../../store/advisor/advisor.selectors';
+import { combineLatest, take } from 'rxjs';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { ButtonComponent } from '../../../base/button/button.component';
 
 @Component({
@@ -37,29 +43,33 @@ export class AddClientComponent {
   router = inject(Router);
   mouseoverLogin: boolean = false;
   formGroup: FormGroup = {} as FormGroup;
-  clients = [{}]
   readonly dialogRef = inject(MatDialogRef<AddClientComponent>)
   readonly dialog = inject(MatDialog)
-  regions = [{ id: 1, name: "מרכז" }, { id: 2, name: "צפון" }, { id: 3, name: "דרום" }]
   todayString = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
   clientService = inject(ClientHttpService)
-  
-  constructor(private formBuilder: FormBuilder) { }
+  store= inject(Store)
+  regions$ = this.store.select(selectRegions)
+  advisor$ = this.store.select(selectAdvisor)
+constructor(
+  private formBuilder: FormBuilder,
+  @Inject(MAT_DIALOG_DATA) public data: { mode: 'add' | 'edit', client?: Client }
+) { }
 
 
+ngOnInit() {
+  const isEdit = this.data?.mode === 'edit';
+  const c = this.data?.client;
 
-  ngOnInit() {
-
-    this.formGroup = this.formBuilder.group({
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-      password: ['', [Validators.required, Validators.maxLength(9), Validators.minLength(9)]],
-      birth_date: ['', [Validators.required, this.dateInRange()]],
-      region: ['', Validators.required]
-    });
-  }
+  this.formGroup = this.formBuilder.group({
+    first_name: [isEdit ? c?.first_name : '', Validators.required],
+    last_name: [isEdit ? c?.last_name : '', Validators.required],
+    email: [isEdit ? c?.email : '', [Validators.required, Validators.email]],
+    phone: [isEdit ? c?.phone : '', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+    password: [isEdit ? c?.password : '', [Validators.required, Validators.maxLength(9), Validators.minLength(9)]],
+    birth_date: [isEdit ? c?.birth_date : '', [Validators.required, this.dateInRange()]],
+    region: [isEdit ? c?.region_id : '', Validators.required]  // שימי לב אם צריך התאמה לפי שם/ID
+  });
+}
 
   emailValidator(control: FormControl) {
     if (
@@ -84,43 +94,76 @@ export class AddClientComponent {
     };
   }
 
-  create() {
-    this.dialogRef.close()
-    const v = this.formGroup.value;
+submit() {
+  if (this.data.mode === 'edit') {
+    this.update();
+  } else {
+    this.create();
+  }
+}
 
-    const regionMatch = this.regions?.find(r => r.name === v.region);
-    if (!regionMatch) { console.error('region not found'); return; }
 
-    const client = {
-      first_name: v.first_name,
-      last_name: v.last_name,
-      email: v.email,
-      phone: v.phone,
-      password: v.password,
-      birth_date: typeof v.birth_date === 'string'
-        ? v.birth_date
-        : (v.birth_date as Date).toISOString().slice(0, 10),
-      advisor_id: 1,
-      region_id: regionMatch.id
-    };
-
-    this.clientService.createClient$(client, "ai").subscribe({
-      next: r => console.log('OK:', r),
-      error: (e) => {
-        console.error('HTTP ERR:', e.status, e.statusText);
-        // ב-FastAPI/Django תקבלי פירוט ב-e.error
-        console.dir(e.error, { depth: null });
+ create() {
+  combineLatest([this.advisor$, this.regions$])
+    .pipe(take(1))
+    .subscribe(([advisor, regions]) => {
+      this.dialogRef.close();
+      const v = this.formGroup.value;
+      const regionMatch = regions.find(r => r.name === v.region);
+      if (!regionMatch) {
+        console.error('region not found');
+        return;
       }
-    });
+      const client: Client = {
+        first_name: v.first_name,
+        last_name: v.last_name,
+        email: v.email,
+        phone: v.phone,
+        password: v.password,
+        birth_date: typeof v.birth_date === 'string'
+          ? v.birth_date
+          : (v.birth_date as Date).toISOString().slice(0, 10),
+        advisor_id: advisor.id ?? 0,
+        region_id: regionMatch.id
+      };
 
-
-
-
-    // this.clients.push(client)
-    this.dialog.open(NewClientDetailsComponent, {
+      this.store.dispatch(AdvisorActions.createClient({ client }));
+        this.dialog.open(NewClientDetailsComponent, {
       data: { username: v.email, password: v.password },
     })
+    });
   }
+
+update() {
+  combineLatest([this.advisor$, this.regions$])
+    .pipe(take(1))
+    .subscribe(([advisor, regions]) => {
+      this.dialogRef.close();
+      const v = this.formGroup.value;
+      const regionMatch = regions.find(r => r.name === v.region);
+      if (!regionMatch) {
+        console.error('region not found');
+        return;
+      }
+
+      const updatedClient: Client = {
+        ...this.data.client,
+        first_name: v.first_name,
+        last_name: v.last_name,
+        email: v.email,
+        phone: v.phone,
+        password: v.password,
+        birth_date: typeof v.birth_date === 'string'
+          ? v.birth_date
+          : (v.birth_date as Date).toISOString().slice(0, 10),
+        advisor_id: advisor.id ?? 0,
+        region_id: regionMatch.id
+      };
+
+      this.store.dispatch(AdvisorActions.updateClient({ client: updatedClient }));
+    });
+}
+
   return() {
     this.dialogRef.close()
   }

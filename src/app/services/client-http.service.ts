@@ -40,6 +40,21 @@ export class ClientHttpService extends HttpServiceBase {
       pathParams:{id:advisor_id}
     }))
   }
+
+  updateClient$(client: Client): Observable<Client> {
+    return this.put$(new HttpRequestModel({
+      url: this._serverUrl,
+      action: `${client.id}`,
+      body: client
+    }))
+  }
+  deleteClient$(id: number): Observable<any> {
+    return this.delete$(new HttpRequestModel({
+      url: this._serverUrl,
+      action: `${id}`
+    }))
+  }
+ 
 }
 
 

@@ -16,5 +16,16 @@ export const clientReducer = createReducer(
     on(ClientActions.clientLoadFailure, (state, { message }) => ({
         ...state, loadingClient: false, error: message
     })
-    )
+    ),
+    on(ClientActions.getTypeTestSuccess, (state, {test_type}) => ({
+        ...state,
+         test_type
+    })),
+    on(ClientActions.getTypeTestFailure, (state, {message}) => ({
+        ...state,
+        error: message
+    })
+    ),
+    
+
 )

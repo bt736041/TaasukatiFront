@@ -1,11 +1,48 @@
-<mat-card style="margin-top: 2vh;" appearance="outlined">
+<!-- <mat-card style="margin-top: 2vh;" appearance="outlined">
     <mat-card-header>
-        <mat-card-title [innerText]="client.first_name"></mat-card-title>
-        <mat-card-subtitle [innerText]="client.email"></mat-card-subtitle>
+        <mat-card-title [innerText]="client.first_name + ' ' + client.last_name " ></mat-card-title>
+        <mat-card-subtitle [innerText]="client.email+ ' '+ client.phone+ ' '+ client.birth_date"></mat-card-subtitle>
+        @if(client.dominant_type_id){
+        <mat-card-subtitle [innerText]="client.dominant_type_id"></mat-card-subtitle>
+        }
+
+
     </mat-card-header>
     <mat-card-actions align="end">
         <button mat-button style="color: #0c6f74;" (click)="viewResults()">לצפיה בתוצאות המבחן</button>
         <button mat-button style="color: #0c6f74;" (click)="set()">עריכה</button>
         <button mat-button style="color: #0c6f74;" (click)="delete()">מחיקה</button>
     </mat-card-actions>
+</mat-card> -->
+
+<mat-card class="client-card">
+  <!-- פרטי נועץ -->
+  <div class="client-info">
+    <span><mat-icon>person</mat-icon> {{ client.first_name }} {{ client.last_name }}</span>
+    <span><mat-icon>phone</mat-icon> {{ client.phone }}</span>
+    <span><mat-icon>email</mat-icon> {{ client.email }}</span>
+    <span><mat-icon>calendar_today</mat-icon> {{ client.birth_date }}</span>
+@if(client.dominant_type_id){
+    <span [innerText]="typeName$ | async ">
+         <mat-icon>label</mat-icon>
+    </span>}
+  </div>
+
+  <!-- כפתורים -->
+  <div class="client-actions">
+    <button mat-button (click)="viewResults()">
+      <mat-icon>bar_chart</mat-icon> תוצאות
+    </button>
+    <button mat-button (click)="set()">
+      <mat-icon>edit</mat-icon> עריכה
+    </button>
+    <button mat-button (click)="delete()">
+      <mat-icon>delete</mat-icon> מחיקה
+    </button>
+  </div>
 </mat-card>
+
+
+
+
+

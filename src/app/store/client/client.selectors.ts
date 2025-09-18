@@ -19,3 +19,8 @@ export const selectClientTestId = createSelector(
     selectClientState,
     (state: clientState) => state.client?.active_test_id
 );
+
+export const selectTypeTest = createSelector(
+    selectClientState,
+    (state: clientState) => state.test_type
+);
