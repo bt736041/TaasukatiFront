@@ -47,7 +47,7 @@ export class LoginService extends HttpServiceBase {
     return this.post$(new HttpRequestModel({
       url: this._serverUrl,
       action: "reset-password",
-      body: { token: token, new_password: newPassword }
+      params: { token: token, new_password: newPassword }
     }))
   }
 }
