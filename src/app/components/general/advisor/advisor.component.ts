@@ -10,6 +10,8 @@ import { OneClientComponent } from './one-client/one-client.component';
 import { ButtonComponent } from '../../base/button/button.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { Client } from '../../../models/client';
+import { AdvisorActions } from '../../../store/advisor/advisor.actions';
 
 
 @Component({
