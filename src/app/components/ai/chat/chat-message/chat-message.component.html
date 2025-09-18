@@ -1,5 +1,26 @@
-<div [innerText]="message" class="p-4 rounded-xl shadow" [ngClass]="{
-    'ml-auto bg-blue-100': isUser,
-    'mr-auto bg-gray-200': !isUser,
-    'border-l-4 border-amber-400': clarification || follow_up
-}"></div>
+<div class="p-4 rounded-md shadow relative max-w-[80%]" [ngClass]="{
+    'ml-auto mr-8 bg-orangeLight text-orangeDark': !isUser,
+    'mr-auto ml-8 bg-gray-100 text-gray-800': isUser,
+    'border border-orangeMedium': clarification || follow_up
+  }">
+
+    <!-- אייקון לפי isUser -->
+    <div class="absolute -top-2 -start-2">
+        <svg *ngIf="isUser" class="w-4 h-4 text-orangeDark" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 10a4 4 0 100-8 4 4 0 000 8zm-7 8a7 7 0 0114 0H3z" />
+        </svg>
+
+        <svg *ngIf="!isUser" class="w-4 h-4 text-blueDark" fill="currentColor" viewBox="0 0 20 20">
+            <path
+                d="M18 10c0 3.866-3.582 7-8 7a8.44 8.44 0 01-3.156-.603L3 17l1.04-2.6A6.94 6.94 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7z" />
+        </svg>
+    </div>
+
+    <!-- טקסט ההודעה -->
+    <div class="whitespace-pre-line">{{ message }}</div>
+
+    <!-- תגית הבהרה / המשך -->
+    <div *ngIf="clarification || follow_up" class="text-xs text-orangeMedium mt-2 font-medium">
+    </div>
+
+</div>

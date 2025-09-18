@@ -1,25 +1,54 @@
-<h1 [innerText]="part.part"></h1>
-@if(part.part !== part.title){
-<h2 [innerText]="part.title"></h2>}
+<!-- עטיפה כללית שגובהה כל המסך פחות ה-navbar -->
+<div class="flex flex-col h-[85vh] max-w-5xl mx-auto px-4 py-6 gap-4">
 
-<div class="flex flex-col gap-2 p-2 h-[60vh] overflow-auto" cdkScrollable [appAutoScrollBottom]="messages$ | async">
-    @for (msg of (messages$ |async); track track($index, msg)) {
-    <app-chat-message [message]="msg.message" [isUser]="msg.sender=='client'" [clarification]="!!msg.clarification"
-        [follow_up]="!!msg.follow_up"></app-chat-message>
+  <!-- כותרות -->
+  <div class="mb-4">
+    <h1 [innerText]="part.part" class="text-2xl font-bold text-orangeDark text-right mb-2"></h1>
+    @if (part.part !== part.title) {
+      <h2 [innerText]="part.title" class="text-lg font-medium text-orangeMedium text-right"></h2>
     }
-</div>
-@if (completeMassage.trim().length){
-<p [innerText]="completeMassage"></p>
-}
-@if (loading$|async) {
-<span
-    class="inline-block h-6 w-6 animate-spin rounded-full border-2 border-current border-t-transparent align-[-0.125em]"
-    role="status" aria-label="Loading"></span>
-}
+  </div>
 
-@if (error$|async) {
-<div [innerText]="error$" role="alert" class="mt-2 rounded-lg border border-red-300 bg-red-50 p-2 text-red-700"> </div>
-}
-@if(showInput){
-<app-chat-input [disabled]="disabled" (sendMessage)="onSendMessage($event)"></app-chat-input>
-}
+  <!-- גוף הצ'אט - לוקח את כל המקום הפנוי שנשאר -->
+  <div class="flex flex-col flex-1 overflow-hidden border rounded-md">
+
+    <!-- הודעות (גוללות בתוך האזור הפנימי) -->
+    <div class="flex-1 overflow-y-auto flex flex-col gap-2 p-2" cdkScrollable [appAutoScrollBottom]="messages$ | async">
+      @for (msg of (messages$ | async); track track($index, msg)) {
+        <app-chat-message
+          [message]="msg.message"
+          [isUser]="msg.sender=='client'"
+          [clarification]="!!msg.clarification"
+          [follow_up]="!!msg.follow_up">
+        </app-chat-message>
+      }
+
+      @if (completeMassage.trim().length) {
+        <p [innerText]="completeMassage"
+          class="bg-orangeLight text-orangeDark p-3 rounded-md shadow text-right border border-orangeMedium">
+        </p>
+      }
+
+      @if (loading$ | async) {
+        <div class="flex justify-center mt-4">
+          <app-spinner size="w-6 h-6"></app-spinner>
+        </div>
+      }
+
+      @if (error$ | async) {
+        <div [innerText]="error$"
+             role="alert"
+             class="mt-2 rounded-lg border border-red-300 bg-red-50 p-2 text-red-700">
+        </div>
+      }
+    </div>
+
+    <!-- שדה הקלט בתחתית -->
+    @if (showInput) {
+      <div class="border-t p-2">
+        <app-chat-input [disabled]="disabled" (sendMessage)="onSendMessage($event)"></app-chat-input>
+      </div>
+    }
+
+  </div>
+</div>

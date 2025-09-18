@@ -19,6 +19,7 @@ import { selectAdvisor, selectRegions } from '../../../../store/advisor/advisor.
 import { combineLatest, take } from 'rxjs';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import { ButtonComponent } from '../../../base/button/button.component';
 
 @Component({
   selector: 'app-add-client',
@@ -31,7 +32,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule],
+    MatSelectModule,
+  ButtonComponent],
   templateUrl: './add-client.component.html',
   styleUrl: './add-client.component.scss'
 })

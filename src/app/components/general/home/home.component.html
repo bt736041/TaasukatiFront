@@ -1,20 +1,35 @@
-<body id="child">
-    <header class="hero">
-        <h1>ברוכה הבאה למבחן התעסוקתי</h1>
-        <p>כאן תמצאי את הדרך שלך להצלחה</p>
+<div class="flex flex-col min-h-screen bg-gray-50">
+
+  <!-- Hero Section -->
+  <div class="flex flex-col-reverse md:flex-row items-center justify-between min-h-[90vh] px-6 md:px-20 py-12 md:py-0">
+    <!-- Text -->
+    <header class="text-center md:text-right md:w-1/2 space-y-6 animate-fade-slide-up">
+      <h1 class="text-4xl md:text-5xl font-bold text-orangeDark">ברוכה הבאה למבחן התעסוקתי</h1>
+      <p class="text-lg text-blueDark">כאן תמצאי את הדרך שלך להצלחה</p>
     </header>
-    
-    <section id="about" class="about">
-        <app-about></app-about>
 
-    </section>
-    <section id="testimonials" class="testimonials">
-        <blockquote>
-            <app-clients-tell></app-clients-tell>
+    <!-- Image -->
+    <div class="md:w-1/2 flex justify-center animate-scale-in mb-10 md:mb-0">
+      <img
+        src="assets/1.jpg"
+        alt="הזדמנות תעסוקתית"
+        class="rounded-3xl shadow-2xl w-full max-w-2xl object-cover"
+      />
+    </div>
+  </div>
 
-        </blockquote>
-    </section>
-    <footer>
-        <p>&copy; חנה זיידל. ייעוץ תעסוקתי</p>
-    </footer>
-</body>
+  <!-- Unified Content Sections -->
+  <section class="py-16 px-6 md:px-20 space-y-16">
+    <div id="about" class="animate-fade-in-up">
+      <app-about></app-about>
+    </div>
+    <div id="types" class="animate-fade-in-up">
+      <app-clients-tell></app-clients-tell>
+    </div>
+  </section>
+
+  <!-- Footer -->
+<footer class="w-full bg-blueDark !bg-[#10222e] text-white text-center !py-6 mt-10">
+    <p class="text-base font-light tracking-wide">&copy; AIM - לעתיד תעסוקתי מדויק</p>
+  </footer>
+</div>

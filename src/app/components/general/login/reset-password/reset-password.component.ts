@@ -12,11 +12,12 @@ import { Actions, ofType } from '@ngrx/effects';
 import { take } from 'rxjs';
 import { LoginRequest } from '../../../../models/auth';
 import { NavbarService } from '../../../../services/navbar.service';
+import { ButtonComponent } from '../../../base/button/button.component';
 
 
 @Component({
   selector: 'app-reset-password',
-  imports: [CommonModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatCardModule, MatInputModule
+  imports: [CommonModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatCardModule, MatInputModule, ButtonComponent
   ],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss'

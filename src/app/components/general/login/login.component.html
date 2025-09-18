@@ -1,32 +1,45 @@
-<h2 mat-dialog-title>התחברות</h2>
+<h2 mat-dialog-title class="!text-2xl !font-bold !text-orangeDark text-center mb-4">התחברות</h2>
 
-<mat-dialog-content>
-  <form [formGroup]="formGroup" (ngSubmit)="login()">
-    <mat-form-field appearance="fill" class="full-width">
+<mat-dialog-content class="p-4 space-y-4">
+  <form [formGroup]="formGroup" (ngSubmit)="login()" class="space-y-4">
+
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>שם משתמש</mat-label>
-      <input matInput type="text" id="username" formControlName="username" required placeholder="Enter your username">
+      <input matInput type="text" id="username" formControlName="username" required placeholder="הכנס שם משתמש">
       <mat-error *ngIf="formGroup.get('username')?.invalid && mouseoverLogin">
         שדה חובה
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>סיסמה</mat-label>
-      <input matInput type="password" id="pwd" formControlName="password" required placeholder="Enter your password">
+      <input matInput type="password" id="pwd" formControlName="password" required placeholder="הכנס סיסמה">
       <mat-error *ngIf="formGroup.get('password')?.invalid && mouseoverLogin">
         שדה חובה
       </mat-error>
     </mat-form-field>
-    <button (click)="forgetPass()">שכחת סיסמה?</button>
-    <button (click)="createAdvisor()">יועץ חדש, מעוניין להצטרף?</button>
-    <p [innerHtml]="message"></p>
+
+    <div class="text-sm text-blueDark flex flex-col gap-1">
+      <button type="button" class="text-orangeDark hover:underline text-right" (click)="forgetPass()">שכחת סיסמה?</button>
+      <button type="button" class="text-orangeDark hover:underline text-right" (click)="createAdvisor()">יועץ חדש? הצטרף כאן</button>
+    </div>
+
+    <p class="text-red-600 text-sm" [innerHtml]="message"></p>
+
+    <div class="flex justify-center pt-2">
+      <app-spinner *ngIf="(loading$ | async)"></app-spinner>
+    </div>
   </form>
-  <mat-spinner *ngIf="(loading$ |async)"></mat-spinner>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onNoClick()">ביטול</button>
-  <button mat-raised-button [disabled]="(loading$ | async)" color="primary" type="submit" [disabled]="formGroup.invalid"
-    (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false" (click)="login()">
-    התחבר
-  </button>
+
+<mat-dialog-actions align="end" class="p-4 flex justify-end gap-4">
+  <app-button [label]="'ביטול'" (click)="onNoClick()" variant="outline"></app-button>
+
+  <app-button
+    [label]="'התחבר'"
+    [disabled]="formGroup.invalid || (loading$ | async)"
+    (mouseenter)="mouseoverLogin=true"
+    (mouseleave)="mouseoverLogin=false"
+    (click)="login()">
+  </app-button>
 </mat-dialog-actions>

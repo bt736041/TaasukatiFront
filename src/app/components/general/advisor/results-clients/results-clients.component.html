@@ -1,10 +1,10 @@
-<button mat-fab extended style="margin-top: 3vh;" (click)="addClient()" >
-          <mat-icon style="margin-left: 3vh;">add</mat-icon>
-          הרשמת נועץ
-        </button>
 
-<!-- @for(user of users;track user;){
-<app-one-client [user]="user"></app-one-client>
-} -->
+<div class="p-4 flex justify-end">
+  <app-button (click)="addClient()" [label]="'הרשמת נועץ'">
+    <mat-icon class="ml-2">add</mat-icon>
+  </app-button>
+</div>
+
+
 
 <router-outlet></router-outlet>

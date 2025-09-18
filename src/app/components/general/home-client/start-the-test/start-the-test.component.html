@@ -1,9 +1,16 @@
+<div class="min-h-[70vh] flex flex-col items-center justify-center px-4 py-10 text-center bg-white rounded-2xl shadow-md space-y-8 max-w-3xl mx-auto">
+    <h2 class="text-orangeDark text-2xl font-bold">לפני שמתחילים...</h2>
 
-<div class="introduction-container">
-    <p [innerText]="explain">
-      המבחן הזה נועד לעזור לך להבין את הכישורים והתחומים שבהם אתה מצטיין. 
-      אנו ממליצים לך לענות על השאלות בכנות ובפתיחות, כדי שנוכל לספק לך את ההמלצות הטובות ביותר.
-    </p>
-    <button (click)="start()">התחל את המבחן</button>
+  <p
+    [innerText]="explain"
+    class="whitespace-pre-line text-lg leading-loose text-gray-700 whitespace-pre-line"
+  >
+  </p>
 
-  </div>
+  <app-button
+    (click)="start()"
+    [label]="'התחל את המבחן'"
+    class="mt-4"
+  ></app-button>
+
+</div>

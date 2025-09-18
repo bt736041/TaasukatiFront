@@ -4,12 +4,13 @@ import { NavbarService } from '../../../../services/navbar.service';
 import { ConfigurationService } from '../../../../services/configuration.service';
 import { Store } from '@ngrx/store';
 import { ClosedActions } from '../../../../store/closed/closed.actions';
+import { ButtonComponent } from '../../../base/button/button.component';
 import { selectTypeTest } from '../../../../store/client/client.selectors';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-start-the-test',
-  imports: [],
+  imports: [ButtonComponent],
   templateUrl: './start-the-test.component.html',
   styleUrl: './start-the-test.component.scss'
 })

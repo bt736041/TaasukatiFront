@@ -1,0 +1,12 @@
+
+<button
+  [disabled]="disabled"
+  [ngClass]="{
+    'bg-orangeDark text-white hover:bg-orangeDark/90 cursor-pointer': !disabled,
+    'bg-orangeMedium text-white opacity-50 cursor-not-allowed': disabled
+  }"
+  class="bg-orangeDark hover:bg-orangeDark/90 !text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
+
+  {{ label }}
+</button>
+

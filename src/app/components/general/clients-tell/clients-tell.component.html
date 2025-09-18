@@ -1,10 +1,16 @@
-<div class="client-showcase">
-      <h1>נועצות משתפות</h1>
-      @for(cust of clients;track cust;){
-      <div class="client">
-        <p [innerText]="cust.sentence"></p>
-        <h3 [innerText]="cust.name"></h3>
-        <div class="rating" [innerText]="cust.rating"></div>
-      </div>
-    }
+<div class="bg-white rounded-xl shadow-lg p-8 md:p-10 space-y-10">
+  <h1 class="text-3xl md:text-4xl font-bold text-center text-blueDark mb-8 border-b-2 border-orangeLight pb-2">
+    טיפוסי הולנד
+  </h1>
+
+  @for(type of types; track type) {
+    <div class="p-6 border-r-4 border-orangeMedium rounded-md bg-gray-50 space-y-3">
+      <p [innerText]="type.description"
+         class="text-blueDark leading-relaxed text-sm md:text-base whitespace-pre-line">
+      </p>
+      <h3 [innerText]="type.name"
+          class="text-orangeDark font-semibold text-lg text-right border-t border-orangeLight pt-2">
+      </h3>
     </div>
+  }
+</div>

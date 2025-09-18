@@ -6,4 +6,5 @@ export interface Part {
   description:string;
   status: PartStatus;
   pathToNavigate:string;
+  icon_src:string
 }

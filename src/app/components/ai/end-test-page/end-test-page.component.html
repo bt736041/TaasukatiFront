@@ -1,13 +1,12 @@
-<div class="bg-white shadow-xl rounded-2xl p-8 max-w-md mx-auto text-center">
-  <h1 class="text-2xl font-bold text-gray-800 mb-4">תודה על ההשתתפות!</h1>
-  <p class="text-gray-600 mb-6">
-    סיימת בהצלחה את המבחן. תודה רבה שלקחת חלק 💙
-  </p>
-  <button
-    (click)="goToResults()"
-    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-xl transition duration-200 shadow-md"
-  >
-    מעבר לתוצאות
-  </button>
-</div>
+<div class="min-h-[calc(100vh-15vh)] flex items-center justify-center bg-orangeLight px-4">
+  <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md text-center">
+    <h1 class="text-3xl font-bold text-orangeDark mb-4">תודה על ההשתתפות!</h1>
+    
+    <p class="text-orangeMedium text-lg mb-6">
+      סיימת בהצלחה את המבחן.<br />
+      תודה רבה שלקחת חלק 🧡
+    </p>
 
+    <app-button (click)="goToResults()" [label]="'מעבר לתוצאות'"></app-button>
+  </div>
+</div>

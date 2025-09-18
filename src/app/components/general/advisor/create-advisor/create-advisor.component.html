@@ -1,68 +1,79 @@
-<h2 mat-dialog-title>יצירת יועץ</h2>
-<mat-dialog-content>
-  <form [formGroup]="formGroup" (ngSubmit)="create()">
-    <mat-form-field appearance="fill" class="full-width">
+<h2 mat-dialog-title class="!text-2xl !font-bold !text-orangeDark text-center mb-4">יצירת יועץ</h2>
+
+<mat-dialog-content class="p-4 space-y-4 text-right rtl">
+  <form [formGroup]="formGroup" (ngSubmit)="create()" class="space-y-4">
+
+    <!-- שם פרטי -->
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>שם פרטי</mat-label>
-      <input matInput type="text" id="first_name" class="formControlLogin" formControlName="first_name" required>
+      <input matInput type="text" id="first_name" formControlName="first_name" required>
       <mat-error *ngIf="formGroup.controls['first_name'].errors | hasErrors: 'first_name'">
         <span *ngFor="let error of [formGroup.controls['first_name'].errors | getError]" [innerText]="error"></span>
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
+    <!-- שם משפחה -->
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>שם משפחה</mat-label>
-      <input matInput type="text" id="last_name" class="formControlLogin" formControlName="last_name" required>
+      <input matInput type="text" id="last_name" formControlName="last_name" required>
       <mat-error *ngIf="formGroup.controls['last_name'].errors | hasErrors: 'last_name'">
         <span *ngFor="let error of [formGroup.controls['last_name'].errors | getError]" [innerText]="error"></span>
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
+    <!-- טלפון -->
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>טלפון</mat-label>
-      <input matInput type="text" id="phone" class="formControlLogin" formControlName="phone" required>
+      <input matInput type="text" id="phone" formControlName="phone" required>
       <mat-error *ngIf="formGroup.controls['phone'].errors | hasErrors: 'phone'">
         <span *ngFor="let error of [formGroup.controls['phone'].errors | getError]" [innerText]="error"></span>
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
+    <!-- אימייל -->
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>אימייל</mat-label>
-      <input matInput type="email" id="email" class="formControlLogin" formControlName="email" required>
+      <input matInput type="email" id="email" formControlName="email" required>
       <mat-error *ngIf="formGroup.controls['email'].errors | hasErrors: 'email'">
         <span *ngFor="let error of [formGroup.controls['email'].errors | getError]" [innerText]="error"></span>
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
+    <!-- סיסמה -->
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>סיסמה</mat-label>
-      <input matInput type="password" id="password" class="formControlLogin" formControlName="password" required>
+      <input matInput type="password" id="password" formControlName="password" required>
       <mat-error *ngIf="formGroup.controls['password'].errors | hasErrors: 'password'">
         <span *ngFor="let error of [formGroup.controls['password'].errors | getError]" [innerText]="error"></span>
       </mat-error>
     </mat-form-field>
 
-
-    <mat-form-field appearance="fill" class="full-width">
+    <!-- סוג מבחנים -->
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>סוג המבחנים</mat-label>
       <mat-select id="type_tests" formControlName="type_tests" required>
         <mat-option *ngFor="let t of types" [value]="t">
-          {{ t}}
+          {{ t }}
         </mat-option>
-      </mat-select>      <mat-error *ngIf="formGroup.controls['type_tests'].errors | hasErrors: 'type_tests'">
+      </mat-select>
+      <mat-error *ngIf="formGroup.controls['type_tests'].errors | hasErrors: 'type_tests'">
         <span *ngFor="let error of [formGroup.controls['type_tests'].errors | getError]" [innerText]="error"></span>
       </mat-error>
     </mat-form-field>
 
-    <p [innerHtml]="message"></p>
+    <p class="text-red-600 text-sm" [innerHtml]="message"></p>
 
   </form>
-
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button (click)="return()">ביטול</button>
-  <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid"
-    (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false" (click)="create()">
-    הוסף
-  </button>
+<mat-dialog-actions align="end" class="p-4 flex justify-end gap-4">
+  <app-button [label]="'ביטול'" (click)="return()" variant="outline"></app-button>
+
+  <app-button
+    [label]="'הוסף'"
+    [disabled]="formGroup.invalid"
+    (mouseenter)="mouseoverLogin=true"
+    (mouseleave)="mouseoverLogin=false"
+    (click)="create()">
+  </app-button>
 </mat-dialog-actions>

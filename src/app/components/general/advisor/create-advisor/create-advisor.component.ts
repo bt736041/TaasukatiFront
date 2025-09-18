@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AdvisorActions } from '../../../../store/advisor/advisor.actions';
+import { ButtonComponent } from '../../../base/button/button.component';
 
 @Component({
   selector: 'app-create-advisor',
@@ -23,7 +24,8 @@ import { AdvisorActions } from '../../../../store/advisor/advisor.actions';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule],
+    MatSelectModule,
+  ButtonComponent],
   templateUrl: './create-advisor.component.html',
   styleUrl: './create-advisor.component.scss'
 })
