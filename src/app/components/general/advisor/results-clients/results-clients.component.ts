@@ -15,11 +15,9 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class ResultsClientsComponent {
 
-  // counsellorService= inject(CounsellorService)
 
   readonly dialog = inject(MatDialog)
 
-  // users=this.counsellorService.getUsers()
  
   addClient(){
     this.dialog.open(AddClientComponent)

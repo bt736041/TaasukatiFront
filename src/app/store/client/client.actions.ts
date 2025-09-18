@@ -9,6 +9,6 @@ export const ClientActions = createActionGroup({
         'Client Load Failure': props<{ message: string }>(),
         'Get Type Test': props<{advisor_id: number}>(),
         'Get Type Test Success': props<{test_type: string}>(),
-        'Get Type Test Failure': props<{message: string}>()
+        'Get Type Test Failure': props<{message: string}>(),
     }
 })

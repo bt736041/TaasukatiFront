@@ -6,6 +6,7 @@ import { AuthActions } from "./auth.actions";
 import { HttpErrorResponse } from '@angular/common/http';
 import { ClientActions } from "../client/client.actions";
 import { AdvisorActions } from "../advisor/advisor.actions";
+import { ResultsActions } from "../results/results.actions";
 
 
 export const loginEffect = createEffect(
@@ -16,12 +17,13 @@ export const loginEffect = createEffect(
                 authService.login$(loginRequest).pipe(
                     switchMap((loginResponse) => {
                         const loginSuccessAction = AuthActions.loginSuccess({ loginResponse });
+                        const loadTypes= ResultsActions.getTypes();
                         const additionalAction =
                             loginResponse.role === 'client'
                                 ? ClientActions.clientLoad()
                                 : AdvisorActions.advisorLoad();
 
-                        return of(loginSuccessAction, additionalAction);
+                        return of(loginSuccessAction, additionalAction, loadTypes);
                     }),
                     catchError((err: HttpErrorResponse) =>
                         of(AuthActions.loginFailure({

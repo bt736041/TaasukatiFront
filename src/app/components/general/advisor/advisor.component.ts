@@ -7,10 +7,13 @@ import { Store } from '@ngrx/store';
 import { Advisor } from '../../../models/advisor';
 import { selectAdvisor, selectClients, selectLastCreatedClient, selectRegions } from '../../../store/advisor/advisor.selectors';
 import { OneClientComponent } from './one-client/one-client.component';
-
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { Client } from '../../../models/client';
+import { AdvisorActions } from '../../../store/advisor/advisor.actions';
 @Component({
   selector: 'app-advisor',
-  imports: [RouterModule, CommonModule, OneClientComponent],
+  imports: [RouterModule, CommonModule, OneClientComponent, MatButtonModule, MatIconModule],
   templateUrl: './advisor.component.html',
   styleUrl: './advisor.component.scss'
 })
@@ -29,11 +32,27 @@ export class AdvisorComponent implements OnInit {
     
   }
 
-  addClient() {
-    debugger
-    this.dialog.open(AddClientComponent)
-  }
+ addClient() {
+  this.dialog.open(AddClientComponent, {
+    width: '500px',
+    data: {
+      mode: 'add'
+    }
+  });
+}
 
+editClient(client: Client) {
+  this.dialog.open(AddClientComponent, {
+    width: '500px',
+    data: {
+      mode: 'edit',
+      client: client
+    }
+  });
+}
+deleteClient(clientId: number) {
+  this.store.dispatch(AdvisorActions.deleteClient({ clientId }));
+}
 
 
 }

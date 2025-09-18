@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>הוספת נועץ</h2>
+<h2 mat-dialog-title>{{ data.mode === 'edit' ? 'עריכת נועץ' : 'הוספת נועץ' }}</h2>
 <mat-dialog-content>
   <form [formGroup]="formGroup" (ngSubmit)="create()">
     <mat-form-field appearance="fill" class="full-width">
@@ -76,8 +76,22 @@
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="return()">ביטול</button>
-  <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid"
-    (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false" (click)="create()">
+
+  <button *ngIf="data.mode === 'add'"
+          mat-raised-button color="primary"
+          type="submit"
+          [disabled]="formGroup.invalid"
+          (mouseenter)="mouseoverLogin=true"
+          (mouseleave)="mouseoverLogin=false"
+          (click)="create()">
     הוסף
+  </button>
+
+  <button *ngIf="data.mode === 'edit'"
+          mat-raised-button color="primary"
+          type="submit"
+          [disabled]="formGroup.invalid"
+          (click)="submit()">
+    שמור שינויים
   </button>
 </mat-dialog-actions>
