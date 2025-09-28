@@ -1,16 +1,21 @@
 
 
-@for(client of clients$ | async; track client) {
- <div style="width: 100%;">
-  <app-one-client
-    [client]="client"
-    (edit)="editClient(client)"
-    (remove)="deleteClient($event)">
-  </app-one-client>
-</div>
+<app-button 
+  [label]="'הרשמת נועץ'"
+  (click)="addClient()"
+ ></app-button>
 
+
+@for (client of clients$ | async; track client) {
+  <div style="width: 100%;">
+    <app-one-client
+      [client]="client"
+      (edit)="editClient(client)"
+      (remove)="deleteClient($event)">
+    </app-one-client>
+  </div>
 }
 
 
 
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->

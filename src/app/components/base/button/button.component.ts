@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-button',
   imports: [CommonModule],
   templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+  styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent {
   @Input() label: string = 'שליחה';
