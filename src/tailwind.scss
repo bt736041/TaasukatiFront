@@ -39,6 +39,56 @@
   .label {
     @apply text-orange-800 text-sm font-medium mb-1;
   }
+   .card-responsive {
+    @apply w-full max-w-full bg-white rounded shadow border border-orange-100 p-4 md:p-5;
+    /* ביטול חיתוך כללי שהיה ב-card-fit */
+    overflow: visible;
+  }
+
+  /* שורה: מונע חיתוך, מאפשר שבירה */
+  .row {
+    @apply flex items-center gap-3 min-w-0; /* חשוב: min-w-0 */
+  }
+
+  /* איקון: לא נחתך, לא מתכווץ */
+  .icon {
+    @apply text-orange-600 text-[20px] leading-none shrink-0;
+  }
+
+  /* טקסט ליד האייקון: שובר שורות, לא נחתך */
+  .text-wrap {
+    @apply min-w-0 whitespace-normal break-words;
+  }
+
+  /* לשדות ארוכים במיוחד (מייל/URL) */
+  .text-wrap-hard {
+    @apply min-w-0 whitespace-normal break-all;
+  }
+
+  /* טקסט שלא גולש מהכרטיס */
+  .break-safe {
+    @apply overflow-hidden break-words;
+  }
+
+  /* במיוחד למייל/מחרוזות ארוכות מאוד */
+  .break-hard {
+    @apply overflow-hidden break-all;
+  }
+
+  /* הכרטיס לא נותן לגלוש */
+  .card-fit {
+    @apply max-w-full overflow-hidden;
+  }
+
+  /* מנקה רקע/צל של כפתור חומרה במקרה של עטיפה כפולה */
+  .btn-clean :where(.mdc-button, button) {
+    @apply bg-transparent shadow-none border-0 !ring-0;
+  }
+
+  /* כפתור עם אייקון בשורה יפה */
+  .btn-inline {
+    @apply inline-flex items-center gap-2;
+  }
 }
 
 @layer utilities {
@@ -187,4 +237,6 @@
   .delay-500 {
     animation-delay: 0.5s;
   }
+
+  
 }

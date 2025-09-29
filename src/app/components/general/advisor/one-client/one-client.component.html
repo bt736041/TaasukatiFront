@@ -1,23 +1,8 @@
-<!-- <mat-card style="margin-top: 2vh;" appearance="outlined">
-    <mat-card-header>
-        <mat-card-title [innerText]="client.first_name + ' ' + client.last_name " ></mat-card-title>
-        <mat-card-subtitle [innerText]="client.email+ ' '+ client.phone+ ' '+ client.birth_date"></mat-card-subtitle>
-        @if(client.dominant_type_id){
-        <mat-card-subtitle [innerText]="client.dominant_type_id"></mat-card-subtitle>
-        }
 
 
-    </mat-card-header>
-    <mat-card-actions align="end">
-        <button mat-button style="color: #0c6f74;" (click)="viewResults()">לצפיה בתוצאות המבחן</button>
-        <button mat-button style="color: #0c6f74;" (click)="set()">עריכה</button>
-        <button mat-button style="color: #0c6f74;" (click)="delete()">מחיקה</button>
-    </mat-card-actions>
-</mat-card> -->
-
-<mat-card class="client-card">
-  <!-- פרטי נועץ -->
-  <div class="client-info">
+<!-- <mat-card class="client-card">
+  פרטי נועץ -->
+  <!-- <div class="client-info">
     <span><mat-icon>person</mat-icon> {{ client.first_name }} {{ client.last_name }}</span>
     <span><mat-icon>phone</mat-icon> {{ client.phone }}</span>
     <span><mat-icon>email</mat-icon> {{ client.email }}</span>
@@ -28,19 +13,66 @@
     </span>}
   </div>
 
-  <!-- כפתורים -->
-  <div class="client-actions">
-    <button mat-button (click)="viewResults()">
-      <mat-icon>bar_chart</mat-icon> תוצאות
-    </button>
-    <button mat-button (click)="set()">
-      <mat-icon>edit</mat-icon> עריכה
-    </button>
-    <button mat-button (click)="delete()">
-      <mat-icon>delete</mat-icon> מחיקה
-    </button>
+  כפתורים -->
+  <!-- <div class="client-actions">
+  <app-button [label]="'תוצאות'" (click)="viewResults()">
+    <mat-icon>bar_chart</mat-icon></app-button>
+    <app-button [label]="'עריכה'" (click)="set()">
+      <mat-icon>edit</mat-icon></app-button>
+    <app-button [label]="'מחיקה'" (click)="delete()">
+      <mat-icon>delete</mat-icon></app-button>
+      </div>
+</mat-card> -->
+<mat-card class="client-card card-responsive">
+  <div class="mb-3">
+    <div class="title row">
+      <mat-icon fontSet="material-icons-outlined" class="icon">person</mat-icon>
+      <span class="text-wrap">{{ client.first_name }} {{ client.last_name }}</span>
+    </div>
+  </div>
+
+  <div class="client-info grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-800">
+    <span class="row">
+      <mat-icon fontSet="material-icons-outlined" class="icon">phone</mat-icon>
+      <span class="text-wrap">{{ client.phone }}</span>
+    </span>
+
+    <span class="row">
+      <mat-icon fontSet="material-icons-outlined" class="icon">email</mat-icon>
+      <span class="text-wrap-hard">{{ client.email }}</span>
+    </span>
+
+    <span class="row">
+      <mat-icon fontSet="material-icons-outlined" class="icon">calendar_today</mat-icon>
+      <span class="text-wrap">{{ client.birth_date }}</span>
+    </span>
+
+    @if (client.dominant_type_id) {
+      <span class="row">
+        <mat-icon fontSet="material-icons-outlined" class="icon">label</mat-icon>
+        <span class="label text-wrap" [innerText]="typeName$ | async"></span>
+      </span>
+    }
+  </div>
+
+  <div class="client-actions mt-4 flex flex-wrap gap-2">
+    <app-button  [label]="'תוצאות'" (click)="viewResults()">
+      <mat-icon fontSet="material-icons-outlined" class="icon">bar_chart</mat-icon>
+    </app-button>
+
+    <app-button  [label]="'עריכה'" (click)="set()">
+      <mat-icon fontSet="material-icons-outlined" class="icon">edit</mat-icon>
+    </app-button>
+
+    <app-button [label]="'מחיקה'" (click)="delete()">
+      <mat-icon fontSet="material-icons-outlined" class="icon">delete</mat-icon>
+    </app-button>
   </div>
 </mat-card>
+
+
+
+
 
 
 
