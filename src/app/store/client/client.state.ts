@@ -5,6 +5,7 @@ export interface clientState {
     loadingClient: boolean;
     error: string | null;
     test_type: string| null
+    
 }
 
 export const initialState: clientState = {

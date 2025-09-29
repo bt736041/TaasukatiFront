@@ -12,10 +12,11 @@ import { Type } from '../../../../models/types';
 import { AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectTypes } from '../../../../store/results/results.selectors';
+import { ButtonComponent } from '../../../base/button/button.component';
 
 @Component({
   selector: 'app-one-client',
-  imports: [MatCardModule, MatButtonModule, MatIconModule, AsyncPipe],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, AsyncPipe, ButtonComponent],
   templateUrl: './one-client.component.html',
   styleUrl: './one-client.component.scss'
 })
