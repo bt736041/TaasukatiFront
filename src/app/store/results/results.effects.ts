@@ -3,6 +3,7 @@ import { ResultsActions } from "./results.actions";
 import { inject } from "@angular/core";
 import { TypeService } from "../../services/type.service";
 import { catchError, concatMap, map, of } from "rxjs";
+import { AiResultsService } from "../../services/ai-results.service";
 
 export const getTypesEffect = createEffect(
   (actions$ = inject(Actions), typeService = inject(TypeService)) => {
@@ -19,4 +20,26 @@ export const getTypesEffect = createEffect(
     );
   },
   { functional: true }
+);
+
+export const loadProfile = createEffect(
+  (actions$ = inject(Actions), svc = inject(AiResultsService)) => {
+    return actions$.pipe(
+      ofType(ResultsActions.loadProfile),
+      concatMap(({ testId }) =>
+        svc.getProfile$(testId).pipe(
+          map((data) => ResultsActions.loadProfileSuccess({ testId, data })),
+          catchError((err) =>
+            of(
+              ResultsActions.loadProfileFailure({
+                testId,
+                error: err?.error?.detail || "בקשה נכשלה",
+              })
+            )
+          )
+        )
+      )
+    );
+  }
+  ,  { functional: true }
 );

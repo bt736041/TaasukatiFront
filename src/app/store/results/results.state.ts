@@ -1,11 +1,15 @@
-import { Type } from "../../models/types";
+import { AiProfileResponse } from "../../models/ai-profile";
 
-export interface ResultsState {
-    results: any[]; 
-    types: Type[]// Replace 'any' with the actual type of a result if available
+
+
+export interface AiResultsState {
+  entities: Record<number, AiProfileResponse | undefined>;
+  loading: Record<number, boolean | undefined>;
+  error: Record<number, string | undefined>;
 }
 
-export const initialState: ResultsState = {
-    results: [],
-    types: []
+export const initialState: AiResultsState = {
+  entities: {},
+  loading: {},
+  error: {},
 };

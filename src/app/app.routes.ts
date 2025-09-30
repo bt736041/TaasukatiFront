@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
@@ -73,9 +74,9 @@ export const routes: Routes = [
             }]
     },
     {
-        path: 'results',
+        path: 'results/:testId',
         loadComponent: () =>
-            import('./components/simple/results/results.component').then((m) => m.ResultsComponent)
+            import('./components/general/diagnosis-results/diagnosis-results.component').then((m) => m.DiagnosisResultsComponent),
     },
     {
         path: 'advisor',
@@ -93,6 +94,11 @@ export const routes: Routes = [
             import('./components/general/login/reset-password/reset-password.component').then((m) => m.ResetPasswordComponent)
     }
 ]
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
 
 
 

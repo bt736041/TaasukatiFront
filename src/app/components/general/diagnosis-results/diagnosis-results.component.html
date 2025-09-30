@@ -1,0 +1,66 @@
+<section class="container" *ngIf="!loading && !error && data">
+  <h1 class="title">תוצאות האבחון</h1>
+
+  <article class="panel">
+    <h2>תיאור פרופיל</h2>
+    <pre class="profile-text">{{ data?.profile_text }}</pre>
+  </article>
+
+  <article class="panel">
+    <h2>מאפיינים דומיננטיים</h2>
+    <div class="traits">
+      <div class="trait-group">
+        <h3>Types</h3>
+        <ul>
+          <li *ngFor="let t of data.dominant_traits.types">{{ t }}</li>
+        </ul>
+      </div>
+      <div class="trait-group">
+        <h3>Skills</h3>
+        <ul>
+          <li *ngFor="let s of data.dominant_traits.skills">{{ s }}</li>
+        </ul>
+      </div>
+      <div class="trait-group">
+        <h3>Soft Skills</h3>
+        <ul>
+          <li *ngFor="let ss of data.dominant_traits.soft_skills">{{ ss }}</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="panel">
+    <h2>טבלה לפי טיפוסים</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let k of (data.types_table[0] | keyvalue); let first = first">{{ k.key }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of data.types_table">
+            <td *ngFor="let cell of (row | keyvalue)">{{ cell.value }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+
+  <article class="panel">
+    <h2>גרף (פשוט, ללא ספריות)</h2>
+    <div class="graph">
+      <div class="graph-group" *ngFor="let category of (groupedGraph | keyvalue)">
+        <h3>{{ category.key }}</h3>
+        <div class="bar" *ngFor="let g of category.value">
+          <div class="bar-fill" [style.width.%]="widthPercent(g.value)"></div>
+          <div class="bar-label">{{ g.label }} ({{ g.value | number:'1.0-2' }})</div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section *ngIf="loading" class="loading">טוען…</section>
+<section *ngIf="!loading && error" class="error">{{ error }}</section>
