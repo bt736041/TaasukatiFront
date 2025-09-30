@@ -15,6 +15,22 @@ export const resultReducer = createReducer(
         error: message
     })
     ),
-    
+     on(ResultsActions.loadProfile, (state, { testId }) => ({
+    ...state,
+    loading: { ...state.loading, [testId]: true },
+    error: { ...state.error, [testId]: undefined },
+  })),
+  on(ResultsActions.loadProfileSuccess, (state, { testId, data }) => ({
+    ...state,
+    entities: { ...state.entities, [testId]: data },
+    loading: { ...state.loading, [testId]: false },
+    error: { ...state.error, [testId]: undefined },
+  })),
+  on(ResultsActions.loadProfileFailure, (state, { testId, error }) => ({
+    ...state,
+    loading: { ...state.loading, [testId]: false },
+    error: { ...state.error, [testId]: error },
+  }))
 
 )
+

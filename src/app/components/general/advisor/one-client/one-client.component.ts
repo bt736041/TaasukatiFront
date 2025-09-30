@@ -24,7 +24,6 @@ export class OneClientComponent {
 @Output() edit = new EventEmitter<void>();
 @Output() remove = new EventEmitter<number>();
 @Input() client:Client={} as Client
-private typeService = inject(TypeService);
 router=inject(Router)
 readonly dialog = inject(MatDialog)
 private store = inject(Store);
@@ -35,7 +34,7 @@ typeName$: Observable<string> = this.types$.pipe(
 );
 
 viewResults(){
-this.router.navigate(['one-client-results'],{ queryParams:{ id: this.client.id } })
+this.router.navigate(['/results'],{ queryParams:{ testId: this.client.active_test_id } })
 }
 
 set() {
