@@ -8,11 +8,13 @@ import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { authReducer } from './store/auth/auth.reducers';
 import { advisorReducer } from './store/advisor/advisor.reducer';
+import {resultReducer} from './store/results/results.reducer'
 import * as AuthEffects from './store/auth/auth.effects';
 import * as AdvisorEffects from './store/advisor/advisor.effects';
 import * as OpenEffects from './store/open/open.effects'
 import * as closedEffects from './store/closed/closed.effects'
 import * as ClientEffects from './store/client/client.effects'
+import * as resultsEffects from './store/results/results.effects';
 import { AUTH_FEATURE_KEY } from './store/auth/auth.selectors';
 import { ADVISOR_FEATURE_KEY } from './store/advisor/advisor.selectors';
 import { OPEN_FEATURE_KEY } from './store/open/open.selectors';
@@ -21,6 +23,8 @@ import { CLIENT_FEATURE_KEY } from './store/client/client.selectors';
 import { clientReducer } from './store/client/client.reducer';
 import { CLOSED_FEATURE_KEY } from './store/closed/closed.selectors';
 import { closedReducer } from './store/closed/closed.reducer';
+import {AI_RESULT_FEATURE_KEY} from './store/results/results.selectors'
+
 
 
 export const appConfig: ApplicationConfig = {
@@ -41,6 +45,9 @@ export const appConfig: ApplicationConfig = {
 
     provideState(CLIENT_FEATURE_KEY, clientReducer),
     provideEffects(ClientEffects),
+
+    provideState(AI_RESULT_FEATURE_KEY, resultReducer),
+    provideEffects(resultsEffects),
 
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),

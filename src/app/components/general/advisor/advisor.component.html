@@ -1,31 +1,24 @@
 
-<!-- <app-button 
-  [label]="'הרשמת נועץ'"
-  (click)="addClient()"
- ></app-button>
+<div class="flex flex-wrap items-center mb-6 gap-x-2 gap-y-3">
+  <app-button
+    [label]="'הרשמת נועץ'"
+    (click)="addClient()">
+  </app-button>
 
-@for (client of clients$ | async; track client) {
-  <div style="width: 100%;">
-    <app-one-client
-      [client]="client"
-      (edit)="editClient(client)"
-      (remove)="deleteClient($event)">
-    </app-one-client>
-  </div>
-} -->
+  <input
+    type="text"
+    [ngModel]="searchTerm"
+    (ngModelChange)="onSearch($event)"
+    (keyup.enter)="onSearch(searchTerm)"
+    placeholder="חיפוש לקוח..."
+    class="input-primary max-w-xs"
+  />
+</div>
 
-<div class="bg-page min-h-screen p-4 md:p-6">
-  <div class="mx-auto max-w-7xl">
-    <div class="flex justify-end mb-4">
-      <app-button
-        [label]="'הרשמת נועץ'"
-        (click)="addClient()">
-      </app-button>
-    </div>
 
     <!-- כרטיסים יתמלאו בשורות, כל כרטיס מינימום 360–400px, גדלים בחופשיות על מסך רחב -->
     <div class="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(380px,1fr))]">
-      @for (client of clients$ | async; track client) {
+      @for (client of filteredClients$ | async; track client) {
         <app-one-client
           [client]="client"
           (edit)="editClient(client)"
@@ -33,11 +26,7 @@
         </app-one-client>
       }
     </div>
-  </div>
-</div>
+  
 
 
 
-
-
-<!-- <router-outlet></router-outlet> -->

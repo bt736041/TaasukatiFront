@@ -11,7 +11,6 @@ export const ResultsActions = createActionGroup({
         'Load Profile Success': props<{ testId: number; data: AiProfileResponse }>(),
         'Load Profile Failure': props<{ testId: number; error: string }>()
 
-
     }
 })
 

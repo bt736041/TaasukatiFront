@@ -1,4 +1,3 @@
-// Update the import path to the correct location of initialState
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "../results/results.state";
 import { ResultsActions } from "./results.actions";

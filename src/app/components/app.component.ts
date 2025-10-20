@@ -11,8 +11,9 @@ import { LoginComponent } from './general/login/login.component';
 import { Button, NavBar } from '.././models/nabar';
 import { select, Store } from '@ngrx/store';
 import { AuthActions } from '.././store/auth/auth.actions';
-import { selectIsAuthenticated, selectUserName } from '.././store/auth/auth.selectors';
+import { selectIsAuthenticated, selectUserId, selectUserName } from '.././store/auth/auth.selectors';
 import { Client } from '../models/client';
+import { selectClient } from '../store/client/client.selectors';
 
 
 
@@ -32,9 +33,10 @@ export class AppComponent implements OnInit {
   viewportScroller = inject(ViewportScroller)
   navbarService = inject(NavbarService)
   store = inject(Store)
-
   user_name = this.store.select(selectUserName)
+  userId$!: Observable<number | undefined>; 
 
+  
   buttons: Button[] = []
   dataSubscription: Subscription | undefined;
   readonly dialog = inject(MatDialog)
@@ -44,6 +46,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.userId$ = this.store.select(selectUserId);
     this.store.dispatch(AuthActions.refresh());
 
     this.navbarService.navbarData$.pipe(take(1)).subscribe();
@@ -77,6 +81,15 @@ export class AppComponent implements OnInit {
   navigate(path: string): void {
     if (path === "/login")
       this.dialog.open(LoginComponent)
+    else
+   if (path === 'results') {
+  this.userId$.pipe(take(1)).subscribe(userId => {
+    if (userId) {
+      this.router.navigate([path, userId]);
+    }
+  });
+}
+
     else {
       this.router.navigate([path])
       if (path == '') {
