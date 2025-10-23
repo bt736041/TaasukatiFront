@@ -78,6 +78,26 @@
 
 <section *ngIf="(loading$ | async)" class="text-center py-8 text-lg">טוען…</section>
 <section *ngIf="(loading$ | async) === false && (error$ | async)" class="text-center text-red-600 py-8 text-lg">{{ error$ | async }}</section>  -->
+<!-- מצב טוען -->
+<section *ngIf="(loading$ | async)" class="flex justify-center items-center py-12 animate-fade-in">
+  <app-spinner size="w-10 h-10"></app-spinner>
+</section>
+
+<!-- מצב שגיאה -->
+<section *ngIf="(loading$ | async) === false && (error$ | async)" class="text-center text-red-600 py-8 text-lg animate-fade-in">
+  {{ error$ | async }}
+</section>
+
+<!-- מצב מבחן לא הושלם -->
+<section
+  *ngIf="(loading$ | async) === false 
+      && (error$ | async) === undefined 
+      && (data$ | async)?.incomplete === true"
+  class="text-center text-orange-600 py-8 text-lg animate-fade-in"
+>
+  {{ (data$ | async)?.message || 'המבחן טרם הושלם. אין עדיין תוצאות להצגה.' }}
+</section>
+
 <section class="max-w-4xl mx-auto p-4 space-y-6" *ngIf="(loading$ | async) === false && (error$ | async) === undefined && (data$ | async) as d">
 
   <!-- כותרת כללית -->
@@ -168,12 +188,6 @@
   </article>
 </section>
 
-<!-- מצב טוען -->
-<section *ngIf="(loading$ | async)" class="flex justify-center items-center py-12 animate-fade-in">
-  <app-spinner size="w-10 h-10"></app-spinner>
-</section>
 
-<!-- מצב שגיאה -->
-<section *ngIf="(loading$ | async) === false && (error$ | async)" class="text-center text-red-600 py-8 text-lg animate-fade-in">
-  {{ error$ | async }}
-</section>
+
+

@@ -9,7 +9,8 @@ export const ResultsActions = createActionGroup({
         'Get Types Failure': props<{ message: string }>(),
         'Load Profile': props<{ testId: number }>(),
         'Load Profile Success': props<{ testId: number; data: AiProfileResponse }>(),
-        'Load Profile Failure': props<{ testId: number; error: string }>()
+        'Load Profile Failure': props<{ testId: number; error: string }>(),
+        'Load Profile Incomplete': props<{ testId: number; message: string }>()
 
     }
 })

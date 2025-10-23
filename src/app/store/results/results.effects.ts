@@ -22,24 +22,54 @@ export const getTypesEffect = createEffect(
   { functional: true }
 );
 
+// export const loadProfile = createEffect(
+//   (actions$ = inject(Actions), svc = inject(AiResultsService)) => {
+//     return actions$.pipe(
+//       ofType(ResultsActions.loadProfile),
+//       concatMap(({ testId }) =>
+//         svc.getProfile$(testId).pipe(
+//           map((data) => ResultsActions.loadProfileSuccess({ testId, data })),
+//           catchError((err) =>
+//             of(
+//               ResultsActions.loadProfileFailure({
+//                 testId,
+//                 error: err?.error?.detail || "בקשה נכשלה",
+//               })
+//             )
+//           )
+//         )
+//       )
+//     );
+//   }
+//   ,  { functional: true }
+// );
+
 export const loadProfile = createEffect(
   (actions$ = inject(Actions), svc = inject(AiResultsService)) => {
     return actions$.pipe(
       ofType(ResultsActions.loadProfile),
       concatMap(({ testId }) =>
         svc.getProfile$(testId).pipe(
-          map((data) => ResultsActions.loadProfileSuccess({ testId, data })),
+          map((response) => {
+            if (response?.incomplete) {
+              return ResultsActions.loadProfileIncomplete({
+                testId,
+                message: response.message || 'המבחן טרם הושלם',
+              });
+            }
+            return ResultsActions.loadProfileSuccess({ testId, data: response });
+          }),
           catchError((err) =>
             of(
               ResultsActions.loadProfileFailure({
                 testId,
-                error: err?.error?.detail || "בקשה נכשלה",
+                error: err?.error?.detail || 'בקשה נכשלה',
               })
             )
           )
         )
       )
     );
-  }
-  ,  { functional: true }
+  },
+  { functional: true }
 );
