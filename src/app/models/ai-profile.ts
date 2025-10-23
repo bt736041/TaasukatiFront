@@ -20,4 +20,6 @@ types_table: Array<Record<string, any>>;
 profile_text: string;
 dominant_traits: DominantTraits;
 graph_data: GraphDatum[];
+incomplete?: boolean; 
+message?: string;
 }

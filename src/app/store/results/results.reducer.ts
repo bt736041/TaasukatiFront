@@ -29,7 +29,13 @@ export const resultReducer = createReducer(
     ...state,
     loading: { ...state.loading, [testId]: false },
     error: { ...state.error, [testId]: error },
-  }))
+  })),
+  on(ResultsActions.loadProfileIncomplete, (state, { testId, message }) => ({
+  ...state,
+  loading: { ...state.loading, [testId]: false },
+  error: { ...state.error, [testId]: message }, 
+}))
+
 
 )
 
