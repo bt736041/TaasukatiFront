@@ -89,16 +89,17 @@
 </section>
 
 <!-- מצב מבחן לא הושלם -->
-<section
-  *ngIf="(loading$ | async) === false 
-      && (error$ | async) === undefined 
-      && (data$ | async)?.incomplete === true"
-  class="text-center text-orange-600 py-8 text-lg animate-fade-in"
->
-  {{ (data$ | async)?.message || 'המבחן טרם הושלם. אין עדיין תוצאות להצגה.' }}
+<section *ngIf="(loading$ | async) === false && (incomplete$ | async) as message" class="text-center text-orange-600 py-8 text-lg animate-fade-in">
+  {{ message || 'המבחן לא הושלם במלואו, ולכן לא ניתן להציג תוצאות.' }}
 </section>
 
-<section class="max-w-4xl mx-auto p-4 space-y-6" *ngIf="(loading$ | async) === false && (error$ | async) === undefined && (data$ | async) as d">
+<section
+  class="max-w-4xl mx-auto p-4 space-y-6"
+  *ngIf="(loading$ | async) === false 
+      && (error$ | async) === undefined 
+      && (data$ | async)?.incomplete !== true 
+      && (incomplete$ | async) === undefined
+      && (data$ | async) as d">
 
   <!-- כותרת כללית -->
   <h1 class="text-2xl font-bold text-orange-700 text-center animate-fade-in-up">תוצאות האבחון</h1>
@@ -117,21 +118,21 @@
       <div>
         <h3 class="label">טיפוסים</h3>
         <ul class="list-disc list-inside text-gray-700">
-          <li *ngFor="let t of d.dominant_traits.types">{{ t }}</li>
+            <li *ngFor="let t of d.dominant_traits?.types || []">{{ t }}</li>
         </ul>
       </div>
 
       <div>
         <h3 class="label">כישורים</h3>
         <ul class="list-disc list-inside text-gray-700">
-          <li *ngFor="let s of d.dominant_traits.skills">{{ s }}</li>
+            <li *ngFor="let t of d.dominant_traits?.skills || []">{{ t }}</li>
         </ul>
       </div>
 
       <div>
         <h3 class="label">כישורים רכים</h3>
         <ul class="list-disc list-inside text-gray-700">
-          <li *ngFor="let ss of d.dominant_traits.soft_skills">{{ ss }}</li>
+            <li *ngFor="let t of d.dominant_traits?.soft_skills || []">{{ t }}</li>
         </ul>
       </div>
 

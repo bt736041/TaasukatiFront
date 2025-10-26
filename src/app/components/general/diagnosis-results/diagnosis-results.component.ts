@@ -7,7 +7,8 @@ import {
   selectAiProfileById,
   selectAiLoadingById,
   selectAiErrorById,
-  selectTypes
+  selectTypes,
+  selectAiIncompleteById
 } from '../../../store/results/results.selectors';
 import { GraphDatum, AiProfileResponse } from '../../../models/ai-profile';
 import { Observable, filter, map, combineLatest } from 'rxjs';
@@ -31,6 +32,8 @@ export class DiagnosisResultsComponent implements OnInit {
   objectKeys = Object.keys;
   typesMap: Record<number, string> = {};
   typesWithStrength$!: Observable<Array<{ id: number; name: string; value: number }>>;
+  incomplete$!: Observable<string | undefined>;
+
 
   constructor(private route: ActivatedRoute, private store: Store) {}
 
@@ -43,6 +46,9 @@ ngOnInit(): void {
   this.loading$ = this.store.select(selectAiLoadingById(this.testId));
   this.error$ = this.store.select(selectAiErrorById(this.testId));
   this.data$ = this.store.select(selectAiProfileById(this.testId));
+  this.incomplete$ = this.store.select(selectAiIncompleteById(this.testId));
+
+
 
   // ← טיפוסים עם חוזק
   this.typesWithStrength$ = combineLatest([

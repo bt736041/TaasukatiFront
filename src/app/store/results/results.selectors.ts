@@ -27,3 +27,9 @@ export const selectTypes = createSelector(
   selectAiResultsState,
   (state) => state.types
 );
+
+export const selectAiIncompleteById = (testId: number) =>
+  createSelector(
+    selectAiResultsState, 
+    state => state.incomplete[testId]);
+

@@ -57,6 +57,7 @@ export const selectClosedError = createSelector(
   s => s.error
 );
 
+
 export const selectCurrentQuestionId = createSelector(
   selectClosedFeature,
   s => {

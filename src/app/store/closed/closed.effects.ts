@@ -44,21 +44,29 @@ export const StartClosedFlowEffect = createEffect(
             mergeMap(([_, testId, categoryId]) => {
                 return closedService.getNewQuestion$(testId, categoryId).pipe(
                     switchMap((question) => {
-                        if (question.status === 'category_completed')
-                            return of(ClosedActions.closedAnswerProcessing({
-                                source: 'closed',
-                                categoryId: categoryId ?? undefined,
-                                closedQuestion: question
-                            }))
-                        else
-                            return of(ClosedActions.startClosedFlowSuccess({ question }));
+  if (question.status === 'error') {
+    return of(ClosedActions.startClosedFlowFailure({
+      message: question.error_message ?? 'שגיאה לא ידועה'
+    }));
+  }
 
-                    }),
+  if (question.status === 'category_completed') {
+    return of(ClosedActions.closedAnswerProcessing({
+      source: 'closed',
+      categoryId: categoryId ?? undefined,
+      closedQuestion: question
+    }));
+  }
+
+  return of(ClosedActions.startClosedFlowSuccess({ question }));
+}),
+
                     catchError((err: HttpErrorResponse) => {
-                        return of(ClosedActions.startClosedFlowFailure({
-                            message: err.error?.detail ?? err.message ?? 'Starting closed flow failed'
-                        }))
-                    }),
+  console.log(err); // בדוק את מבנה השגיאה
+  return of(ClosedActions.startClosedFlowFailure({
+    message: err.error?.detail ?? err.message ?? 'Starting closed flow failed'
+  }))
+})
                 )
             }),
         );
