@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpServiceBase } from './http-service.base';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { AiProfileResponse } from '../models/ai-profile';
 import { HttpRequestModel } from '../models/http-request.model';
 
@@ -18,14 +18,21 @@ getProfile$(testId: number): Observable<AiProfileResponse> {
     url: this._serverUrl,
     action: `ai/${testId}`,
   })).pipe(
-    map((res: any) => {      
-      const raw = res?.body;
-      const jsonString = typeof raw === 'string' ? raw : String(raw);
-      const parsed = JSON.parse(jsonString);
-      return parsed;
+    tap(res => console.log('RAW RESPONSE:', res)),
+    map((res: any) => {
+      let parsedBody = res?.body;
+      if (typeof parsedBody === 'string') {
+        try {
+          parsedBody = JSON.parse(parsedBody);
+        } catch (e) {
+          console.error('Failed to parse body:', parsedBody);
+        }
+      }
+      return parsedBody ?? res;
     })
   );
 }
+
 
 
 

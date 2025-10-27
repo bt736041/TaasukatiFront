@@ -14,6 +14,7 @@ import { AuthActions } from '.././store/auth/auth.actions';
 import { selectIsAuthenticated, selectUserId, selectUserName } from '.././store/auth/auth.selectors';
 import { Client } from '../models/client';
 import { selectClient } from '../store/client/client.selectors';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -40,12 +41,18 @@ export class AppComponent implements OnInit {
   buttons: Button[] = []
   dataSubscription: Subscription | undefined;
   readonly dialog = inject(MatDialog)
+  constructor(private snackBar: MatSnackBar) {}
+
 
   goToComponent(path: string) {
     this.router.navigate([path]);
   }
 
   ngOnInit(): void {
+     this.snackBar.open('טסט Snackbar', 'סגור', {
+    duration: 3000,
+    direction: 'rtl'
+  });
 
     this.userId$ = this.store.select(selectUserId);
     this.store.dispatch(AuthActions.refresh());
@@ -68,8 +75,7 @@ export class AppComponent implements OnInit {
     const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({ top: y, behavior: 'smooth' });
   }
-}, 300);
-        
+}, 300); 
       });
     }
     if (action && action === 'logout') {
@@ -89,7 +95,6 @@ export class AppComponent implements OnInit {
     }
   });
 }
-
     else {
       this.router.navigate([path])
       if (path == '') {
@@ -97,6 +102,4 @@ export class AppComponent implements OnInit {
       }
     }
   }
-
-
 }
