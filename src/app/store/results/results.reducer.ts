@@ -35,8 +35,5 @@ on(ResultsActions.loadProfileIncomplete, (state, { testId, message }) => ({
   loading: { ...state.loading, [testId]: false },
   incomplete: { ...state.incomplete, [testId]: message },
 }))
-
-
-
 )
 

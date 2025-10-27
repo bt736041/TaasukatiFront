@@ -2,7 +2,7 @@ import { APP_INITIALIZER, ApplicationConfig, provideZoneChangeDetection } from '
 import { provideRouter } from '@angular/router';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { ConfigurationService } from './services/configuration.service';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -24,6 +24,7 @@ import { clientReducer } from './store/client/client.reducer';
 import { CLOSED_FEATURE_KEY } from './store/closed/closed.selectors';
 import { closedReducer } from './store/closed/closed.reducer';
 import {AI_RESULT_FEATURE_KEY} from './store/results/results.selectors'
+import { ServerErrorInterceptor } from './core/server-error.interceptor';
 
 
 
@@ -59,6 +60,11 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initConfigValues,
       deps: [ConfigurationService],
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerErrorInterceptor,
       multi: true
     },
   ]
