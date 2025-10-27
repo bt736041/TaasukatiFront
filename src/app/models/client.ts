@@ -11,5 +11,6 @@ export interface Client{
   dominant_type_id?:number
   profile_text?:string
   active_test_id?:number
+  status_test?:string
 }
 

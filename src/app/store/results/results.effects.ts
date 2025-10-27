@@ -50,15 +50,20 @@ export const loadProfile = createEffect(
       ofType(ResultsActions.loadProfile),
       concatMap(({ testId }) =>
         svc.getProfile$(testId).pipe(
-          map((response) => {
-            if (response?.incomplete) {
-              return ResultsActions.loadProfileIncomplete({
-                testId,
-                message: response.message || 'המבחן טרם הושלם',
-              });
-            }
-            return ResultsActions.loadProfileSuccess({ testId, data: response });
-          }),
+map((response) => {
+  if (response?.incomplete) {
+    return ResultsActions.loadProfileIncomplete({
+      testId,
+      message: response.message || 'המבחן טרם הושלם',
+    });
+  }
+
+  return ResultsActions.loadProfileSuccess({
+    testId,
+    data: response,
+  });
+}),
+
           catchError((err) =>
             of(
               ResultsActions.loadProfileFailure({
