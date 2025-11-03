@@ -5,12 +5,14 @@ import { ConfigurationService } from '../../../../services/configuration.service
 import { Store } from '@ngrx/store';
 import { ClosedActions } from '../../../../store/closed/closed.actions';
 import { ButtonComponent } from '../../../base/button/button.component';
-import { selectTypeTest } from '../../../../store/client/client.selectors';
-import { Observable } from 'rxjs';
+import { selectStatusTest, selectTypeTest } from '../../../../store/client/client.selectors';
+import { Observable, take } from 'rxjs';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-start-the-test',
-  imports: [ButtonComponent],
+  imports: [ButtonComponent, CommonModule],
   templateUrl: './start-the-test.component.html',
   styleUrl: './start-the-test.component.scss'
 })
@@ -19,7 +21,10 @@ export class StartTheTestComponent implements OnInit {
   store = inject(Store)
   navbarService = inject(NavbarService)
   config = inject(ConfigurationService)
-  type_test$!: Observable<any>; // רק הגדרת טיפוס למעלה
+  type_test$!: Observable<any>;
+  status_test$ = this.store.select(selectStatusTest);
+  is_completed: boolean = false;
+
 
   explain_simple: string = "ברוכים הבאים למבחן התעסוקתי המקיף והממצה \n במבחן שלושה חלקים, בכל חלק שאלות של כן ולא, עני על השאלות בכנות \n שימי לב: לא ניתן לשנות את התשובה אחרי שכבר ענית על השאלה, ולא ניתו לחזור אלורה לשאלה קודמת. \n בסיום המבחן יוצגו התוצאות.\n שנתחיל?"
   explain_ai: string = "צריך להכניס כאן הסבר על אופ ביצוע המבחן"
@@ -32,6 +37,11 @@ export class StartTheTestComponent implements OnInit {
    this.type_test$.subscribe(type => {
       this.explain = type === 'ai' ? this.explain_ai : this.explain_simple;
     });
+     this.status_test$.pipe(take(1)).subscribe(status => {
+      this.is_completed = status === 'completed';
+    });
+    console.log(this.is_completed);
+    
   }
 
   start() {

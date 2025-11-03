@@ -2,11 +2,13 @@ import { Component, Inject, OnInit, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button'
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCard } from '@angular/material/card';
 
 
 @Component({
   selector: 'app-new-client-details',
-  imports: [MatDialogModule,MatButtonModule],
+  imports: [MatDialogModule,MatButtonModule, MatDialogModule, MatIconModule, MatCard],
   templateUrl: './new-client-details.component.html',
   styleUrl: './new-client-details.component.scss'
 })

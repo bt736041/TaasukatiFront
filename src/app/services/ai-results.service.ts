@@ -17,20 +17,8 @@ getProfile$(testId: number): Observable<AiProfileResponse> {
   return this.get$(new HttpRequestModel({
     url: this._serverUrl,
     action: `ai/${testId}`,
-  })).pipe(
-    tap(res => console.log('RAW RESPONSE:', res)),
-    map((res: any) => {
-      let parsedBody = res?.body;
-      if (typeof parsedBody === 'string') {
-        try {
-          parsedBody = JSON.parse(parsedBody);
-        } catch (e) {
-          console.error('Failed to parse body:', parsedBody);
-        }
-      }
-      return parsedBody ?? res;
-    })
-  );
+     })
+   );
 }
 
 
