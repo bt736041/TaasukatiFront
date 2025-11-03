@@ -6,24 +6,29 @@ export const advisorReducer = createReducer(
     initialState,
 
     on(AdvisorActions.advisorLoad, (state) => ({
-        ...state, loadingAdvisor: true
+        ...state, loading: true
     })),
 
     on(AdvisorActions.advisorLoadSuccess, (state, { advisor }) => ({
-        ...state, advisor, loadingAdvisor: false
+        ...state, advisor, loading: false
     })),
 
     on(AdvisorActions.advisorLoadFailure, (state, { message }) => ({
-        ...state, loadingAdvisor: false, error: message
+        ...state, loading: false, error: message
     })
     ),
+    on(AdvisorActions.clientsLoad, (state) => ({
+        ...state, loading: true
+    })),
 
     on(AdvisorActions.clientsLoadSuccess, (state, { clients }) => ({
         ...state,
+        loading: false,
         clients
     })),
     on(AdvisorActions.clientsLoadFailure, (state, { message }) => ({
         ...state,
+        loading: false,
         error: message
     })),
     on(AdvisorActions.regionsLoadSuccess, (state, { regions }) => ({
@@ -46,12 +51,28 @@ export const advisorReducer = createReducer(
         ...state,
         error: message
     })),
+    on(AdvisorActions.createClient , (state) => ({
+        ...state,
+        loading: true
+    })),
+    on(AdvisorActions.createClientSuccess, (state, { client }) => ({
+        ...state,
+        loading: false,
+        lastCreatedClient: client
+    })),
     on(AdvisorActions.createClientFailure, (state, { message }) => ({
         ...state,
+        loading: false,
         error: message
     })),
-    on(AdvisorActions.updateClientFailure, (state, { message }) => ({
+    on(AdvisorActions.updateClient, (state) => ({
         ...state,
+        loading: true
+    })),
+    
+    on(AdvisorActions.updateClientFailure, (state, { message }) => ({
+        ...state,   
+        loading: false,
         error: message
     })),
     on(AdvisorActions.deleteClientFailure, (state, { message }) => ({

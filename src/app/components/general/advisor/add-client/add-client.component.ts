@@ -32,8 +32,7 @@ import { ButtonComponent } from '../../../base/button/button.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule,
-  ButtonComponent],
+    MatSelectModule,],
   templateUrl: './add-client.component.html',
   styleUrl: './add-client.component.scss'
 })

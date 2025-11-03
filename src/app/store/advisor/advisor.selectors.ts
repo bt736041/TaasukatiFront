@@ -25,3 +25,8 @@ export const selectLastCreatedClient = createSelector(
     selectAdvisorState,
     (state: AdvisorState) => state.lastCreatedClient
 );
+
+export const selectLoading = createSelector(
+    selectAdvisorState,
+    (state: AdvisorState) => state.loading
+);

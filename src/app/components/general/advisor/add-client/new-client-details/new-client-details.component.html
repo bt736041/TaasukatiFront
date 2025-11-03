@@ -1,12 +1,37 @@
-<h2 mat-dialog-title>!הנועץ נוסף בהצלחה</h2>
-<mat-dialog-content>
-    <p class="label">שם משתמש</p>
-    <p class="content" [innerText]="username"></p>
-    <p class="label">סיסמא</p>
-    <p class="content" [innerText]="password"></p>
-</mat-dialog-content>
+<mat-card class="card-responsive space-y-6 animate-fade-in-up border border-orange-200 shadow-md bg-white">
+  <div class="title row text-center justify-center">
+    <mat-icon fontSet="material-icons-outlined" class="icon text-green-600">check_circle</mat-icon>
+    <span class="text-wrap">!הנועץ נוסף בהצלחה</span>
+  </div>
 
-<mat-dialog-actions align="end">
-    <button mat-button style="color: red;" (click)="close()">X</button>
-    <button mat-button (click)="sendEmail()">✉️</button>
-</mat-dialog-actions>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-orange-50 p-4 rounded">
+    <div class="row border border-orange-100 rounded p-3 bg-white">
+      <mat-icon fontSet="material-icons-outlined" class="icon">person</mat-icon>
+      <div class="flex flex-col min-w-0">
+        <span class="label">שם משתמש</span>
+        <span class="text-wrap break-safe font-medium text-gray-900" [innerText]="username"></span>
+      </div>
+    </div>
+
+    <div class="row border border-orange-100 rounded p-3 bg-white">
+      <mat-icon fontSet="material-icons-outlined" class="icon">vpn_key</mat-icon>
+      <div class="flex flex-col min-w-0">
+        <span class="label">סיסמא</span>
+        <span class="text-wrap-hard break-hard font-medium text-gray-900" [innerText]="password"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center flex-wrap gap-2 pt-2">
+    <button mat-button class="btn-outline btn-inline" (click)="close()">
+      <mat-icon fontSet="material-icons-outlined" class="icon">close</mat-icon>
+      סגור
+    </button>
+
+    <button mat-button class="btn-primary btn-inline" (click)="sendEmail()">
+      <mat-icon fontSet="material-icons-outlined" class="icon">email</mat-icon>
+      שלח אימייל
+    </button>
+  </div>
+</mat-card>
+
