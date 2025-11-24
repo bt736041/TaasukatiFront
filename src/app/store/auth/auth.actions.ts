@@ -23,5 +23,10 @@ export const AuthActions = createActionGroup({
     'Reset Password': props<{ token: string, newPassword: string }>(),
     'Reset Password Success': emptyProps(),
     'Reset Password Failure': props<{ message: string }>(),
+
+    'Set Redirect URL': props<{ url: string }>(),
+    'Clear Redirect URL': emptyProps(),
+
+
   }
 });

@@ -79,8 +79,8 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button (click)="return()">ביטול</button>
-  <button *ngIf="data.mode === 'add'"
+  <Button mat-button (click)="return()">ביטול</Button>
+  <Button *ngIf="data.mode === 'add'"
           mat-raised-button color="primary"
           type="submit"
           [disabled]="formGroup.invalid"
@@ -88,12 +88,12 @@
           (mouseleave)="mouseoverLogin=false"
           (click)="create()">
     הוסף
-  </button>
-  <button *ngIf="data.mode === 'edit'"
+  </Button>
+  <Button *ngIf="data.mode === 'edit'"
           mat-raised-button color="primary"
           type="submit"
           [disabled]="formGroup.invalid"
           (click)="submit()">
     שמור שינויים
-  </button>
+  </Button>
 </mat-dialog-actions>
