@@ -50,4 +50,14 @@ export const authReducer = createReducer(
   on(AuthActions.forgotPasswordFailure, (state, { message }) => ({
     ...state, loading: false, error: message
   })),
+ on(AuthActions.setRedirectURL, (state, { url }) => ({
+  ...state,
+  redirectUrl: url
+})),
+on(AuthActions.clearRedirectURL, (state) => ({
+  ...state,
+  redirectUrl: undefined
+}))
+
+
 );

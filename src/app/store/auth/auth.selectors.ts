@@ -17,4 +17,4 @@ export const selectClientId = createSelector(selectAuthUser, u => u?.clientId ??
 export const selectUserId = createSelector(selectAuthUser, u => u?.userId ?? undefined);
 export const selectUserName = createSelector(selectAuthUser, u => u?.userName ?? undefined);
 
-
+export const selectRedirectUrl = createSelector(selectAuthFeature, s => s.redirectUrl);
