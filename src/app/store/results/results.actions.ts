@@ -10,7 +10,8 @@ export const ResultsActions = createActionGroup({
         'Load Profile': props<{ testId: number }>(),
         'Load Profile Success': props<{ testId: number; data: AiProfileResponse }>(),
         'Load Profile Failure': props<{ testId: number; error: string }>(),
-        'Load Profile Incomplete': props<{ testId: number; message: string }>()
+        'Load Profile Incomplete': props<{ testId: number; message: string }>(),
+        'Complete Test': props<{ testId: number }>(),
 
     }
 })

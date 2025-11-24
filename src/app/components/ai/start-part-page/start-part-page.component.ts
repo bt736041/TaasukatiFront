@@ -7,7 +7,9 @@ import { Store } from '@ngrx/store';
 import { ClosedActions } from '../../../store/closed/closed.actions';
 import { ButtonComponent } from '../../base/button/button.component';
 import { selectClosedError } from '../../../store/closed/closed.selectors';
-import { tap } from 'rxjs';
+import { combineLatest, map, tap } from 'rxjs';
+import { selectAiErrorById, selectAiIncompleteById } from '../../../store/results/results.selectors';
+import { selectClient, selectStatusTest } from '../../../store/client/client.selectors';
 
 @Component({
   selector: 'app-start-part-page',
@@ -20,9 +22,7 @@ export class StartPartPageComponent {
   testService = inject(TestFlowService)
   router = inject(Router)
   store = inject(Store)
-  error$ = this.store.select(selectClosedError).pipe(
-  tap(err => console.log('שגיאה:', err))
-);
+  stasusTest$= this.store.select(selectStatusTest)
 
 
 

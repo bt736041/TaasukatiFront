@@ -24,3 +24,8 @@ export const selectTypeTest = createSelector(
     selectClientState,
     (state: clientState) => state.test_type
 );
+
+export const selectStatusTest = createSelector(
+    selectClientState,
+    (state: clientState) => state.client?.status_test
+);

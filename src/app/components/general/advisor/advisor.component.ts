@@ -5,7 +5,7 @@ import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { AddClientComponent } from './add-client/add-client.component';
 import { Store } from '@ngrx/store';
 import { Advisor } from '../../../models/advisor';
-import { selectAdvisor, selectClients, selectLastCreatedClient, selectRegions } from '../../../store/advisor/advisor.selectors';
+import { selectAdvisor, selectClients, selectLastCreatedClient, selectLoading, selectRegions } from '../../../store/advisor/advisor.selectors';
 import { OneClientComponent } from './one-client/one-client.component';
 import { ButtonComponent } from '../../base/button/button.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,11 +14,12 @@ import { Client } from '../../../models/client';
 import { AdvisorActions } from '../../../store/advisor/advisor.actions';
 import { FormsModule } from '@angular/forms';
 import { map, combineLatest, startWith, BehaviorSubject } from 'rxjs';
+import { SpinnerComponent } from '../../base/spinner/spinner.component';
 
 
 @Component({
   selector: 'app-advisor',
-  imports: [ButtonComponent,RouterModule, CommonModule, OneClientComponent, MatButtonModule, MatIconModule, FormsModule],
+  imports: [ButtonComponent, SpinnerComponent,RouterModule, CommonModule, OneClientComponent, MatButtonModule, MatIconModule, FormsModule],
   templateUrl: './advisor.component.html',
   styleUrl: './advisor.component.scss'
 })
@@ -30,10 +31,22 @@ export class AdvisorComponent  {
   advisor$ = this.store.select(selectAdvisor)
   clients$ = this.store.select(selectClients)
   regions$ = this.store.select(selectRegions)
+  loading$= this.store.select(selectLoading)
+  
   lastCreatedClient$ = this.store.select(selectLastCreatedClient)
   searchTerm = '';
 private searchSubject = new BehaviorSubject<string>('');
 
+
+ fieldsToSearch: (keyof Client)[] = [
+  'first_name',
+  'last_name',
+  'phone',
+  'email',
+  'birth_date',
+  
+
+];
 
 filteredClients$ = combineLatest([
   this.clients$,
@@ -44,9 +57,11 @@ filteredClients$ = combineLatest([
     if (!search) return clients;
 
     return clients.filter(client =>
-      Object.values(client).some(value =>
-        (value ?? '').toString().toLowerCase().includes(search)
-      )
+      this.fieldsToSearch.some(field => {
+        const value = client[field];
+        if (value == null) return false;
+        return value.toString().trim().toLowerCase().includes(search);
+      })
     );
   })
 );
@@ -75,9 +90,13 @@ editClient(client: Client) {
       client: client
     }
   });
+  this.loading$.subscribe(val => console.log('loading changed:', val));
+
 }
 deleteClient(clientId: number) {
   this.store.dispatch(AdvisorActions.deleteClient({ clientId }));
+  this.loading$.subscribe(val => console.log('loading changed:', val));
+
 }
 
 }

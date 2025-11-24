@@ -1,83 +1,4 @@
-<!-- <section class="max-w-4xl mx-auto p-4" *ngIf="(loading$ | async) === false && (error$ | async) === undefined && (data$ | async) as d">
-  <h1 class="text-2xl font-bold mb-4 text-center">תוצאות האבחון</h1>
 
-  <article class="bg-white shadow-md rounded-2xl p-4 mb-6">
-    <h2 class="text-xl font-semibold mb-2">תיאור פרופיל</h2>
-    <pre class="whitespace-pre-wrap text-gray-700">{{ d.profile_text }}</pre>
-  </article>
-
-  <article class="bg-white shadow-md rounded-2xl p-4 mb-6">
-    <h2 class="text-xl font-semibold mb-4">מאפיינים דומיננטיים</h2>
-    <div class="grid gap-4 md:grid-cols-3">
-      <div>
-        <h3 class="text-lg font-medium mb-2">טיפוסים</h3>
-        <ul class="list-disc list-inside text-gray-700">
-          <li *ngFor="let t of d.dominant_traits.types">{{ t }}</li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="text-lg font-medium mb-2">כישורים</h3>
-        <ul class="list-disc list-inside text-gray-700">
-          <li *ngFor="let s of d.dominant_traits.skills">{{ s }}</li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="text-lg font-medium mb-2">כישורים רכים</h3>
-        <ul class="list-disc list-inside text-gray-700">
-          <li *ngFor="let ss of d.dominant_traits.soft_skills">{{ ss }}</li>
-        </ul>
-      </div>
-    </div>
-  </article>
-
-   @if(typesReady){
-  <article class="bg-white shadow-md rounded-2xl p-4 mb-6">
-    <h2 class="text-xl font-semibold mb-4">טבלה לפי טיפוסים</h2>
-    <div class="overflow-x-auto">
-      <table class="min-w-full border border-gray-300 text-sm">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="border px-4 py-2">טיפוס</th>
-            <th *ngFor="let k of (d.types_table[0] | keyvalue); let i = index" class="border px-4 py-2" [hidden]="k.key === 'id' || i === 0">{{ k.key }}</th>
-          </tr>
-        </thead>
-        <tbody>
-         <tr *ngFor="let row of d.types_table">
-  <td class="border px-4 py-2 font-medium">
-    {{ typesMap[+row['id']]  }}
-  </td>
-  <td *ngFor="let key of objectKeys(row)" [hidden]="key === 'id'" class="border px-4 py-2">
-    {{ row[key] }}
-  </td>
-</tr>
-
-        </tbody>
-      </table>
-    </div>
-  </article>} -->
-
-  <!-- <article class="bg-white shadow-md rounded-2xl p-4 mb-6">
-    <h2 class="text-xl font-semibold mb-4">גרף מאפיינים</h2>
-    <ng-container *ngIf="groupedGraph$ | async as groupedGraph">
-      <ng-container *ngIf="maxValue$ | async as max">
-        <div class="space-y-6">
-          <div *ngFor="let category of (groupedGraph | keyvalue)">
-            <h3 class="text-lg font-medium mb-2">{{ category.key }}</h3>
-            <div *ngFor="let g of category.value" class="relative h-8 bg-gray-100 rounded-lg overflow-hidden mb-2">
-              <div class="absolute top-0 left-0 bottom-0 bg-blue-300" [style.width.%]="widthPercent(g.value, max)"></div>
-              <div class="relative z-10 px-2 text-sm leading-8 font-medium text-gray-800">
-                {{ g.label }} ({{ g.value | number:'1.0-2' }})
-              </div>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-    </ng-container>
-  </article>
-</section>
-
-<section *ngIf="(loading$ | async)" class="text-center py-8 text-lg">טוען…</section>
-<section *ngIf="(loading$ | async) === false && (error$ | async)" class="text-center text-red-600 py-8 text-lg">{{ error$ | async }}</section>  -->
 <!-- מצב טוען -->
 <section *ngIf="(loading$ | async)" class="flex justify-center items-center py-12 animate-fade-in">
   <app-spinner size="w-10 h-10"></app-spinner>
@@ -103,8 +24,8 @@
 
   <!-- כותרת כללית -->
   <h1 class="text-2xl font-bold text-orange-700 text-center animate-fade-in-up">תוצאות האבחון</h1>
-
-  <!-- תיאור פרופיל -->
+ <!-- תיאור פרופיל -->
+ 
   <article class="card animate-fade-in-up">
     <h2 class="title">תיאור הפרופיל האישי</h2>
     <p class="text-gray-800 whitespace-pre-wrap leading-relaxed">{{ d.profile_text }}</p>

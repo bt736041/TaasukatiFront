@@ -1,31 +1,39 @@
+<!-- טוען אם הנתונים עדיין בטעינה -->
+<!-- Overlay טעינה על כל המסך -->
+<div *ngIf="loading$ | async" class="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
+  <app-spinner size="w-16 h-16"></app-spinner>
+</div>
 
-<div class="flex flex-wrap items-center mb-6 gap-x-2 gap-y-3">
+
+
+
+<!-- כפתור וחיפוש -->
+<div  class="flex flex-wrap items-center mb-6 gap-x-2 gap-y-3 justify-center">
   <app-button
     [label]="'הרשמת נועץ'"
     (click)="addClient()">
   </app-button>
-
   <input
     type="text"
     [ngModel]="searchTerm"
     (ngModelChange)="onSearch($event)"
     (keyup.enter)="onSearch(searchTerm)"
-    placeholder="חיפוש לקוח..."
-    class="input-primary max-w-xs"
+    placeholder=" חיפוש לקוח לפי פרטים אישיים..."
+    class="input-primary w-full max-w-md"
   />
 </div>
 
+<!-- שורת כרטיסים: תמיד לקוח אחד בשורה -->
+<div class="grid gap-5 grid-cols-1">
+  @for (client of filteredClients$ | async; track client) {
+    <app-one-client
+      [client]="client"
+      (edit)="editClient(client)"
+      (remove)="deleteClient($event)">
+    </app-one-client>
+  }
+</div>
 
-    <!-- כרטיסים יתמלאו בשורות, כל כרטיס מינימום 360–400px, גדלים בחופשיות על מסך רחב -->
-    <div class="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(380px,1fr))]">
-      @for (client of filteredClients$ | async; track client) {
-        <app-one-client
-          [client]="client"
-          (edit)="editClient(client)"
-          (remove)="deleteClient($event)">
-        </app-one-client>
-      }
-    </div>
   
 
 

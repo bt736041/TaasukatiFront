@@ -1,42 +1,46 @@
-
-<mat-card class="client-card card-responsive">
-  <div class="mb-3">
-    <div class="title row">
-      <mat-icon fontSet="material-icons-outlined" class="icon">person</mat-icon>
-      <span class="text-wrap">{{ client.first_name }} {{ client.last_name }}</span>
-    </div>
+<mat-card class="client-card card-responsive space-y-4 text-center animate-fade-in-up">
+  <!-- כותרת -->
+  <div class="title row justify-center">
+    <mat-icon fontSet="material-icons-outlined" class="icon">person</mat-icon>
+    <span class="text-wrap text-lg font-semibold">
+      {{ client.first_name }} {{ client.last_name }}
+    </span>
   </div>
 
-  <div class="client-info grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-800">
-    <span class="row">
-      <mat-icon fontSet="material-icons-outlined" class="icon">phone</mat-icon>
+  <!-- פרטי לקוח -->
+  <div class="client-info space-y-3">
+    <div class="row justify-down flex-wrap text-gray-800">
+      <mat-icon fontSet="material-icons-outlined" class="icon ">phone</mat-icon>
       <span class="text-wrap">{{ client.phone }}</span>
-    </span>
+    </div>
 
-    <span class="row">
+    <div class="row justify-center flex-wrap text-gray-800">
       <mat-icon fontSet="material-icons-outlined" class="icon">email</mat-icon>
-      <span class="text-wrap-hard">{{ client.email }}</span>
-    </span>
+      <span class="text-wrap">{{ client.email }}</span>
+    </div>
 
-    <span class="row">
+    <div class="row justify-center flex-wrap text-gray-800">
       <mat-icon fontSet="material-icons-outlined" class="icon">calendar_today</mat-icon>
       <span class="text-wrap">{{ client.birth_date }}</span>
-    </span>
+    </div>
 
     @if (client.dominant_type_id) {
-      <span class="row">
+      <div class="row justify-center flex-wrap text-gray-800">
         <mat-icon fontSet="material-icons-outlined" class="icon">label</mat-icon>
-        <span class="label text-wrap" [innerText]="typeName$ | async"></span>
-      </span>
+        <span class="text-wrap">
+          {{ typeName$ | async }}
+        </span>
+      </div>
     }
   </div>
 
-  <div class="client-actions mt-4 flex flex-wrap gap-2">
-    <app-button  [label]="'תוצאות'" (click)="viewResults()">
+  <!-- כפתורים -->
+  <div class="client-actions mt-4 flex flex-wrap justify-center gap-3">
+    <app-button [label]="'תוצאות'" (click)="viewResults()">
       <mat-icon fontSet="material-icons-outlined" class="icon">bar_chart</mat-icon>
     </app-button>
 
-    <app-button  [label]="'עריכה'" (click)="set()">
+    <app-button [label]="'עריכה'" (click)="set()">
       <mat-icon fontSet="material-icons-outlined" class="icon">edit</mat-icon>
     </app-button>
 
@@ -45,12 +49,3 @@
     </app-button>
   </div>
 </mat-card>
-
-
-
-
-
-
-
-
-

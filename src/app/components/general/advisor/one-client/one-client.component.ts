@@ -34,7 +34,7 @@ typeName$: Observable<string> = this.types$.pipe(
 );
 
 viewResults(){
-this.router.navigate(['/results', this.client.active_test_id]);
+this.router.navigate(['/results', this.client.id]);
 }
 
 set() {
