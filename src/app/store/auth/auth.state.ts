@@ -6,6 +6,8 @@ export interface AuthState {
   user: AuthUser | null;
   loading: boolean;
   error: string | null;
+  redirectUrl?: string;
+
 }
 
 export const initialAuthState: AuthState = {
@@ -14,4 +16,6 @@ export const initialAuthState: AuthState = {
   user: null,
   loading: false,
   error: null,
+  redirectUrl: undefined
+
 };

@@ -1,3 +1,4 @@
+
 export type Role = 'advisor' | 'client';
 
 export interface LoginRequest {
@@ -15,6 +16,17 @@ export interface LoginResponse {
   advisor_id?: number | null;
   client_id?: number | null;
   email: string;
+}
+
+
+export interface TokenPayload {
+  sub: number; // או מספר – תלוי איך השרת יוצר את הטוקן
+  role: 'client' | 'advisor';
+  user_name: string;
+  advisor_id?: number;
+  client_id?: number;
+  email?: string;
+  [key: string]: any;
 }
 
 export type RefreshRequest = void;
