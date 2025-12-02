@@ -49,10 +49,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     this.snackBar.open('טסט Snackbar', 'סגור', {
-    duration: 3000,
-    direction: 'rtl'
-  });
 
     this.userId$ = this.store.select(selectUserId);
     this.store.dispatch(AuthActions.refresh());
