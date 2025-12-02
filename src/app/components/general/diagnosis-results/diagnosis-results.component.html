@@ -39,21 +39,21 @@
       <div>
         <h3 class="label">טיפוסים</h3>
         <ul class="list-disc list-inside text-gray-700">
-            <li *ngFor="let t of d.dominant_traits?.types || []">{{ t }}</li>
+            <li *ngFor="let t of d.dominant_traits.types || []">{{ t }}</li>
         </ul>
       </div>
 
       <div>
         <h3 class="label">כישורים</h3>
         <ul class="list-disc list-inside text-gray-700">
-            <li *ngFor="let t of d.dominant_traits?.skills || []">{{ t }}</li>
+            <li *ngFor="let t of d.dominant_traits.skills || []">{{ t }}</li>
         </ul>
       </div>
 
       <div>
         <h3 class="label">כישורים רכים</h3>
         <ul class="list-disc list-inside text-gray-700">
-            <li *ngFor="let t of d.dominant_traits?.soft_skills || []">{{ t }}</li>
+            <li *ngFor="let t of d.dominant_traits.soft_skills || []">{{ t }}</li>
         </ul>
       </div>
 
