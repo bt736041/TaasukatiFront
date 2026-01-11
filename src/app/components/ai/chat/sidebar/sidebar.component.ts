@@ -3,9 +3,8 @@ import { Part, PartStatus } from '../../../../models/part';
 import { TestFlowService } from '../../../../services/test-flow.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { map, Observable } from 'rxjs';
+import { map, Observable,Subscription } from 'rxjs';
 import { ChangeDetectorRef, AfterViewInit } from '@angular/core';
-
 
 interface PartGroup {
   title: string;
@@ -24,6 +23,9 @@ export class SidebarComponent implements AfterViewInit {
 
   groupedParts$: Observable<PartGroup[]>;
   currentPart: Part;
+  currentQuestion = 0;
+private subscriptions = new Subscription();
+
 
   // תוספות חדשות
   totalParts = 0;
@@ -75,8 +77,8 @@ export class SidebarComponent implements AfterViewInit {
         this.currentIndex = flatParts.findIndex(p => p.id === this.currentPart?.id);
 
         // מונה הודעות – לשדרוג עתידי לפי חישוב אמיתי
-        this.totalMessages = 10;
-        this.answeredMessages = 7;
+        this.totalMessages = 210;
+        this.answeredMessages = 1;
 
         return groups;
       })

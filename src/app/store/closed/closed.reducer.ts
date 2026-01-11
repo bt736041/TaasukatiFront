@@ -2,6 +2,8 @@ import { createReducer, on } from "@ngrx/store";
 import { initialClosedState } from "./closed.state";
 import { ClosedActions } from "./closed.actions";
 import { ChatMessage } from "../../models/chat-message";
+import { inject } from "@angular/core";
+import { TestFlowService } from "../../services/test-flow.service";
 
 const thankYouMessages = [
     "תודה רבה על המענה 🙏\nנמשיך לשאלה הבאה:",
@@ -113,7 +115,7 @@ export const closedReducer = createReducer(
     }),
     on(ClosedActions.closedAnswerProcessing, (state, action) => {
         const { source, categoryId, closedQuestion, openQuestion, error } = action;
-        if (error) {
+        if (error) {            
             return {
                 ...state,
                 error: error,

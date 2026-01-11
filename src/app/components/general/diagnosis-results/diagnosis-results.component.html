@@ -1,31 +1,32 @@
-
 <!-- מצב טוען -->
 <section *ngIf="(loading$ | async)" class="flex justify-center items-center py-12 animate-fade-in">
   <app-spinner size="w-10 h-10"></app-spinner>
 </section>
 
 <!-- מצב שגיאה -->
-<section *ngIf="(loading$ | async) === false && (error$ | async)" class="text-center text-red-600 py-8 text-lg animate-fade-in">
+<section *ngIf="(loading$ | async) === false && (error$ | async)"
+  class="text-center text-red-600 py-8 text-lg animate-fade-in">
   {{ error$ | async }}
 </section>
 
 <!-- מצב מבחן לא הושלם -->
-<section *ngIf="(loading$ | async) === false && (incomplete$ | async) as message" class="text-center text-orange-600 py-8 text-lg animate-fade-in">
+<section *ngIf="(loading$ | async) === false && (incomplete$ | async) as message"
+  class="text-center text-orange-600 py-8 text-lg animate-fade-in">
   {{ message || 'המבחן לא הושלם במלואו, ולכן לא ניתן להציג תוצאות.' }}
 </section>
 
-<section
-  class="max-w-4xl mx-auto p-4 space-y-6"
-  *ngIf="(loading$ | async) === false 
+<section class="relative max-w-4xl mx-auto p-4 space-y-6" *ngIf="(loading$ | async) === false 
       && (error$ | async) === undefined 
       && (data$ | async)?.incomplete !== true 
       && (incomplete$ | async) === undefined
       && (data$ | async) as d">
+      
+  <app-button (click)="goBack()" [label]="'חזור'"></app-button>
 
   <!-- כותרת כללית -->
   <h1 class="text-2xl font-bold text-orange-700 text-center animate-fade-in-up">תוצאות האבחון</h1>
- <!-- תיאור פרופיל -->
- 
+  <!-- תיאור פרופיל -->
+
   <article class="card animate-fade-in-up">
     <h2 class="title">תיאור הפרופיל האישי</h2>
     <p class="text-gray-800 whitespace-pre-wrap leading-relaxed">{{ d.profile_text }}</p>
@@ -35,25 +36,25 @@
   <article class="card animate-fade-in-up">
     <h2 class="title">מאפיינים דומיננטיים</h2>
     <div class="grid gap-4 md:grid-cols-3">
-      
+
       <div>
         <h3 class="label">טיפוסים</h3>
         <ul class="list-disc list-inside text-gray-700">
-            <li *ngFor="let t of d.dominant_traits.types || []">{{ t }}</li>
+          <li *ngFor="let t of d.dominant_traits.types || []">{{ t }}</li>
         </ul>
       </div>
 
       <div>
         <h3 class="label">כישורים</h3>
         <ul class="list-disc list-inside text-gray-700">
-            <li *ngFor="let t of d.dominant_traits.skills || []">{{ t }}</li>
+          <li *ngFor="let t of d.dominant_traits.skills || []">{{ t }}</li>
         </ul>
       </div>
 
       <div>
         <h3 class="label">כישורים רכים</h3>
         <ul class="list-disc list-inside text-gray-700">
-            <li *ngFor="let t of d.dominant_traits.soft_skills || []">{{ t }}</li>
+          <li *ngFor="let t of d.dominant_traits.soft_skills || []">{{ t }}</li>
         </ul>
       </div>
 
@@ -61,29 +62,29 @@
   </article>
 
   <article class="card animate-fade-in-up">
-  <h2 class="title">חוזק לפי טיפוסים</h2>
+    <h2 class="title">חוזק לפי טיפוסים</h2>
 
-  <div class="overflow-x-auto">
-    <table class="min-w-full border border-orange-200 text-sm text-right">
-      <thead class="bg-orange-50 text-orange-800">
-        <tr>
-          <th class="border border-orange-100 px-4 py-2">שם הטיפוס</th>
-          <th class="border border-orange-100 px-4 py-2">חוזק</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let row of (typesWithStrength$ | async)" class="hover:bg-orange-50">
-          <td class="border px-4 py-2 font-medium text-orange-700">
-            {{ row.name }}
-          </td>
-          <td class="border px-4 py-2 text-gray-800">
-            {{ row.value | number:'1.0-2' }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</article>
+    <div class="overflow-x-auto">
+      <table class="min-w-full border border-orange-200 text-sm text-right">
+        <thead class="bg-orange-50 text-orange-800">
+          <tr>
+            <th class="border border-orange-100 px-4 py-2">שם הטיפוס</th>
+            <th class="border border-orange-100 px-4 py-2">חוזק</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of (typesWithStrength$ | async)" class="hover:bg-orange-50">
+            <td class="border px-4 py-2 font-medium text-orange-700">
+              {{ row.name }}
+            </td>
+            <td class="border px-4 py-2 text-gray-800">
+              {{ row.value | number:'1.0-2' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
 
 
   <!-- גרף מאפיינים -->
@@ -97,7 +98,8 @@
             <h3 class="text-orange-600 font-semibold text-lg mb-2">{{ category.key }}</h3>
 
             <div *ngFor="let g of category.value" class="relative h-8 bg-gray-100 rounded-lg overflow-hidden mb-2">
-              <div class="absolute top-0 left-0 bottom-0 bg-orange-300" [style.width.%]="widthPercent(g.value, max)"></div>
+              <div class="absolute top-0 left-0 bottom-0 bg-orange-300" [style.width.%]="widthPercent(g.value, max)">
+              </div>
               <div class="relative z-10 px-2 text-sm leading-8 font-medium text-gray-800">
                 {{ g.label }} ({{ g.value | number:'1.0-2' }})
               </div>
@@ -109,7 +111,3 @@
     </ng-container>
   </article>
 </section>
-
-
-
-

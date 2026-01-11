@@ -13,12 +13,15 @@ import {
 import { GraphDatum, AiProfileResponse } from '../../../models/ai-profile';
 import { Observable, filter, map, combineLatest } from 'rxjs';
 import { SpinnerComponent } from '../../base/spinner/spinner.component';
+import { Location } from '@angular/common';
+import { ButtonComponent } from '../../base/button/button.component';
+
 
 @Component({
   selector: 'app-diagnosis-results',
   templateUrl: './diagnosis-results.component.html',
   styleUrls: ['./diagnosis-results.component.scss'],
-  imports: [CommonModule, DecimalPipe, AsyncPipe, SpinnerComponent],
+  imports: [CommonModule, DecimalPipe, AsyncPipe, SpinnerComponent, ButtonComponent],
   standalone: true,
 })
 export class DiagnosisResultsComponent implements OnInit {
@@ -35,7 +38,7 @@ export class DiagnosisResultsComponent implements OnInit {
   incomplete$!: Observable<string | undefined>;
 
 
-  constructor(private route: ActivatedRoute, private store: Store) {}
+  constructor(private route: ActivatedRoute, private store: Store,private location: Location) {}
 
 ngOnInit(): void {
   const testIdParam = this.route.snapshot.paramMap.get('testId');
@@ -87,5 +90,9 @@ ngOnInit(): void {
 
   widthPercent(value: number, max: number): number {
     return Math.max(0, Math.min(100, (value / max) * 100));
+  }
+
+    goBack(): void {
+    this.location.back();
   }
 }

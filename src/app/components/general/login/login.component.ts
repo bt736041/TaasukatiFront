@@ -17,6 +17,7 @@ import { AuthActions } from '../../../store/auth/auth.actions';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { CreateAdvisorComponent } from '../advisor/create-advisor/create-advisor.component';
 import { SpinnerComponent } from "../../base/spinner/spinner.component";
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ButtonComponent } from '../../base/button/button.component';
 import { take } from 'rxjs';
 @Component({
@@ -27,7 +28,7 @@ import { take } from 'rxjs';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatProgressSpinnerModule,ButtonComponent ],
+    MatProgressSpinnerModule, ButtonComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -38,7 +39,7 @@ export class LoginComponent implements OnInit {
   navbarService = inject(NavbarService)
   mouseoverLogin: boolean = false;
   message: string = ""
-  redirectUrl: string = '/'; 
+  redirectUrl: string = '/';
   formGroup: FormGroup = {} as FormGroup;
   readonly dialogRef = inject(MatDialogRef<LoginComponent>)
   readonly dialog = inject(MatDialog)
@@ -52,39 +53,48 @@ export class LoginComponent implements OnInit {
   error$ = this.store.select(selectAuthError)
   redirectUrl$ = this.store.select(selectRedirectUrl); // ← חדש
 
+  passwordLengthValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value) return null;
+
+      return value.length === 4 || value.length === 9
+        ? null
+        : { invalidPasswordLength: true };
+    };
+  }
+
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, this.passwordLengthValidator()]]
     });
 
   }
 
+
   login() {
     const { username, password } = this.formGroup.value;
-    if (password.length !== 4 && password.length !== 9) {
-      this.message = 'אורך סיסמה לא תקין';
-    }
     const role: Role = (password.length === 9) ? 'client' : 'advisor';
     const loginUser: LoginRequest = { email: username, password, role };
     this.store.dispatch(AuthActions.login({ loginRequest: loginUser }));
 
-this.actions.pipe(
-  ofType(AuthActions.loginSuccess),
-).subscribe(({ loginResponse }) => {
-  const role = loginResponse.role;
-  this.navbarService.changeNavbar(role === 'advisor' ? 'login_advisor' : 'login_user');
+    this.actions.pipe(
+      ofType(AuthActions.loginSuccess),
+    ).subscribe(({ loginResponse }) => {
+      const role = loginResponse.role;
+      this.navbarService.changeNavbar(role === 'advisor' ? 'login_advisor' : 'login_user');
 
-  this.redirectUrl$.pipe(take(1)).subscribe((redirect) => {
-    const fallback = role === 'advisor' ? '/advisor' : '/client';
-    const target = redirect || fallback;
-console.log('Redirecting to:', target);
+      this.redirectUrl$.pipe(take(1)).subscribe((redirect) => {
+        const fallback = role === 'advisor' ? '/advisor' : '/client';
+        const target = redirect || fallback;
+        console.log('Redirecting to:', target);
 
-    this.router.navigateByUrl(target);
-    this.store.dispatch(AuthActions.clearRedirectURL()); // אופציונלי
-    this.dialogRef?.close();
-  });
-});
+        this.router.navigateByUrl(target);
+        this.store.dispatch(AuthActions.clearRedirectURL()); // אופציונלי
+        this.dialogRef?.close();
+      });
+    });
 
     this.actions.pipe(
       ofType(AuthActions.loginFailure),

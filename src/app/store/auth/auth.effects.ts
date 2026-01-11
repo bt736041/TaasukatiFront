@@ -9,12 +9,14 @@ import { AdvisorActions } from "../advisor/advisor.actions";
 import { ResultsActions } from "../results/results.actions";
 import { Router } from "@angular/router";
 import { LoginResponse, TokenPayload } from "../../models/auth";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 
 export const loginEffect = createEffect(
+
     (actions$ = inject(Actions), authService = inject(LoginService)) => {
         return actions$.pipe(
+            
             ofType(AuthActions.login),
             exhaustMap(({ loginRequest }) =>
                 authService.login$(loginRequest).pipe(
@@ -28,12 +30,17 @@ export const loginEffect = createEffect(
 
                         return of(loginSuccessAction, additionalAction, loadTypes);
                     }),
-                    catchError((err: HttpErrorResponse) =>
-                        of(AuthActions.loginFailure({
-                            message: err.error?.detail ?? err.message ?? 'Login failed'
-                        }))
+                    catchError((err: HttpErrorResponse) => {
+                        console.log('שגיאה מהשרת:', err);
+                        console.log('error.error:', err.error);
 
-                    ),
+                        return of(
+                            AuthActions.loginFailure({
+                                message: err.error?.message ?? err.message ?? 'Login failed'
+                            })
+                        );
+                    })
+
                 ),
             ),
         );
@@ -42,52 +49,52 @@ export const loginEffect = createEffect(
 );
 
 export const refreshEffect = createEffect(
-  (actions$ = inject(Actions), authService = inject(LoginService), router = inject(Router)) => {
-    return actions$.pipe(
-      ofType(AuthActions.refresh),
-      mergeMap(() =>
-        authService.refresh$().pipe(
-          switchMap((refreshResponse) => {
-            // חילוץ נתונים מה-Access Token
-            const decoded: TokenPayload = jwtDecode(refreshResponse.access_token);
+    (actions$ = inject(Actions), authService = inject(LoginService), router = inject(Router)) => {
+        return actions$.pipe(
+            ofType(AuthActions.refresh),
+            mergeMap(() =>
+                authService.refresh$().pipe(
+                    switchMap((refreshResponse) => {
+                        // חילוץ נתונים מה-Access Token
+                        const decoded: TokenPayload = jwtDecode(refreshResponse.access_token);
 
-            const loginResponse:LoginResponse = {
-              access_token: refreshResponse.access_token,
-              role: decoded.role,
-              token_type: 'bearer',
-              user_id: +decoded.sub,
-              user_name: decoded.user_name ?? '',
-              advisor_id: decoded.advisor_id ?? null,
-              client_id: decoded.client_id ?? null,
-              email: decoded.email ?? '',
-            };
+                        const loginResponse: LoginResponse = {
+                            access_token: refreshResponse.access_token,
+                            role: decoded.role,
+                            token_type: 'bearer',
+                            user_id: +decoded.sub,
+                            user_name: decoded.user_name ?? '',
+                            advisor_id: decoded.advisor_id ?? null,
+                            client_id: decoded.client_id ?? null,
+                            email: decoded.email ?? '',
+                        };
 
-            const successAction = AuthActions.loginSuccess({ loginResponse });
-            const loadTypes = ResultsActions.getTypes();
-            console.log(loginResponse);
-            
-            const roleLoad =
-              decoded.role === 'client'
-                ? ClientActions.clientLoad()
-                : AdvisorActions.advisorLoad();
+                        const successAction = AuthActions.loginSuccess({ loginResponse });
+                        const loadTypes = ResultsActions.getTypes();
+                        console.log(loginResponse);
 
-            return of(successAction, roleLoad, loadTypes);
-          }),
-          catchError((err: HttpErrorResponse) => {
-            const currentUrl = router.url;
+                        const roleLoad =
+                            decoded.role === 'client'
+                                ? ClientActions.clientLoad()
+                                : AdvisorActions.advisorLoad();
 
-            return of(
-              AuthActions.setRedirectURL({ url: currentUrl }),
-              AuthActions.refreshFailure({
-                message: err.error?.detail ?? err.message ?? 'התחברות מחדש נדרשת',
-              })
-            );
-          })
-        )
-      )
-    );
-  },
-  { functional: true }
+                        return of(successAction, roleLoad, loadTypes);
+                    }),
+                    catchError((err: HttpErrorResponse) => {
+                        const currentUrl = router.url;
+
+                        return of(
+                            AuthActions.setRedirectURL({ url: currentUrl }),
+                            AuthActions.refreshFailure({
+                                message: err.error?.detail ?? err.message ?? 'התחברות מחדש נדרשת',
+                            })
+                        );
+                    })
+                )
+            )
+        );
+    },
+    { functional: true }
 );
 
 

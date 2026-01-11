@@ -14,17 +14,18 @@ export class TestFlowService {
   categories$ = this.store.select(selectClosedCategories)
 
   partsData: Part[] = [
-    { id: 'closed', part: 'שאלות סגורות', title: 'שאלות סגורות', description: 'לפנייך שאלות המחולקות ל - 3 קטגוריות, עני בסגנון של כן או לא', status: PartStatus.idle, pathToNavigate: '/closed',icon_src:"" },
-    { id: '1', part: 'שאלות סגורות', title: 'פעילויות מהנות', description: '', status: PartStatus.idle, pathToNavigate: '/category' ,icon_src:"assets/activities.svg"},
-    { id: '2', part: 'שאלות סגורות', title: 'כישורים ויכולות', description: '', status: PartStatus.idle, pathToNavigate: '/category',icon_src:"assets/skills.svg" },
-    { id: '3', part: 'שאלות סגורות', title: 'מקצועות שמעניינים אותך', description: '', status: PartStatus.idle, pathToNavigate: '/category' ,icon_src:"assets/jobs.svg"},
-    { id: 'open', part: 'שאלות פתוחות', title: 'שאלות פתוחות', description: 'לפנייך שאלות פתוחות שמטרתן ללמוד עליך עוד נתונים משמעותיים למציאת עבודה, השתדלי להשיב בפתיחות ובהרחבה', status: PartStatus.idle, pathToNavigate: '/open',icon_src:"" },
+    { id: 'closed', part: 'שאלות סגורות', title: 'שאלות סגורות', description: 'לפנייך שאלות המחולקות ל - 3 קטגוריות, עני בסגנון של כן או לא', status: PartStatus.idle, pathToNavigate: '/closed', icon_src: "" },
+    { id: '1', part: 'שאלות סגורות', title: 'פעילויות מהנות', description: '', status: PartStatus.idle, pathToNavigate: '/category', icon_src: "assets/activities.svg" },
+    { id: '2', part: 'שאלות סגורות', title: 'כישורים ויכולות', description: '', status: PartStatus.idle, pathToNavigate: '/category', icon_src: "assets/skills.svg" },
+    { id: '3', part: 'שאלות סגורות', title: 'מקצועות שמעניינים אותך', description: '', status: PartStatus.idle, pathToNavigate: '/category', icon_src: "assets/jobs.svg" },
+    { id: 'open', part: 'שאלות פתוחות', title: 'שאלות פתוחות', description: 'לפנייך שאלות פתוחות שמטרתן ללמוד עליך עוד נתונים משמעותיים למציאת עבודה, השתדלי להשיב בפתיחות ובהרחבה', status: PartStatus.idle, pathToNavigate: '/open', icon_src: "" },
   ]
 
   private currentPartSubject = new BehaviorSubject<Part>(this.partsData[0]);
+  private currentQuestionSubject = new BehaviorSubject<number>(0);
 
   currentPart$ = this.currentPartSubject.asObservable();
-
+  currentQuestion$ = this.currentQuestionSubject.asObservable();
 
   constructor() {
     this.categories$.pipe(
@@ -76,6 +77,19 @@ export class TestFlowService {
     }
     this.currentPartSubject.next({ ...current, status });
   }
+
+  incrementCurrentQuestion(): void {
+  const current = this.currentQuestionSubject.value;
+  this.currentQuestionSubject.next(current + 1);
+}
+
+getCurrentQuestion(): number {
+  return this.currentQuestionSubject.value;
+}
+
+resetCurrentQuestion(): void {
+  this.currentQuestionSubject.next(0);
+}
 
 
 }

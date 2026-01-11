@@ -45,7 +45,7 @@ export const loadProfile = createEffect(
   console.error('ERROR CAUGHT:', err);
   return of(ResultsActions.loadProfileFailure({
     testId,
-    error: err?.error?.detail || 'בקשה נכשלה',
+    error: err?.error?.message || 'בקשה נכשלה',
   }));
 })
         )

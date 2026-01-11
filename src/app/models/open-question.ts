@@ -5,6 +5,7 @@ export interface OpenQuestion { //OpenQuestionProcessOut
     question_id?: number,
     question_text?: string,
     clarification_prompt?: string,
+
 }
 
 export interface OpenAnswer { //OpenAnswerIn

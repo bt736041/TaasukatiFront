@@ -11,6 +11,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { OpenQuestionService } from "../../services/open-question.service";
 import { OpenAnswer } from "../../models/open-question";
 import { CloseAnswer, CloseQuestion } from "../../models/close-question";
+import { TestFlowService } from "../../services/test-flow.service";
 
 const hasIds = (t: [any, number | undefined, number | null | undefined]): t is [any, number, number] =>
     t[1] != null && t[2] != null;
@@ -44,29 +45,29 @@ export const StartClosedFlowEffect = createEffect(
             mergeMap(([_, testId, categoryId]) => {
                 return closedService.getNewQuestion$(testId, categoryId).pipe(
                     switchMap((question) => {
-  if (question.status === 'error') {
-    return of(ClosedActions.startClosedFlowFailure({
-      message: question.error_message ?? 'שגיאה לא ידועה'
-    }));
-  }
+                        if (question.status === 'error') {
 
-  if (question.status === 'category_completed') {
-    return of(ClosedActions.closedAnswerProcessing({
-      source: 'closed',
-      categoryId: categoryId ?? undefined,
-      closedQuestion: question
-    }));
-  }
+                            return of(ClosedActions.startClosedFlowFailure({
+                                message: question.error_message ?? 'שגיאה לא ידועה'
+                            }));
+                        }
 
-  return of(ClosedActions.startClosedFlowSuccess({ question }));
-}),
+                        if (question.status === 'category_completed') {
+                            return of(ClosedActions.closedAnswerProcessing({
+                                source: 'closed',
+                                categoryId: categoryId ?? undefined,
+                                closedQuestion: question
+                            }));
+                        }
+
+                        return of(ClosedActions.startClosedFlowSuccess({ question }));
+                    }),
 
                     catchError((err: HttpErrorResponse) => {
-  console.log(err); // בדוק את מבנה השגיאה
-  return of(ClosedActions.startClosedFlowFailure({
-    message: err.error?.detail ?? err.message ?? 'Starting closed flow failed'
-  }))
-})
+                        return of(ClosedActions.startClosedFlowFailure({
+                            message: err.error?.detail ?? err.message ?? 'Starting closed flow failed'
+                        }))
+                    })
                 )
             }),
         );
@@ -96,13 +97,14 @@ export const SubmitClosedAnswerEffect = createEffect(
                         user_answer: userAnswer
                     } as OpenAnswer).pipe(
                         switchMap((question) => {
+
                             const base = ClosedActions.closedAnswerProcessing({
                                 source: 'open',
                                 categoryId: categoryId ?? undefined,
                                 openQuestion: question
                             });
-
                             switch (question.status) {
+
                                 case 'error':
                                     return [ClosedActions.closedAnswerProcessing({
                                         source: 'open',
